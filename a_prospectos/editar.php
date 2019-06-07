@@ -1,7 +1,7 @@
 <?php
-	require_once("db_prospectos.php");
-	$db = new Prospectos();
+	require_once("db_.php");
 	$id=$_REQUEST['id'];
+	$ejecutivo= $db->personal();
 	if($id>0){
 		$pers = $db->prospecto_edit($id);
 		$cliente=$pers['cliente'];
@@ -13,6 +13,7 @@
 		$venta=$pers['venta'];
 		$producto=$pers['producto'];
 		$seguimiento=$pers['seguimiento'];
+		$idpersona=$pers['idpersona'];
 	}
 	else{
 		$cliente="";
@@ -24,10 +25,11 @@
 		$venta="";
 		$producto="";
 		$seguimiento="";
+		$idpersona="";
 	}
 ?>
 <div class="container">
-	<form action="" id="form_personal" data-lugar="a_prospectos/db_prospectos" data-funcion="guardar_prospecto">
+	<form action="" id="form_personal" data-lugar="a_prospectos/db_" data-funcion="guardar_prospecto" data-destino='a_prospectos/editar'>
 		<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 		<div class="card">
 			<div class="card-header">Prospectos</div>
@@ -44,15 +46,15 @@
 					<div class="col-4">
 						<label for="rfc">RFC</label>
 						<input type="text" placeholder="RFC" id="rfc" name="rfc" value="<?php echo $rfc; ?>" class="form-control" required>
-					</div>	
+					</div>
 					<div class="col-4">
 						<label for="domicilio">Domicilio</label>
 						<input type="text" placeholder="Domicilio" id="domicilio" name="domicilio" value="<?php echo $domicilio; ?>" class="form-control">
-					</div>	
+					</div>
 					<div class="col-4">
 						<label for="correo">Correo</label>
 						<input type="mail" placeholder="Correo electronico" id="correo" name="correo" value="<?php echo $correo; ?>" class="form-control" required>
-					</div>	
+					</div>
 					<div class="col-4">
 						<label for="prospecto">Prospecto</label>
 						<select class='form-control' id='prospecto' name='prospecto'>
@@ -61,11 +63,21 @@
 							echo "<option"; if($prospecto==0){ echo " selected"; } echo " value='0'>Cliente</option>";
 						?>
 						</select>
-					</div>		
+					</div>
+					<div class="col-3">
+						<label for="iddespacho">Ejecutivo</label>
+						<select class='form-control' id='idpersona' name='idpersona'>
+							<?php
+							foreach ($ejecutivo as $key => $value) {
+								echo "<option"; if($idpersona==$value['idpersona']){ echo " selected"; } echo " value='".$value['idpersona']."'>".$value['nombre']."</option>";
+							}
+							?>
+						</select>
+					</div>
 					<div class="col-4">
 						<label for="venta">Venta</label>
 						<input type="venta" placeholder="Venta" id="venta" name="venta" value="<?php echo $venta; ?>" class="form-control" required>
-					</div>	
+					</div>
 					<div class="col-4">
 						<label for="producto">Producto</label>
 						<input type="producto" placeholder="Producto" id="producto" name="producto" value="<?php echo $producto; ?>" class="form-control" required>
@@ -73,7 +85,7 @@
 					<div class="col-12">
 						<label for="seguimiento">Seguimiento</label>
 						<textarea id='seguimiento' name='seguimiento' class="form-control"><?php echo $seguimiento; ?></textarea>
-					</div>				
+					</div>
 				</div>
 			</div>
 			<div class="card-footer">
