@@ -18,7 +18,7 @@
 			<tbody>
 			<?php
 				for($i=0;$i<count($pd);$i++){
-					echo "<tr id=".$pd[$i]['idcom']." class='edit-t'>";
+					echo "<tr id=".$pd[$i]['id']." class='edit-t'>";
 					echo "<td>";
 					echo $i+1;
 					echo "</td>";
