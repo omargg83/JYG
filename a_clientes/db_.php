@@ -9,7 +9,7 @@ class Clientes extends Sagyc{
 
 	public function __construct(){
 		parent::__construct();
-		$this->doc="a_clientes/papeles/";
+		$this->doc="a_clientes/documentos/";
 
 		if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 
