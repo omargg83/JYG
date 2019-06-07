@@ -23,7 +23,7 @@
 	}
 ?>
 <div class="container">
-	<form action="" id="form_personal" data-lugar="a_comisionista/db_comisionistas" data-funcion="guardar_comisionista">
+	<form action="" id="form_personal" data-lugar="a_comisionistas/db_comisionistas" data-funcion="guardar_comisionista">
 		<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 		<div class="card">
 			<div class="card-header">Comisionista</div>
