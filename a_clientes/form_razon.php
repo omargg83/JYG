@@ -1,6 +1,5 @@
 <?php
-	require_once("db_clientes.php");
-	$db = new Clientes();
+	require_once("db_.php");
 
 	$id=$_REQUEST['id'];
 	$idcliente=$_REQUEST['id2'];
@@ -12,7 +11,7 @@
 		$razon="";
 	}
 ?>
-	<form action="" id="form_personal" data-lugar="a_clientes/db_clientes" data-funcion="guardar_razon" data-destino="a_clientes/editar">
+	<form action="" id="form_razon" data-lugar="a_clientes/db_" data-funcion="guardar_razon" data-destino="a_clientes/editar">
 		<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 		<input type="hidden" value="<?php echo $idcliente; ?>" name="idcliente" id="idcliente">
 		<div class="card">

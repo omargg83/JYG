@@ -1,28 +1,53 @@
 <?php
 require_once("../control_db.php");
 if (isset($_REQUEST['function'])){$function=$_REQUEST['function'];}	else{ $function="";}
-	
+
 class Clientes extends Sagyc{
-	
+
 	public $nivel_personal;
 	public $nivel_captura;
-	
+
 	public function __construct(){
 		parent::__construct();
 		$this->doc="a_clientes/papeles/";
 
 		if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
-			
+
 		}
 		else{
 			include "../error.php";
 			die();
 		}
 	}
+
 	public function clientes(){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM clientes where prospecto=0";
+			if($_SESSION['tipousuario']=="administrativo"){
+				$sql="SELECT clientes.*,personal.nombre as ejecutivo FROM clientes left outer join personal on personal.idpersona=clientes.idpersona where prospecto=0";
+			}
+			else{
+				$sql="SELECT clientes.*,personal.nombre as ejecutivo FROM clientes left outer join personal on personal.idpersona=clientes.idpersona where prospecto=0 and idpersona='".$_SESSION['idpersona']."'";
+			}
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+
+	public function personal(){
+		try{
+			parent::set_names();
+			if($_SESSION['tipousuario']=="administrativo"){
+				$sql="SELECT * FROM personal where tipo='ejecutivo'";
+			}
+			else{
+				$sql="SELECT * FROM personal where idpersona='".$_SESSION['idpersona']."' and tipo='ejecutivo'";
+			}
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();
@@ -76,7 +101,6 @@ class Clientes extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-	
 
 	function guardar_cliente(){
 		$x="";
@@ -98,7 +122,10 @@ class Clientes extends Sagyc{
 		if (isset($_REQUEST['correo'])){
 			$arreglo+=array('correo'=>$_REQUEST['correo']);
 		}
-		if($id==0){					
+		if (isset($_REQUEST['idpersona'])){
+			$arreglo+=array('idpersona'=>$_REQUEST['idpersona']);
+		}
+		if($id==0){
 			$x.=$this->insert('clientes', $arreglo);
 		}
 		else{
@@ -118,22 +145,25 @@ class Clientes extends Sagyc{
 			$idcliente=$_REQUEST['idcliente'];
 			$arreglo+=array('idcliente'=>$idcliente);
 		}
-		
-		if($id==0){		
-			$arreglo+=array('prospecto'=>0);
+
+		if($id==0){
 			$x.=$this->insert('clientes_razon', $arreglo);
 		}
 		else{
 			$x.=$this->update('clientes_razon',array('idrazon'=>$id), $arreglo);
 		}
-		return $idcliente;
+		if(is_numeric($x)){
+			return $idcliente;
+		}
+		else{
+			return $x;
+		}
+
 	}
 
 }
 
+$db = new Clientes();
 if(strlen($function)>0){
-	$personal = new Clientes();
-	echo $personal->$function();
+	echo $db->$function();
 }
-
-
