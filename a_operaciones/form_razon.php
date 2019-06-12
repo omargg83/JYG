@@ -1,11 +1,11 @@
 <?php
-	require_once("../a_clientes/db_clientes.php");
+	require_once("db_operaciones.php");
 	$id=$_REQUEST['id'];
-	$db = new Clientes();
+	$db = new Operaciones();
 
 	$res=$db->cliente_edit($id);
 	$cliente=$res['cliente'];
-?>	
+?>
 <form id='clientesel' action=''>
 <input type="hidden" name="idcliente_seek" id='idcliente_seek' value='<?php echo $id; ?>' readonly>
 <div class="card">
@@ -18,10 +18,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="card-body" id='resultadosx'>	
+	<div class="card-body" id='resultadosx'>
 	<?php
-		$db = new Clientes();
-		
 		$id=$_REQUEST['id'];
 		$pd=$db->razon($id);
 
@@ -35,16 +33,16 @@
 					echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='cliente_sel' title='seleccionar razon social' data-id='".$pd[$i]['idrazon']."' data-razon='".$pd[$i]['razon']."'><i class='fas fa-pencil-alt'></i></button>";
 				echo "</div>";
 			echo "</td>";
-		
+
 			echo "<td>".$pd[$i]["razon"]."</td>";
-		
+
 			echo "</tr>";
 		}
 		echo "</tbody>";
 		echo "</table>";
 
 	?>
-	
+
 
 	</div>
 

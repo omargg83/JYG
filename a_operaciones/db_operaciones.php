@@ -1,17 +1,17 @@
 <?php
 require_once("../control_db.php");
 if (isset($_REQUEST['function'])){$function=$_REQUEST['function'];}	else{ $function="";}
-	
+
 class Operaciones extends Sagyc{
 	public $nivel_personal;
 	public $nivel_captura;
-	
+
 	public function __construct(){
 		parent::__construct();
 		$this->doc="a_productostipo/papeles/";
 
 		if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
-			
+
 		}
 		else{
 			include "../error.php";
@@ -32,14 +32,20 @@ class Operaciones extends Sagyc{
 		}
 	}
 
-	function busca_cliente(){
+	public function busca_cliente(){
 		try{
 			$x="";
 			if (isset($_REQUEST['texto'])){$texto=$_REQUEST['texto'];}
 			parent::set_names();
-
-			$sql="SELECT * FROM clientes where cliente like :texto";
-			$sth = $this->dbh->prepare($sql);
+			if($_SESSION['tipousuario']=="administrativo"){
+				$sql="SELECT * FROM clientes where cliente like :texto";
+				$sth = $this->dbh->prepare($sql);
+			}
+			else{
+				$sql="SELECT * FROM clientes where cliente like :texto and idpersona=:idpersona";
+				$sth = $this->dbh->prepare($sql);
+				$sth->bindValue(":idpersona",$_SESSION['idpersona']);
+			}
 			$sth->bindValue(":texto","%$texto%");
 			$sth->execute();
 			$res=$sth->fetchAll();
@@ -53,7 +59,7 @@ class Operaciones extends Sagyc{
 
 					$x.="<td>";
 					$x.="<div class='btn-group'>";
-					$x.="<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idcliente']."'  data-lugar='a_operaciones/form_razon' title='Cambiar cargo'><i class='fas fa-receipt'></i></button>";
+					$x.="<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idcliente']."'  data-lugar='a_operaciones/form_razon' title='Seleccionar''><i class='fas fa-receipt'></i></button>";
 					$x.="</div>";
 					$x.="</td>";
 
@@ -80,8 +86,7 @@ class Operaciones extends Sagyc{
 		}
 		return $texto;
 	}
-
-	function busca_despacho(){
+	public function busca_despacho(){
 		try{
 			$x="";
 			if (isset($_REQUEST['texto'])){$texto=$_REQUEST['texto'];}
@@ -100,7 +105,7 @@ class Operaciones extends Sagyc{
 				foreach ($res as $key) {
 					$x.= "<tr id=".$key['idempresa']." class='edit-t'>";
 					$x.= "<td>";
-					
+
 					$x.= "<div class='btn-group'>";
 					$x.= "<button class='btn btn-outline-secondary btn-sm' id='despacho_sel' title='Editar' data-lugar='a_empresas/editar'><i class='fas fa-pencil-alt'></i></button>";
 					$x.= "</div>";
@@ -113,12 +118,12 @@ class Operaciones extends Sagyc{
 					$x.= "<td>";
 					$x.= $key["razon"];
 					$x.= "</td>";
-					
+
 					$x.= "<td>";
 					$x.= $key["rfc"];
 					$x.= "</td>";
-					
-				
+
+
 					$x.= "</tr>";
 				}
 				$x.= "</table>";
@@ -134,7 +139,6 @@ class Operaciones extends Sagyc{
 		}
 		return $texto;
 	}
-
 	public function producto_edit($id){
 		try{
 			parent::set_names();
@@ -177,8 +181,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
-
 	public function despachos_operedit($idempresa){
 		try{
 			self::set_names();
@@ -192,8 +194,7 @@ class Operaciones extends Sagyc{
 		catch(PDOException $e){
 			return "Database access FAILED! ".$e->getMessage();
 		}
-	}	
-
+	}
 	public function operacion_edit($id){
 		try{
 			self::set_names();
@@ -264,7 +265,7 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-	function guardar_operacion(){
+	public function guardar_operacion(){
 		$x="";
 		parent::set_names();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
@@ -274,7 +275,7 @@ class Operaciones extends Sagyc{
 			$fx=explode("-",$_REQUEST['fecha']);
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
-		
+
 
 		if (isset($_REQUEST['monto'])){
 			$arreglo+=array('monto'=>$_REQUEST['monto']);
@@ -285,17 +286,16 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['idempresa'])){
 			$arreglo+=array('idempresa'=>$_REQUEST['idempresa']);
 		}
-	
-		if($id==0){					
+
+		if($id==0){
 			$x.=$this->insert('operaciones', $arreglo);
 		}
 		else{
 			$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
 		}
 		return $x;
-	}	
-
-	function guardar_factura(){
+	}
+	public function guardar_factura(){
 		$x="";
 		parent::set_names();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
@@ -323,7 +323,7 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('forma'=>$_REQUEST['forma']);
 		}
 
-		if($id==0){					
+		if($id==0){
 			$x.=$this->insert('facturas', $arreglo);
 		}
 		else{
@@ -336,7 +336,7 @@ class Operaciones extends Sagyc{
 			return $x;
 		}
 	}
-	function guardar_retorno(){
+	public function guardar_retorno(){
 		$x="";
 		parent::set_names();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
@@ -355,12 +355,12 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['monto'])){
 			$arreglo+=array('monto'=>$_REQUEST['monto']);
 		}
-		
+
 		if (isset($_REQUEST['tipo'])){
 			$arreglo+=array('tipo'=>$_REQUEST['tipo']);
 		}
 
-		if($id==0){					
+		if($id==0){
 			$x.=$this->insert('retorno', $arreglo);
 		}
 		else{
@@ -373,8 +373,7 @@ class Operaciones extends Sagyc{
 			return $x;
 		}
 	}
-
-	function producto_tipo(){
+	public function producto_tipo(){
 		$x="";
 		if (isset($_REQUEST['idproducto'])){
 			$idproducto=$_REQUEST['idproducto'];
@@ -453,6 +452,34 @@ class Operaciones extends Sagyc{
 			</div>";
 		}
 		return $x;
+	}
+	public function razon($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM clientes_razon where idcliente=:idcliente";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idcliente",$id);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function cliente_edit($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM clientes where idcliente=:idcliente";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idcliente",$id);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
 	}
 }
 if(strlen($function)>0){

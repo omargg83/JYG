@@ -19,7 +19,6 @@ class Clientes extends Sagyc{
 			die();
 		}
 	}
-
 	public function clientes(){
 		try{
 			parent::set_names();
@@ -38,7 +37,6 @@ class Clientes extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function personal(){
 		try{
 			parent::set_names();
@@ -57,7 +55,6 @@ class Clientes extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function cliente_edit($id){
 		try{
 			parent::set_names();
@@ -72,7 +69,6 @@ class Clientes extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function razon($id){
 		try{
 			parent::set_names();
@@ -101,8 +97,7 @@ class Clientes extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
-	function guardar_cliente(){
+	public function guardar_cliente(){
 		$x="";
 		parent::set_names();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
@@ -133,7 +128,7 @@ class Clientes extends Sagyc{
 		}
 		return $x;
 	}
-	function guardar_razon(){
+	public function guardar_razon(){
 		$x="";
 		parent::set_names();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}

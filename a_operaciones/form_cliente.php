@@ -1,8 +1,3 @@
-<?php
-	require_once("../a_clientes/db_clientes.php");
-	$db = new Clientes();
-?>	
-
 <div class="card">
 	<div class="card-header">Buscar cliente</div>
 	<div class="card-body">
@@ -16,9 +11,6 @@
 			<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal"><i class="fas fa-sign-out-alt"></i>Cerrar</button>
 		</div>
 	</div>
-	<div class='container' id='resultadosx'>	
+	<div class='container' id='resultadosx'>
 	</div>
 </div>
-
-
-
