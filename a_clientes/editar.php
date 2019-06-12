@@ -9,6 +9,7 @@ if($id>0){
 	$rfc=$pers['rfc'];
 	$domicilio=$pers['domicilio'];
 	$correo=$pers['correo'];
+	$telefono=$pers['telefono'];
 	$idpersona=$pers['idpersona'];
 }
 else{
@@ -17,6 +18,7 @@ else{
 	$rfc="";
 	$domicilio="";
 	$correo="";
+	$telefono="";
 	$idpersona=$_SESSION['idpersona'];
 }
 ?>
@@ -46,6 +48,10 @@ else{
 					<div class="col-3">
 						<label for="correo">Correo</label>
 						<input type="mail" placeholder="Correo electronico" id="correo" name="correo" value="<?php echo $correo; ?>" class="form-control" required>
+					</div>
+					<div class="col-3">
+						<label for="telefono">Telefono</label>
+						<input type="text" placeholder="Telefono/Telefonos" id="telefono" name="telefono" value="<?php echo $telefono; ?>" class="form-control" required>
 					</div>
 					<div class="col-3">
 						<label for="iddespacho">Ejecutivo</label>

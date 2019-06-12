@@ -89,6 +89,9 @@ class Prospectos extends Sagyc{
 		if (isset($_REQUEST['correo'])){
 			$arreglo+=array('correo'=>$_REQUEST['correo']);
 		}
+		if (isset($_REQUEST['telefono'])){
+			$arreglo+=array('telefono'=>$_REQUEST['telefono']);
+		}
 		if (isset($_REQUEST['prospecto'])){
 			$arreglo+=array('prospecto'=>$_REQUEST['prospecto']);
 		}

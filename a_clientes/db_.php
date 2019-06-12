@@ -117,6 +117,9 @@ class Clientes extends Sagyc{
 		if (isset($_REQUEST['correo'])){
 			$arreglo+=array('correo'=>$_REQUEST['correo']);
 		}
+		if (isset($_REQUEST['telefono'])){
+			$arreglo+=array('telefono'=>$_REQUEST['telefono']);
+		}
 		if (isset($_REQUEST['idpersona'])){
 			$arreglo+=array('idpersona'=>$_REQUEST['idpersona']);
 		}

@@ -9,6 +9,7 @@
 		$rfc=$pers['rfc'];
 		$domicilio=$pers['domicilio'];
 		$correo=$pers['correo'];
+		$telefono=$pers['telefono'];
 		$prospecto=$pers['prospecto'];
 		$venta=$pers['venta'];
 		$producto=$pers['producto'];
@@ -21,6 +22,7 @@
 		$rfc="";
 		$domicilio="";
 		$correo="";
+		$telefono="";
 		$prospecto="1";
 		$venta="";
 		$producto="";
@@ -35,7 +37,11 @@
 			<div class="card-header">Prospectos</div>
 			<div class="card-body">
 				<div class="row">
-					<div class="col-4">
+					<div class="col-2">
+						<label for="rfc">RFC</label>
+						<input type="text" placeholder="RFC" id="rfc" name="rfc" value="<?php echo $rfc; ?>" class="form-control" required>
+					</div>
+					<div class="col-5">
 						<label for="cliente">Cliente</label>
 						<input type="text" placeholder="Cliente" id="cliente" name="cliente" value="<?php echo $cliente; ?>" class="form-control">
 					</div>
@@ -43,11 +49,7 @@
 						<label for="contacto">Contacto</label>
 						<input type="text" placeholder="Contacto" id="contacto" name="contacto" value="<?php echo $contacto; ?>" class="form-control" required>
 					</div>
-					<div class="col-4">
-						<label for="rfc">RFC</label>
-						<input type="text" placeholder="RFC" id="rfc" name="rfc" value="<?php echo $rfc; ?>" class="form-control" required>
-					</div>
-					<div class="col-4">
+					<div class="col-7">
 						<label for="domicilio">Domicilio</label>
 						<input type="text" placeholder="Domicilio" id="domicilio" name="domicilio" value="<?php echo $domicilio; ?>" class="form-control">
 					</div>
@@ -56,13 +58,8 @@
 						<input type="mail" placeholder="Correo electronico" id="correo" name="correo" value="<?php echo $correo; ?>" class="form-control" required>
 					</div>
 					<div class="col-4">
-						<label for="prospecto">Prospecto</label>
-						<select class='form-control' id='prospecto' name='prospecto'>
-						<?php
-							echo "<option"; if($prospecto==1){ echo " selected"; } echo " value='1'>Prospecto</option>";
-							echo "<option"; if($prospecto==0){ echo " selected"; } echo " value='0'>Cliente</option>";
-						?>
-						</select>
+						<label for="telefono">Telefono</label>
+						<input type="telefono" placeholder="Telefono / Telefonos" id="telefono" name="telefono" value="<?php echo $telefono; ?>" class="form-control" required>
 					</div>
 					<div class="col-3">
 						<label for="iddespacho">Ejecutivo</label>
@@ -75,12 +72,21 @@
 						</select>
 					</div>
 					<div class="col-4">
-						<label for="venta">Venta</label>
-						<input type="venta" placeholder="Venta" id="venta" name="venta" value="<?php echo $venta; ?>" class="form-control" required>
+						<label for="producto">Producto Ofrecido</label>
+						<input type="producto" placeholder="Producto" id="producto" name="producto" value="<?php echo $producto; ?>" class="form-control" required>
 					</div>
 					<div class="col-4">
-						<label for="producto">Producto</label>
-						<input type="producto" placeholder="Producto" id="producto" name="producto" value="<?php echo $producto; ?>" class="form-control" required>
+						<label for="venta">% de Venta manejado</label>
+						<input type="venta" placeholder="Venta" id="venta" name="venta" value="<?php echo $venta; ?>" class="form-control" required>
+					</div>
+					<div class="col-2">
+						<label for="prospecto">Estatus</label>
+						<select class='form-control' id='prospecto' name='prospecto'>
+						<?php
+							echo "<option"; if($prospecto==1){ echo " selected"; } echo " value='1'>Prospecto</option>";
+							echo "<option"; if($prospecto==0){ echo " selected"; } echo " value='0'>Cliente</option>";
+						?>
+						</select>
 					</div>
 					<div class="col-12">
 						<label for="seguimiento">Seguimiento</label>
