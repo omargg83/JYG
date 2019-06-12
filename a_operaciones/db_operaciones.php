@@ -21,7 +21,12 @@ class Operaciones extends Sagyc{
 	public function operaciones(){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM operaciones";
+			if ($_SESSION['tipousuario']=='administrativo'){
+				$sql="SELECT * FROM operaciones";
+			}
+			else{
+				$sql="SELECT * FROM operaciones where idpersona='".$_SESSION['idpersona']."'";
+			}
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();
@@ -274,8 +279,6 @@ class Operaciones extends Sagyc{
 			$fx=explode("-",$_REQUEST['fecha']);
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
-
-
 		if (isset($_REQUEST['monto'])){
 			$arreglo+=array('monto'=>$_REQUEST['monto']);
 		}
@@ -285,8 +288,8 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['idempresa'])){
 			$arreglo+=array('idempresa'=>$_REQUEST['idempresa']);
 		}
-
 		if($id==0){
+			$arreglo+=array('idpersona'=>$_REQUEST['idpersona']);
 			$x.=$this->insert('operaciones', $arreglo);
 		}
 		else{
@@ -385,69 +388,69 @@ class Operaciones extends Sagyc{
 		$pikito=$val['pikito'];
 		$monto="";
 		$x.="<div class='row'>";
-			$x.="<div class='col-4'>
-					<label for='monto'>Pventa</label>
-					<input type='text' placeholder='monto' id='pventa' name='pventa' value='$pventa' class='form-control' autocomplete=off readonly>
-			</div>";
+		$x.="<div class='col-4'>
+		<label for='monto'>Pventa</label>
+		<input type='text' placeholder='monto' id='pventa' name='pventa' value='$pventa' class='form-control' autocomplete=off readonly>
+		</div>";
 
-			$x.="<div class='col-4'>
-					<label for='monto'>pcomisionista</label>
-					<input type='text' placeholder='pcomisionista' id='pcomisionista' name='pcomisionista' value='$pcomisionista' class='form-control' autocomplete=off readonly>
-			</div>";
+		$x.="<div class='col-4'>
+		<label for='monto'>pcomisionista</label>
+		<input type='text' placeholder='pcomisionista' id='pcomisionista' name='pcomisionista' value='$pcomisionista' class='form-control' autocomplete=off readonly>
+		</div>";
 
-			$x.="<div class='col-4'>
-					<label for='monto'>psocios</label>
-					<input type='text' placeholder='psocios' id='psocios' name='psocios' value='$psocios' class='form-control' autocomplete=off readonly>
-			</div>";
+		$x.="<div class='col-4'>
+		<label for='monto'>psocios</label>
+		<input type='text' placeholder='psocios' id='psocios' name='psocios' value='$psocios' class='form-control' autocomplete=off readonly>
+		</div>";
 
-			$x.="<div class='col-4'>
-					<label for='monto'>pikito</label>
-					<input type='text' placeholder='pikito' id='pikito' name='pikito' value='$pikito' class='form-control' autocomplete=off readonly>
-			</div>";
+		$x.="<div class='col-4'>
+		<label for='monto'>pikito</label>
+		<input type='text' placeholder='pikito' id='pikito' name='pikito' value='$pikito' class='form-control' autocomplete=off readonly>
+		</div>";
 		$x.="</div>";
 
 		$total=0;
 		$x.="<div class='row'>";
 		if($producto=="CHEQUE"){
 			$x.="<div class='col-4'>
-				<label for='total'>Total</label>
-				<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
+			<label for='total'>Total</label>
+			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
 			</div>";
 		}
 		if($producto=="SPEI"){
 			$x.="<div class='col-4'>
-				<label for='total'>Total</label>
-				<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
+			<label for='total'>Total</label>
+			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
 			</div>";
 		}
 		if($producto=="ASIMILADOS"){
 			$x.="<div class='col-4'>
-				<label for='total'>Total</label>
-				<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
+			<label for='total'>Total</label>
+			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
 			</div>";
 		}
 		if($producto=="PLAN PRIVADO"){
 			$x.="<div class='col-4'>
-				<label for='total'>Total</label>
-				<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
+			<label for='total'>Total</label>
+			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
 			</div>";
 		}
 		if($producto=="EFECTIVO"){
 			$x.="<div class='col-4'>
-				<label for='total'>Total</label>
-				<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
+			<label for='total'>Total</label>
+			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
 			</div>";
 		}
 		if($producto=="CUCA"){
 			$x.="<div class='col-4'>
-				<label for='total'>Total</label>
-				<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
+			<label for='total'>Total</label>
+			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
 			</div>";
 		}
 		if($producto=="SINDICATO"){
 			$x.="<div class='col-4'>
-				<label for='total'>Total</label>
-				<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
+			<label for='total'>Total</label>
+			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
 			</div>";
 		}
 		return $x;
@@ -508,7 +511,8 @@ class Operaciones extends Sagyc{
 	}
 
 }
+
+$db = new Operaciones();
 if(strlen($function)>0){
-	$db = new Operaciones();
 	echo $db->$function();
 }

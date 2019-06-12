@@ -1,6 +1,5 @@
-<?php 
+<?php
 	require_once("db_operaciones.php");
-	$db = new Operaciones();
 	if (isset($_REQUEST['id'])){
 		$id=$_REQUEST['id'];
 		$operacion = $db->operacion_edit($id);
@@ -11,8 +10,8 @@
 	echo "<h5>Retorno</h5>";
 	echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='$idempresa' data-lugar='a_operaciones/form_retorno'><i class='fas fa-exchange-alt'></i>Nueva</button>";
 	echo "<hr>";
-	
-?>	
+
+?>
 		<div class="content table-responsive table-full-width">
 			<table class="table table-sm">
 			<thead>

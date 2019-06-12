@@ -1,6 +1,5 @@
 <?php
 	require_once("db_operaciones.php");
-	$db = new Operaciones();
 
 	if (isset($_REQUEST['id'])){
 		$id=$_REQUEST['id'];

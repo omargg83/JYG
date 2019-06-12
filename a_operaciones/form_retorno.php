@@ -1,6 +1,5 @@
 <?php
 	require_once("db_operaciones.php");
-	$db = new Operaciones();
 	if (isset($_REQUEST['id'])){
 		$id=$_REQUEST['id'];
 	}
@@ -38,7 +37,7 @@
 				<div class="col-4">
 					<label for="monto">Productos</label>
 					<select id='idproducto_selx' name='idproducto_selx' class="form-control" >
-						<?php 
+						<?php
 							foreach($prod as $val){
 								echo "<option value='".$val['idproducto']."'>".$val['producto']."</option>";
 
@@ -55,7 +54,7 @@
 			</div>
 
 			<div id='producto_tipo'></div>
-			
+
 		</div>
 		<div class='card-footer'>
 			<div class='row'>
@@ -73,6 +72,6 @@
 	<script>
 	$(function() {
 		fechas();
-		
+
 	});
 </script>

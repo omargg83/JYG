@@ -1,6 +1,5 @@
 <?php
 	require_once("db_operaciones.php");
-	$db = new Operaciones();
 
 	$uso=$db->uso_fact();
 	$forma=$db->forma();
@@ -65,9 +64,6 @@
 					<input type="text" placeholder="monto" id="monto" name="monto" value="<?php echo $monto; ?>" class="form-control" autocomplete=off>
 				</div>
 
-
-
-
 			</div>
 		</div>
 		<div class='card-footer'>
@@ -86,6 +82,5 @@
 	<script>
 	$(function() {
 		fechas();
-
 	});
 </script>

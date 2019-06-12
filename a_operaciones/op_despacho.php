@@ -1,6 +1,5 @@
-<?php 
+<?php
 	require_once("db_operaciones.php");
-	$db = new Operaciones();
 	if (isset($_REQUEST['idempresa'])){
 		$idempresa=$_REQUEST['idempresa'];
 	}
@@ -15,7 +14,7 @@
 		$socio="";
 		$razon="";
 	}
-?>	
+?>
 	<div class="col-4">
 		<label for="cliente">Despacho</label>
 		<div class="input-group mb-3">

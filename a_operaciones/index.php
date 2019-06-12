@@ -1,6 +1,4 @@
 <?php
-	require_once("db_operaciones.php");
-	$db = new Operaciones();
 	echo "<nav class='navbar navbar-expand-lg navbar-light bg-light '>
 
 	<a class='navbar-brand' ><i class='fas fa-hand-holding-usd'></i> Operaciones</a>

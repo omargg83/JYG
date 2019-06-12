@@ -1,8 +1,6 @@
 <?php
 	require_once("db_operaciones.php");
 	$id=$_REQUEST['id'];
-	$db = new Operaciones();
-
 	$res=$db->cliente_edit($id);
 	$cliente=$res['cliente'];
 ?>

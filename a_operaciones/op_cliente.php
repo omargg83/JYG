@@ -1,6 +1,5 @@
-<?php 
+<?php
 	require_once("db_operaciones.php");
-	$db = new Operaciones();
 	if (isset($_REQUEST['idrazon'])){
 		$idrazon=$_REQUEST['idrazon'];
 	}
@@ -20,7 +19,7 @@
 		$rfc="";
 		$contacto="";
 		$razon="";
-	}	
+	}
 ?>
 
 <div class="col-4">
