@@ -31,7 +31,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function busca_cliente(){
 		try{
 			$x="";
@@ -481,6 +480,20 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function uso_fact(){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM sat_uso";
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+
 }
 if(strlen($function)>0){
 	$db = new Operaciones();

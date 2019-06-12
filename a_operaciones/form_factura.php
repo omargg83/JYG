@@ -1,8 +1,8 @@
 <?php
 	require_once("db_operaciones.php");
 	$db = new Operaciones();
-	
 
+	$uso=$db->uso_fact();
 	if (isset($_REQUEST['id'])){
 		$id=$_REQUEST['id'];
 	}
@@ -13,13 +13,11 @@
 		$row=$db->facturas_edit($id);
 		$fecha=fecha($row['fecha']);
 		$monto=$row['monto'];
-		$uso=$row['uso'];
 		$forma=$row['forma'];
 	}
 	else{
 		$fecha=date("d-m-Y");
 		$monto=0;
-		$uso="";
 		$forma="";
 	}
 ?>
@@ -38,7 +36,13 @@
 
 				<div class="col-4">
 					<label for="uso">Uso de la factura</label>
-					<input type="text" placeholder="uso" id="uso" name="uso" value="<?php echo $uso; ?>" class="form-control" autocomplete=off>
+					<select class="form-control" id="uso" name="uso">
+						<?php
+							foreach ($uso as $key) {
+								echo "<option value='".$key['id']."'>".$key['clave']." - ".$key['desc']."</option>";
+							}
+						?>
+					</select>
 				</div>
 
 
@@ -73,6 +77,6 @@
 	<script>
 	$(function() {
 		fechas();
-		
+
 	});
 </script>
