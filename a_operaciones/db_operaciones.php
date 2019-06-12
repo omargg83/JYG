@@ -314,12 +314,12 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('monto'=>$_REQUEST['monto']);
 		}
 
-		if (isset($_REQUEST['uso'])){
-			$arreglo+=array('uso'=>$_REQUEST['uso']);
+		if (isset($_REQUEST['iduso'])){
+			$arreglo+=array('iduso'=>$_REQUEST['iduso']);
 		}
 
-		if (isset($_REQUEST['forma'])){
-			$arreglo+=array('forma'=>$_REQUEST['forma']);
+		if (isset($_REQUEST['idforma'])){
+			$arreglo+=array('idforma'=>$_REQUEST['idforma']);
 		}
 
 		if($id==0){
@@ -484,6 +484,19 @@ class Operaciones extends Sagyc{
 		try{
 			parent::set_names();
 			$sql="SELECT * FROM sat_uso";
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function forma(){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM sat_fpago order by pago asc";
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();

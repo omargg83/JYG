@@ -3,6 +3,7 @@
 	$db = new Operaciones();
 
 	$uso=$db->uso_fact();
+	$forma=$db->forma();
 	if (isset($_REQUEST['id'])){
 		$id=$_REQUEST['id'];
 	}
@@ -13,12 +14,15 @@
 		$row=$db->facturas_edit($id);
 		$fecha=fecha($row['fecha']);
 		$monto=$row['monto'];
-		$forma=$row['forma'];
+		$iduso=$row['iduso'];
+		$idforma=$row['idforma'];
 	}
 	else{
 		$fecha=date("d-m-Y");
 		$monto=0;
 		$forma="";
+		$iduso="";
+		$idforma="";
 	}
 ?>
 
@@ -29,29 +33,34 @@
 		<div class="card-header">Factura</div>
 		<div class='card-body'>
 			<div class='row'>
-				<div class="col-4">
+				<div class="col-2">
 					<label for="fecha_fact">Fecha</label>
 					<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off>
 				</div>
 
 				<div class="col-4">
 					<label for="uso">Uso de la factura</label>
-					<select class="form-control" id="uso" name="uso">
+					<select class="form-control" id="iduso" name="iduso">
 						<?php
 							foreach ($uso as $key) {
-								echo "<option value='".$key['id']."'>".$key['clave']." - ".$key['desc']."</option>";
+								echo "<option value='".$key['id']."'"; if($iduso==$key['id']){ echo " selected";} echo ">".$key['clave']." - ".$key['desc']."</option>";
 							}
 						?>
 					</select>
 				</div>
 
-
-				<div class="col-4">
-					<label for="forma">Forma de pago</label>
-					<input type="text" placeholder="forma" id="forma" name="forma" value="<?php echo $forma; ?>" class="form-control" autocomplete=off>
+				<div class="col-3">
+					<label for="uso">Forma de pago</label>
+					<select class="form-control" id="idforma" name="idforma">
+						<?php
+							foreach ($forma as $key) {
+								echo "<option value='".$key['id']."'"; if($idforma==$key['id']){ echo " selected";} echo ">".$key['pago']."</option>";
+							}
+						?>
+					</select>
 				</div>
 
-				<div class="col-4">
+				<div class="col-3">
 					<label for="monto">Monto</label>
 					<input type="text" placeholder="monto" id="monto" name="monto" value="<?php echo $monto; ?>" class="form-control" autocomplete=off>
 				</div>
