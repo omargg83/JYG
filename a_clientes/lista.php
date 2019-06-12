@@ -3,7 +3,6 @@
 	$pd = $db->clientes();
 	echo "<div class='container-fluid' style='background-color:".$_SESSION['cfondo']."; '>";
 	echo "<br>";
-
 ?>
 		<div class="content table-responsive table-full-width">
 			<table class="table-sm display compact hover" id="x_lista">

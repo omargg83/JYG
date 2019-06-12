@@ -28,7 +28,6 @@
 			if($userPOST == $CLAVE['correo'] and strtoupper($passPOST)==strtoupper($CLAVE['pass'])){
 				$_SESSION['autoriza']=1;
 				$_SESSION['nombre']=$CLAVE['nombre'];
-
 				$_SESSION['idfondo']=$CLAVE['idfondo'];
 				$_SESSION['nick']=$CLAVE['nick'];
 				$_SESSION['estudio']=$CLAVE['estudio'];
@@ -42,7 +41,6 @@
 				$_SESSION['n_sistema']="J&D";
 
 				$_SESSION['cfondo']="white";
-
 				if($CLAVE['idpersona']==7){
 					$_SESSION['administrador']=1;
 				}
@@ -52,7 +50,6 @@
 				$_SESSION['hasta']=2019;
 				$_SESSION['foco']=mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y"));
 				$_SESSION['cfondo']="white";
-
 				return "1";
 			}
 		}

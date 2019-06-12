@@ -1,33 +1,31 @@
 <?php
 	require_once("db_personal.php");
-	$personal = new Personal();	
 	echo "<nav class='navbar navbar-expand-lg navbar-light bg-light '>
-	
-	<a class='navbar-brand' ><i class='fas fa-user-shield'></i> Personal</a>	
-	
+
+	<a class='navbar-brand' ><i class='fas fa-user-shield'></i> Personal</a>
+
 	  <button class='navbar-toggler navbar-toggler-right' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='principal' aria-expanded='false' aria-label='Toggle navigation'>
 		<span class='navbar-toggler-icon'></span>
 	  </button>
 		  <div class='collapse navbar-collapse' id='navbarSupportedContent'>
 			<ul class='navbar-nav mr-auto'>";
 			echo"<li class='nav-item active'><a class='nav-link barranav' title='Mostrar todo' id='lista_comision' data-lugar='a_personal/lista'><i class='fas fa-list-ul'></i><span>Lista</span></a></li>";
-			
-			if($personal->nivel_personal==0 or $personal->nivel_personal==11 or $personal->nivel_personal==1 or $personal->nivel_personal==2 or $personal->nivel_personal==3 or $personal->nivel_personal==4 or $personal->nivel_personal==10){
+
+			if($db->nivel_personal==0 or $db->nivel_personal==11 or $db->nivel_personal==1 or $db->nivel_personal==2 or $db->nivel_personal==3 or $db->nivel_personal==4 or $db->nivel_personal==10){
 				echo"<li class='nav-item active'><a class='nav-link barranav izq' title='Nuevo' id='new_personal' data-lugar='a_personal/editar'><i class='fas fa-plus'></i><span>Nuevo</span></a></li>";
-	
 			}
-			
-			
+
+
 			echo "</ul>";
 
-			
+
 		echo "
 	  </div>
 	</nav>";
 	echo "<div id='trabajo'>";
-		include 'lista.php';	
+		include 'lista.php';
 	echo "</div>";
-?>	
+?>
 <script type="text/javascript">
 	$(function(){
 		$(document).on('click','#cambiar',function(e){
@@ -38,13 +36,13 @@
 				"function":"cambiar_user",
 				"id": xyId
 			};
-			
+
 			$.ajax({
 				data:  parametros,
-				url: "a_personal/personal_db.php",
+				url: "a_personal/db_personal.php",
 				type: "post",
 				beforeSend: function () {
-						
+
 				},
 				success:  function (response) {
 					if (!isNaN(response)){
@@ -75,13 +73,13 @@
 							"function":"baja",
 							"id": xyId
 						};
-						
+
 						$.ajax({
 							data:  parametros,
 							url: "a_personal/personal_db.php",
 							type: "post",
 							beforeSend: function () {
-									
+
 							},
 							success:  function (response) {
 								if (!isNaN(response)){
@@ -103,7 +101,7 @@
 						$.alert('Canceled!');
 					}
 				}
-			});	
+			});
 		});
 		$(document).on('click','#agregar_permiso',function(e){
 			e.preventDefault();
@@ -112,9 +110,9 @@
 			var acceso= $("#acceso").val();
 			var captura= $("#captura").val();
 			var nivelx= $("#nivelx").val();
-			
+
 			console.log(captura);
-			
+
 			var parametros={
 				"function":"permisos",
 				"aplicacion":aplicacion,
@@ -123,13 +121,13 @@
 				"nivelx":nivelx,
 				"id": xyId
 			};
-			
+
 			$.ajax({
 				data:  parametros,
 				url: "a_personal/personal_db.php",
 				type: "post",
 				beforeSend: function () {
-						
+
 				},
 				success:  function (response) {
 					if (!isNaN(response)){
@@ -154,5 +152,3 @@
 		});
 	});
 </script>
-	
-	

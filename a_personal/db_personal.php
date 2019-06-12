@@ -1,11 +1,11 @@
 <?php
 require_once("../control_db.php");
 if (isset($_REQUEST['function'])){$function=$_REQUEST['function'];}	else{ $function="";}
-	
+
 class Personal extends Sagyc{
 	public $nivel_personal;
 	public $nivel_captura;
-	
+
 	public function __construct(){
 		parent::__construct();
 		$this->doc="a_personal/papeles/";
@@ -18,7 +18,6 @@ class Personal extends Sagyc{
 			die();
 		}
 	}
-
 	public function personal(){
 		try{
 			parent::set_names();
@@ -46,15 +45,26 @@ class Personal extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-//////////////////////////////////////////////////////j&d
-}
-
-	if(strlen($function)>0){
-		echo $function();
-	}
-
-	function guardar_personal(){
+	public function cambiar_user(){
 		$personal = new Personal();
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+
+		$sql="SELECT * FROM personal where idpersona='$id'";
+		$sth = $this->dbh->prepare($sql);
+		$sth->execute();
+		$CLAVE=$sth->fetch();
+		$_SESSION['autoriza']=1;
+		$_SESSION['nombre']=$CLAVE['nombre'];
+		$_SESSION['idfondo']=$CLAVE['idfondo'];
+		$_SESSION['nick']=$CLAVE['nick'];
+		$_SESSION['estudio']=$CLAVE['estudio'];
+		$_SESSION['idpersona']=$CLAVE['idpersona'];
+		$_SESSION['foto']=$CLAVE['file_foto'];
+		$_SESSION['tipousuario']=$CLAVE['tipo'];
+		$_SESSION['foco']=mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y"));
+		return 1;
+	}
+	public function guardar_personal(){
 		$x="";
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
 		$arreglo =array();
@@ -90,13 +100,13 @@ class Personal extends Sagyc{
 		if (isset($_REQUEST['tipo'])){
 			$arreglo+=array('tipo'=>$_REQUEST['tipo']);
 		}
-		
-		if($id==0){		
+
+		if($id==0){
 			$sql="select * from personal where correo='$correo' or rfc='$rfc'";
 			$buscar=$personal->general($sql);
 			if(count($buscar)==0){
 				$arreglo+=array('autoriza'=>1);
-				$x.=$personal->insert('personal', $arreglo);
+				$x.=$this->insert('personal', $arreglo);
 			}
 			else{
 				$x.="Ya existe usuario con esta información favor de verificar ";
@@ -111,12 +121,12 @@ class Personal extends Sagyc{
 					$arreglo+=array('autoriza'=>0);
 				}
 			}
-			
-			$x.=$personal->update('personal',array('idpersona'=>$id), $arreglo);
+
+			$x.=$this->update('personal',array('idpersona'=>$id), $arreglo);
 		}
 		return $x;
 	}
-	function password(){
+	public function password(){
 		$personal = new Personal();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
 		if (isset($_REQUEST['pass1'])){$pass1=$_REQUEST['pass1'];}
@@ -132,12 +142,12 @@ class Personal extends Sagyc{
 			return "La contraseña no coincide";
 		}
 	}
-	function permisos(){
+	public function permisos(){
 		$personal = new Personal();
 		$x="";
-		
+
 		$arreglo =array();
-		
+
 		if (isset($_REQUEST['id'])) {
 			$id=$_REQUEST['id'];
 		}
@@ -147,21 +157,21 @@ class Personal extends Sagyc{
 		else{
 			$acceso=0;
 		}
-		if (isset($_REQUEST['aplicacion'])) {  
+		if (isset($_REQUEST['aplicacion'])) {
 			$aplicacion=$_REQUEST['aplicacion'];
-			$arreglo+=array('nombre'=>$_REQUEST['aplicacion']); 
+			$arreglo+=array('nombre'=>$_REQUEST['aplicacion']);
 		}
-		
+
 		$arreglo+=array('acceso'=>$acceso);
-			
+
 		if (isset($_REQUEST['captura'])) $arreglo+=array('captura'=>$_REQUEST['captura']);
 		if (isset($_REQUEST['nivelx'])) $arreglo+=array('nivel'=>$_REQUEST['nivelx']);
-		
+
 		$sql="select * from personal_permiso where idpersona='$id' and nombre='$aplicacion'";
 		$a=$personal->general($sql);
-		
+
 		$arreglo+=array('idpersona'=>$id);
-		
+
 		if(count($a)>0){
 			$x.=$personal->update('personal_permiso',array('idpermiso'=>$a[0]['idpermiso']),$arreglo);
 		}
@@ -170,11 +180,19 @@ class Personal extends Sagyc{
 		}
 		return $id;
 	}
-	function borrapermiso(){
+	public function borrapermiso(){
 		$personal = new Personal();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
 		return $personal->borrar('personal_permiso','idpermiso',$id);
 	}
-	
+
+//////////////////////////////////////////////////////j&d
+}
+
+$db = new Personal();
+if(strlen($function)>0){
+	echo $db->$function();
+}
+
 
 ?>

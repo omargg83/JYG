@@ -76,7 +76,7 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 						<a class="dropdown-item" href="#a_operaciones/index"><i class="fas fa-hand-holding-usd"></i>Operaciones</a>
 					</div>
 				</li>
-				
+
 				<?php
 				if ($_SESSION['tipousuario']=='administrativo'){
 					echo "<li class='nav-item active'>";
@@ -90,6 +90,29 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 			<ul class="nav navbar-nav navbar-right" id="chatx"></ul>
 			<ul class="nav navbar-nav navbar-right" id="fondo"></ul>
 
+			<ul class="nav navbar-nav navbar-right">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<?php
+							if (file_exists("a_personal/papeles/".trim($_SESSION['foto']))){
+								echo "<img src='a_personal/papeles/".trim($_SESSION['foto'])."' class='rounded-circle' width='20px' height='20px'>";
+							}
+							else{
+								echo "<img src='a_personal/Screenshot_1.png' alt='Cuenta' class='rounded-circle' width='20px' height='20px'>";
+							}
+							echo "  ".$_SESSION['nick'];
+						?>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					  <?php
+						echo "<a class='dropdown-item' id='winmodal_pass' data-id='".$_SESSION['idpersona']."' data-lugar='a_personal/form_pass' title='Cambiar contraseña' ><i class='fas fa-key'></i>Contraseña</a>";
+						if($_SESSION['administrador']==1){
+							echo "<a class='dropdown-item' id='winmodal_pass' data-id='".$_SESSION['idpersona']."' data-lugar='a_personal/form_pass' title='Cambiar contraseña' ><i class='fas fa-key'></i>Usuario</a>";
+						}
+					  ?>
+					</div>
+				</li>
+			</ul>
 
 			<ul class='nav navbar-nav navbar-right'>
 				<li class="nav-item">

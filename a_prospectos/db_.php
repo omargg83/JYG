@@ -26,7 +26,7 @@ class Prospectos extends Sagyc{
 				$sql="SELECT clientes.*,personal.nombre as ejecutivo FROM clientes left outer join personal on personal.idpersona=clientes.idpersona where prospecto=1";
 			}
 			else{
-				$sql="SELECT clientes.*,personal.nombre as ejecutivo FROM clientes left outer join personal on personal.idpersona=clientes.idpersona where prospecto=1 and idpersona='".$_SESSION['idpersona']."'";
+				$sql="SELECT clientes.*,personal.nombre as ejecutivo FROM clientes left outer join personal on personal.idpersona=clientes.idpersona where prospecto=1 and clientes.idpersona='".$_SESSION['idpersona']."'";
 			}
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
