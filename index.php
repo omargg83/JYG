@@ -106,9 +106,6 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					  <?php
 						echo "<a class='dropdown-item' id='winmodal_pass' data-id='".$_SESSION['idpersona']."' data-lugar='a_personal/form_pass' title='Cambiar contraseña' ><i class='fas fa-key'></i>Contraseña</a>";
-						if($_SESSION['administrador']==1){
-							echo "<a class='dropdown-item' id='winmodal_pass' data-id='".$_SESSION['idpersona']."' data-lugar='a_personal/form_pass' title='Cambiar contraseña' ><i class='fas fa-key'></i>Usuario</a>";
-						}
 					  ?>
 					</div>
 				</li>

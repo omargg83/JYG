@@ -93,7 +93,9 @@ else{
 							if($id>0){
 								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_pass' data-id='$id' data-lugar='a_personal/form_pass' title='Cambiar contraseña' ><i class='fas fa-key'></i>Contraseña</button>";
 							}
-							echo "<button class='btn btn-danger btn-sm' type='button' id='cambiar' title='Entrar a la cuenta' ><i class='fas fa-user-shield'></i>Perfil</button>";
+							if ($_SESSION['tipousuario']=='administrativo'){
+								echo "<button class='btn btn-danger btn-sm' type='button' id='cambiar' title='Entrar a la cuenta' ><i class='fas fa-user-shield'></i>Perfil</button>";
+							}
 							?>
 						</div>
 					</div>
