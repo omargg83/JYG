@@ -138,12 +138,13 @@
 		var keyt = $(this).data('keyt');
 		var destino = $(this).data('destino');
 		var iddest = $(this).data('iddest');
+		var divdest = $(this).data('divdest');
 		var proceso="";
 		if ( $(this).data('proceso') ) {
 			proceso=$(this).data('proceso');
 		}
 
-		$("#modal_form").load("archivo.php?id="+id+"&ruta="+ruta+"&ext="+ext+"&tipo="+tipo+"&tabla="+tabla+"&campo="+campo+"&keyt="+keyt+"&destino="+destino+"&iddest="+iddest+"&proceso="+proceso);
+		$("#modal_form").load("archivo.php?id="+id+"&ruta="+ruta+"&ext="+ext+"&tipo="+tipo+"&tabla="+tabla+"&campo="+campo+"&keyt="+keyt+"&destino="+destino+"&iddest="+iddest+"&proceso="+proceso+"&divdest="+divdest);
 	});
 	$(document).on('change',"#prefile",function(e){
 		e.preventDefault();
@@ -201,6 +202,7 @@
 		var funcion="guardar_file";
 		var destino = $("#destino").val();
 		var iddest = $("#iddest").val();
+		var divdest = $("#divdest").val();
 		var proceso="acceso_db.php";
 
 		if ( $("#direccion").length ) {
@@ -215,7 +217,7 @@
 				success:  function (response) {
 					if (!isNaN(response)){
 						lugar=destino+".php?id="+iddest;
-						$("#trabajo").load(lugar);
+						$("#"+divdest).load(lugar);
 						$('#myModal').modal('hide');
 						Swal.fire({
 						  type: 'success',

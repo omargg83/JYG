@@ -8,7 +8,7 @@ class Operaciones extends Sagyc{
 
 	public function __construct(){
 		parent::__construct();
-		$this->doc="a_productostipo/papeles/";
+		$this->doc="a_operaciones/documentos/";
 
 		if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 
