@@ -23,7 +23,7 @@
 				for($i=0;$i<count($pd);$i++){
 					echo "<tr id=".$pd[$i]['idoperacion']." class='edit-t'>";
 					echo "<td>";
-					echo $i+1;
+					echo $pd[$i]["idoperacion"];
 					echo "</td>";
 					echo "<td>";
 
@@ -33,7 +33,7 @@
 
 					echo "</td>";
 					echo "<td>";
-					echo $pd[$i]["fecha"];
+					echo fecha($pd[$i]["fecha"]);
 					echo "</td>";
 
 					echo "<td>";

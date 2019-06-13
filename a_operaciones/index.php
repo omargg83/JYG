@@ -22,8 +22,18 @@
 	echo "</div>";
 ?>
 <script type="text/javascript">
+	function desgloce(){
+		var monto=parseFloat($("#monto_fact").val());
+		if (isNaN(monto)){
+			monto=0;
+			$("#monto_fact").val(0);
+		}
+		var iva=Math.round((monto/1.16)*100)/100;
+		$("#iva").val(iva);
+		var subtotal=Math.round((monto-iva)*100)/100;
+		$("#subtotal").val(subtotal);
 
-
+	}
 
 	$(document).on('change','#idproducto_selx',function(e){
 		e.preventDefault();

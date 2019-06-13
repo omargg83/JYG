@@ -5,11 +5,11 @@
 		$id=$_REQUEST['id'];
 	}
 	$fact = $db->facturas($id);
+	$nofacturas=count($fact);
 	echo "<div class='container-fluid' style='background-color:".$_SESSION['cfondo']."; '>";
 	echo "<h5>Facturas</h5>";
-	echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_factura'><i class='fas fa-file-invoice'></i>Nueva</button>";
+	echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='$nofacturas' data-lugar='a_operaciones/form_factura'><i class='fas fa-file-invoice'></i>Nueva</button>";
 	echo "<hr>";
-
 ?>
 		<div class="content table-responsive table-full-width">
 			<table class="table table-sm">
@@ -17,6 +17,7 @@
 			<th>#</th>
 			<th>-</th>
 			<th>Fecha</th>
+			<th>Descripción</th>
 			<th>Monto</th>
 			</tr>
 			</thead>
@@ -31,14 +32,17 @@
 
 					echo "<td>";
 					echo "<div class='btn-group'>";
-					echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$fact[$i]['idfactura']."' data-id2='$id' data-lugar='a_operaciones/form_factura'><i class='fas fa-pencil-alt'></i></button>";
+					echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$fact[$i]['idfactura']."' data-id2='$id' data-id3='$nofacturas' data-lugar='a_operaciones/form_factura'><i class='fas fa-pencil-alt'></i></button>";
 					echo "</div>";
 					echo "</td>";
 
 					echo "<td>";
-					echo $fact[$i]["fecha"];
+					echo fecha($fact[$i]["fecha"]);
 					echo "</td>";
 
+					echo "<td>";
+					echo $fact[$i]["descripcion"];
+					echo "</td>";
 
 					echo "<td>";
 					echo moneda($fact[$i]["monto"]);

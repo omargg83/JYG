@@ -36,7 +36,7 @@ class Operaciones extends Sagyc{
 				INNER JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
 				INNER JOIN empresas ON oper.idempresa = empresas.idempresa
 				INNER JOIN despachos ON empresas.iddespacho = despachos.iddespacho
-				order by idoperacion desc";
+				order by oper.idoperacion desc";
 			}
 			else{
 				$sql="SELECT
@@ -53,7 +53,7 @@ class Operaciones extends Sagyc{
 				INNER JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
 				INNER JOIN empresas ON oper.idempresa = empresas.idempresa
 				INNER JOIN despachos ON empresas.iddespacho = despachos.iddespacho
-				where operaciones.idpersona='".$_SESSION['idpersona']."' order by idoperacion desc";
+				where operaciones.idpersona='".$_SESSION['idpersona']."' order by oper.idoperacion desc";
 			}
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
@@ -100,7 +100,20 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
+	public function personal_edit($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM personal where idpersona=:idpersona";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idpersona",$id);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
 
 
 	public function producto_edit($id){
@@ -249,8 +262,16 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
 
-		if (isset($_REQUEST['monto'])){
-			$arreglo+=array('monto'=>$_REQUEST['monto']);
+		if (isset($_REQUEST['monto_fact'])){
+			$arreglo+=array('monto'=>$_REQUEST['monto_fact']);
+		}
+
+		if (isset($_REQUEST['subtotal'])){
+			$arreglo+=array('subtotal'=>$_REQUEST['subtotal']);
+		}
+
+		if (isset($_REQUEST['iva'])){
+			$arreglo+=array('iva'=>$_REQUEST['iva']);
 		}
 
 		if (isset($_REQUEST['iduso'])){
@@ -259,6 +280,10 @@ class Operaciones extends Sagyc{
 
 		if (isset($_REQUEST['idforma'])){
 			$arreglo+=array('idforma'=>$_REQUEST['idforma']);
+		}
+
+		if (isset($_REQUEST['descripcion'])){
+			$arreglo+=array('descripcion'=>$_REQUEST['descripcion']);
 		}
 
 		if($id==0){
@@ -391,20 +416,7 @@ class Operaciones extends Sagyc{
 		}
 		return $x;
 	}
-	public function cliente_edit($id){
-		try{
-			parent::set_names();
-			$sql="SELECT * FROM clientes where idcliente=:idcliente";
-			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":idcliente",$id);
-			$sth->execute();
-			$res=$sth->fetch();
-			return $res;
-		}
-		catch(PDOException $e){
-			return "Database access FAILED! ".$e->getMessage();
-		}
-	}
+
 	public function uso_fact(){
 		try{
 			parent::set_names();

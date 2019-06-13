@@ -11,18 +11,28 @@ if($id>0){
 	$disabled="";
 	$fact = $db->facturas($id);
 	$bloqueo=count($fact);
+	$idpersonal=$pers['idpersona'];
 }
 else{
 	$disabled=0;
 	$disabled='disabled';
-	$monto=0;
+	$monto="";
 	$bloqueo=0;
 	$idrazon="";
 	$idempresa="";
 	$fecha=date("d-m-Y");
+	$idpersonal=$_SESSION['idpersona'];
+}
+$readonly="";
+if($bloqueo>0){
+	$readonly="readonly";
 }
 $cli=$db->razon();
 $empresa=$db->empresa();
+
+$ejecutivo=$db->personal_edit($idpersonal);
+$nombre=$ejecutivo['nombre'];
+
 echo "<div class='container'>";
 ?>
 <form action="" id="form_operacion" data-lugar="a_operaciones/db_operaciones" data-funcion="guardar_operacion" data-destino='a_operaciones/editar'>
@@ -48,26 +58,31 @@ echo "<div class='container'>";
 			<div class='tab-content' id='myTabContent'>
 				<div class='tab-pane fade show active' id='ssh' role='tabpanel' aria-labelledby='ssh-tab'>
 					<div class="row">
-						<div class="col-3">
+						<div class="col-2">
 							<label for="fecha">Número</label>
 							<input type="text" placeholder="Número" id="id" name="id" value="<?php echo $id; ?>" class="form-control" readonly>
 						</div>
 
-						<div class="col-2">
+						<div class="col-3">
 							<label for="fecha">Fecha</label>
-							<input type="text" placeholder="Fecha" id="fecha" name="fecha" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off>
+							<input type="text" placeholder="Fecha" id="fecha" name="fecha" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off <?php echo $readonly; ?> >
 						</div>
 
 						<div class="col-3">
 							<label for="monto">Monto</label>
-							<input type="number" step='any' placeholder="monto" id="monto" name="monto" value="<?php echo $monto; ?>" class="form-control" autocomplete=off>
+							<input type="number" step='any' placeholder="Monto" id="monto" name="monto" value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required>
+						</div>
+
+						<div class="col-4">
+							<label for="ejecutivo">Ejecutivo</label>
+							<input type="text" placeholder="Ejecutivo" id="ejecutivo" name="ejecutivo" value="<?php echo $nombre; ?>" class="form-control" autocomplete=off readonly >
 						</div>
 					</div>
 
 					<div class='row'>
 						<div class="col-6">
 							<label for="cliente">Cliente</label>
-							<select id='idrazon' name='idrazon' class='form-control' required>
+							<select id='idrazon' name='idrazon' class='form-control' required <?php echo $readonly; ?>>
 								<?php
 									echo "<option disabled >Seleccione una opción</option>";
 									foreach ($cli as $key ) {
@@ -79,7 +94,7 @@ echo "<div class='container'>";
 
 						<div class="col-6">
 							<label for="cliente">Empresa</label>
-							<select id='idempresa' name='idempresa' class='form-control' required>
+							<select id='idempresa' name='idempresa' class='form-control' required <?php echo $readonly; ?>>
 								<?php
 									echo "<option disabled >Seleccione una opción</option>";
 									foreach ($empresa as $key ) {
@@ -95,7 +110,7 @@ echo "<div class='container'>";
 							<div class="btn-group">
 								<?php
 									if($bloqueo==0){
-									echo "<button class='btn btn-outline-secondary btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
+										echo "<button class='btn btn-outline-secondary btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
 									}
 								?>
 								<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
