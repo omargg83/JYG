@@ -36,8 +36,8 @@
 
 					echo "<td>";
 					echo "<div class='btn-group'>";
-					echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idfactura']."' data-id2='$id' data-id3='$nofacturas' data-lugar='a_operaciones/form_factura'><i class='fas fa-pencil-alt'></i>Editar</button>";
-					echo "<button type='button' class='btn btn-outline-secondary btn-sm'><i class='fas fa-pencil-alt'></i>Generar</button>";
+					echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idfactura']."' data-id2='$id' data-id3='$nofacturas' data-lugar='a_operaciones/form_factura'><i class='fas fa-pencil-alt'></i></button>";
+					echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='imprimir_comision' title='Imprimir' data-lugar='a_operaciones/imprimir' data-tipo='1'><i class='far fa-file-pdf'></i>Generar</button>";
 					echo "</div>";
 					echo "</td>";
 
