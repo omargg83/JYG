@@ -22,10 +22,38 @@ class Operaciones extends Sagyc{
 		try{
 			parent::set_names();
 			if ($_SESSION['tipousuario']=='administrativo'){
-				$sql="SELECT * FROM operaciones";
+				$sql="SELECT
+				oper.idoperacion,
+				oper.fecha,
+				oper.monto,
+				clientes_razon.razon as razoncli,
+				clientes.cliente,
+				empresas.razon as razonemp,
+				despachos.nombre
+				FROM
+				operaciones AS oper
+				INNER JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+				INNER JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+				INNER JOIN empresas ON oper.idempresa = empresas.idempresa
+				INNER JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+				order by idoperacion desc";
 			}
 			else{
-				$sql="SELECT * FROM operaciones where idpersona='".$_SESSION['idpersona']."'";
+				$sql="SELECT
+				oper.idoperacion,
+				oper.fecha,
+				oper.monto,
+				clientes_razon.razon as razoncli,
+				clientes.cliente,
+				empresas.razon as razonemp,
+				despachos.nombre
+				FROM
+				operaciones AS oper
+				INNER JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+				INNER JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+				INNER JOIN empresas ON oper.idempresa = empresas.idempresa
+				INNER JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+				where operaciones.idpersona='".$_SESSION['idpersona']."' order by idoperacion desc";
 			}
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
@@ -36,113 +64,45 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-	public function busca_cliente(){
+
+	public function razon(){
 		try{
-			$x="";
-			if (isset($_REQUEST['texto'])){$texto=$_REQUEST['texto'];}
 			parent::set_names();
 			if($_SESSION['tipousuario']=="administrativo"){
-				$sql="SELECT * FROM clientes where cliente like :texto";
+				$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente";
 				$sth = $this->dbh->prepare($sql);
 			}
 			else{
-				$sql="SELECT * FROM clientes where cliente like :texto and idpersona=:idpersona";
+				$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente where clientes.idpersona=:idpersona";
 				$sth = $this->dbh->prepare($sql);
 				$sth->bindValue(":idpersona",$_SESSION['idpersona']);
 			}
-			$sth->bindValue(":texto","%$texto%");
 			$sth->execute();
 			$res=$sth->fetchAll();
-			$x.="<div class='row'>";
-			if(count($res)>0){
-
-				$x.="<table class='table table-sm'>";
-				$x.="<td><td>Nombre</td><td>Contacto</td>";
-				foreach ($res as $key) {
-					$x.="<tr id='".$key['idcliente']."' class='edit-t'>";
-
-					$x.="<td>";
-					$x.="<div class='btn-group'>";
-					$x.="<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idcliente']."'  data-lugar='a_operaciones/form_razon' title='Seleccionar''><i class='fas fa-receipt'></i></button>";
-					$x.="</div>";
-					$x.="</td>";
-
-					$x.="<td>";
-					$x.=$key['cliente'];
-					$x.="</td>";
-
-					$x.="<td>";
-					$x.=$key['contacto'];
-					$x.="</td>";
-
-					$x.="</tr>";
-				}
-				$x.="</table>";
-			}
-			else{
-				$x="<div class='alert alert-primary' role='alert'>No se encontró: $texto</div>";
-			}
-			$x.="</div>";
-			return $x;
+			return $res;
 		}
 		catch(PDOException $e){
 			return "Database access FAILED! ".$e->getMessage();
 		}
-		return $texto;
 	}
-	public function busca_despacho(){
+	public function empresa(){
 		try{
-			$x="";
-			if (isset($_REQUEST['texto'])){$texto=$_REQUEST['texto'];}
 			parent::set_names();
 
-			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where razon like :texto OR nombre like :nombre";
+			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho ";
 			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":texto","%$texto%");
-			$sth->bindValue(":nombre","%$texto%");
+
 			$sth->execute();
 			$res=$sth->fetchAll();
-			$x.="<div class='row'>";
-			if(count($res)>0){
-				$x.="<table class='table table-sm'>";
-				$x.="<td><td>Nombre</td><td>Contacto</td>";
-				foreach ($res as $key) {
-					$x.= "<tr id=".$key['idempresa']." class='edit-t'>";
-					$x.= "<td>";
-
-					$x.= "<div class='btn-group'>";
-					$x.= "<button class='btn btn-outline-secondary btn-sm' id='despacho_sel' title='Editar' data-lugar='a_empresas/editar'><i class='fas fa-pencil-alt'></i></button>";
-					$x.= "</div>";
-
-					$x.= "</td>";
-					$x.= "<td>";
-					$x.= $key["nombre"];
-					$x.= "</td>";
-
-					$x.= "<td>";
-					$x.= $key["razon"];
-					$x.= "</td>";
-
-					$x.= "<td>";
-					$x.= $key["rfc"];
-					$x.= "</td>";
-
-
-					$x.= "</tr>";
-				}
-				$x.= "</table>";
-			}
-			else{
-				$x="<div class='alert alert-primary' role='alert'>No se encontró: $texto</div>";
-			}
-			$x.="</div>";
-			return $x;
+			return $res;
 		}
 		catch(PDOException $e){
 			return "Database access FAILED! ".$e->getMessage();
 		}
-		return $texto;
 	}
+
+
+
 	public function producto_edit($id){
 		try{
 			parent::set_names();
@@ -171,34 +131,7 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-	public function cliente_oper($idrazon){
-		try{
-			parent::set_names();
-			$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente where idrazon=:idrazon";
-			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":idrazon",$idrazon);
-			$sth->execute();
-			$res=$sth->fetch();
-			return $res;
-		}
-		catch(PDOException $e){
-			return "Database access FAILED! ".$e->getMessage();
-		}
-	}
-	public function despachos_operedit($idempresa){
-		try{
-			self::set_names();
-			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where idempresa=:idempresa";
-			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":idempresa",$idempresa);
-			$sth->execute();
-			$res=$sth->fetch();
-			return $res;
-		}
-		catch(PDOException $e){
-			return "Database access FAILED! ".$e->getMessage();
-		}
-	}
+
 	public function operacion_edit($id){
 		try{
 			self::set_names();
@@ -282,14 +215,17 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['monto'])){
 			$arreglo+=array('monto'=>$_REQUEST['monto']);
 		}
-		if (isset($_REQUEST['idrazon'])){
+
+		if (isset($_REQUEST['idrazon']) ){
 			$arreglo+=array('idrazon'=>$_REQUEST['idrazon']);
 		}
-		if (isset($_REQUEST['idempresa'])){
+
+		if (isset($_REQUEST['idempresa']) ){
 			$arreglo+=array('idempresa'=>$_REQUEST['idempresa']);
 		}
+
 		if($id==0){
-			$arreglo+=array('idpersona'=>$_REQUEST['idpersona']);
+			$arreglo+=array('idpersona'=>$_SESSION['idpersona']);
 			$x.=$this->insert('operaciones', $arreglo);
 		}
 		else{
@@ -454,20 +390,6 @@ class Operaciones extends Sagyc{
 			</div>";
 		}
 		return $x;
-	}
-	public function razon($id){
-		try{
-			parent::set_names();
-			$sql="SELECT * FROM clientes_razon where idcliente=:idcliente";
-			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":idcliente",$id);
-			$sth->execute();
-			$res=$sth->fetchAll();
-			return $res;
-		}
-		catch(PDOException $e){
-			return "Database access FAILED! ".$e->getMessage();
-		}
 	}
 	public function cliente_edit($id){
 		try{

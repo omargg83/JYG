@@ -37,21 +37,19 @@
 					echo "</td>";
 
 					echo "<td>";
-					$raz=$db->cliente_oper($pd[$i]["idrazon"]);
-					echo $raz['cliente'];
+					echo $pd[$i]["cliente"];
 					echo "</td>";
 
 					echo "<td>";
-					echo $raz['razon'];
+					echo $pd[$i]["razoncli"];
 					echo "</td>";
 
 					echo "<td>";
-					$des=$db->despachos_operedit($pd[$i]["idempresa"]);
-					echo $des["nombre"];
+					echo $pd[$i]["nombre"];
 					echo "</td>";
 
 					echo "<td>";
-					echo $des["razon"];
+					echo $pd[$i]["razonemp"];
 					echo "</td>";
 
 					echo "<td align='right'>";
