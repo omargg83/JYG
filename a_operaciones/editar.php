@@ -90,19 +90,15 @@ echo "<div class='container'>";
 									echo "<div class='col-6'>";
 										echo "<label for='cliente'>Cliente</label>";
 										echo "<select id='idrazon' name='idrazon' class='form-control' required $readonly >";
-
-												echo "<option disabled selected>Seleccione una opción</option>";
 												foreach ($cli as $key ) {
 													echo "<option value='".$key['idrazon']."'"; if($idrazon==$key['idrazon']) { echo "selected"; } echo ">".$key['cliente']." - ".$key['razon']."</option>";
 												}
-
 										echo "</select>";
 									echo "</div>";
 
 									echo "<div class='col-6'>";
 										echo "<label for='cliente'>Empresa</label>";
 										echo "<select id='idempresa' name='idempresa' class='form-control' required $readonly >";
-												echo "<option disabled selected>Seleccione una opción</option>";
 												foreach ($empresa as $key ) {
 													echo "<option value='".$key['idempresa']."'"; if($idempresa==$key['idempresa']) { echo "selected"; } echo ">".$key['nombre']." - ".$key['razon']."</option>";
 												}
@@ -122,7 +118,8 @@ echo "<div class='container'>";
 										echo "<button class='btn btn-outline-secondary btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
 									}
 									if($id>0){
-										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_cliente'><i class='fas fa-file-invoice'></i>Clientes</button>";
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_cliente'><i class='fas fa-user-check'></i>Clientes</button>";
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_cliente'><i class='far fa-building'></i>Clientes</button>";
 									}
 								?>
 								<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
