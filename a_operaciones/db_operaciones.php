@@ -32,10 +32,10 @@ class Operaciones extends Sagyc{
 				despachos.nombre
 				FROM
 				operaciones AS oper
-				INNER JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
-				INNER JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
-				INNER JOIN empresas ON oper.idempresa = empresas.idempresa
-				INNER JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+				left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+				left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+				left outer JOIN empresas ON oper.idempresa = empresas.idempresa
+				left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
 				order by oper.idoperacion desc";
 			}
 			else{
@@ -49,11 +49,11 @@ class Operaciones extends Sagyc{
 				despachos.nombre
 				FROM
 				operaciones AS oper
-				INNER JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
-				INNER JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
-				INNER JOIN empresas ON oper.idempresa = empresas.idempresa
-				INNER JOIN despachos ON empresas.iddespacho = despachos.iddespacho
-				where operaciones.idpersona='".$_SESSION['idpersona']."' order by oper.idoperacion desc";
+				left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+				left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+				left outer JOIN empresas ON oper.idempresa = empresas.idempresa
+				left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+				where oper.idpersona='".$_SESSION['idpersona']."' order by oper.idoperacion desc";
 			}
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
@@ -65,18 +65,38 @@ class Operaciones extends Sagyc{
 		}
 	}
 
-	public function razon(){
+	public function razon($idrazon){
 		try{
 			parent::set_names();
-			if($_SESSION['tipousuario']=="administrativo"){
-				$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente";
+			$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente where idrazon=:idrazon";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idrazon",$idrazon);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function buscar_cliente($texto){
+		try{
+			parent::set_names();
+			if ($_SESSION['tipousuario']=='administrativo'){
+				$sql="SELECT * FROM clientes_razon
+				left outer join clientes on clientes.idcliente=clientes_razon.idcliente
+				where (clientes.cliente like :texto or clientes_razon.razon like :texto)";
 				$sth = $this->dbh->prepare($sql);
 			}
 			else{
-				$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente where clientes.idpersona=:idpersona";
+				$sql="SELECT * FROM clientes_razon
+				left outer join clientes on clientes.idcliente=clientes_razon.idcliente
+				where clientes.idpersona=:idpersona and
+				(clientes.cliente like :texto or clientes_razon.razon like :texto)";
 				$sth = $this->dbh->prepare($sql);
 				$sth->bindValue(":idpersona",$_SESSION['idpersona']);
 			}
+			$sth->bindValue(":texto","%$texto%");
 			$sth->execute();
 			$res=$sth->fetchAll();
 			return $res;
@@ -85,13 +105,30 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-	public function empresa(){
+	public function guarda_razon(){
+		$x="";
+		parent::set_names();
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		$arreglo =array();
+
+		if (isset($_REQUEST['idrazon']) and strlen($_REQUEST['idrazon'])>0){
+			$arreglo+=array('idrazon'=>$_REQUEST['idrazon']);
+		}
+
+		if (isset($_REQUEST['idempresa'])  and strlen($_REQUEST['idempresa'])>0){
+			$arreglo+=array('idempresa'=>$_REQUEST['idempresa']);
+		}
+
+		$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
+		return $x;
+	}
+	public function empresa($idempresa){
 		try{
 			parent::set_names();
 
-			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho ";
+			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where idempresa=:idempresa";
 			$sth = $this->dbh->prepare($sql);
-
+			$sth->bindValue(":idempresa",$idempresa);
 			$sth->execute();
 			$res=$sth->fetchAll();
 			return $res;
@@ -229,12 +266,17 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('monto'=>$_REQUEST['monto']);
 		}
 
-		if (isset($_REQUEST['idrazon']) ){
+		if (isset($_REQUEST['idrazon']) and strlen($_REQUEST['idrazon'])>0){
 			$arreglo+=array('idrazon'=>$_REQUEST['idrazon']);
 		}
-
-		if (isset($_REQUEST['idempresa']) ){
+		else{
+			$arreglo+=array('idrazon'=>null);
+		}
+		if (isset($_REQUEST['idempresa'])  and strlen($_REQUEST['idempresa'])>0){
 			$arreglo+=array('idempresa'=>$_REQUEST['idempresa']);
+		}
+		else{
+			$arreglo+=array('idempresa'=>null);
 		}
 
 		if($id==0){

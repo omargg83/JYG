@@ -24,11 +24,16 @@ else{
 	$idpersonal=$_SESSION['idpersona'];
 }
 $readonly="";
-if($bloqueo>0){
+
+if(strlen($idrazon)==0 or strlen($idempresa)==0){
+	$disabled='disabled';
+}
+
+if($bloqueo>0 ){
 	$readonly="readonly";
 }
-$cli=$db->razon();
-$empresa=$db->empresa();
+$cli=$db->razon($idrazon);
+$empresa=$db->empresa($idempresa);
 
 $ejecutivo=$db->personal_edit($idpersonal);
 $nombre=$ejecutivo['nombre'];
@@ -79,31 +84,35 @@ echo "<div class='container'>";
 						</div>
 					</div>
 
-					<div class='row'>
-						<div class="col-6">
-							<label for="cliente">Cliente</label>
-							<select id='idrazon' name='idrazon' class='form-control' required <?php echo $readonly; ?>>
-								<?php
-									echo "<option disabled >Seleccione una opción</option>";
-									foreach ($cli as $key ) {
-										echo "<option value='".$key['idrazon']."'"; if($idrazon==$key['idrazon']) { echo "selected"; } echo ">".$key['cliente']." - ".$key['razon']."</option>";
-									}
-								?>
-							</select>
-						</div>
+					<?php
+						echo "<div class='row'>";
+							if($id>0){
+									echo "<div class='col-6'>";
+										echo "<label for='cliente'>Cliente</label>";
+										echo "<select id='idrazon' name='idrazon' class='form-control' required $readonly >";
 
-						<div class="col-6">
-							<label for="cliente">Empresa</label>
-							<select id='idempresa' name='idempresa' class='form-control' required <?php echo $readonly; ?>>
-								<?php
-									echo "<option disabled >Seleccione una opción</option>";
-									foreach ($empresa as $key ) {
-										echo "<option value='".$key['idempresa']."'"; if($idempresa==$key['idempresa']) { echo "selected"; } echo ">".$key['nombre']." - ".$key['razon']."</option>";
-									}
-								?>
-							</select>
-						</div>
-					</div><br>
+												echo "<option disabled selected>Seleccione una opción</option>";
+												foreach ($cli as $key ) {
+													echo "<option value='".$key['idrazon']."'"; if($idrazon==$key['idrazon']) { echo "selected"; } echo ">".$key['cliente']." - ".$key['razon']."</option>";
+												}
+
+										echo "</select>";
+									echo "</div>";
+
+									echo "<div class='col-6'>";
+										echo "<label for='cliente'>Empresa</label>";
+										echo "<select id='idempresa' name='idempresa' class='form-control' required $readonly >";
+												echo "<option disabled selected>Seleccione una opción</option>";
+												foreach ($empresa as $key ) {
+													echo "<option value='".$key['idempresa']."'"; if($idempresa==$key['idempresa']) { echo "selected"; } echo ">".$key['nombre']." - ".$key['razon']."</option>";
+												}
+										echo "</select>";
+									echo "</div>";
+							}
+						echo "</div>";
+					?>
+
+					<br>
 
 					<div class="row">
 						<div class="col-12">
@@ -111,6 +120,9 @@ echo "<div class='container'>";
 								<?php
 									if($bloqueo==0){
 										echo "<button class='btn btn-outline-secondary btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
+									}
+									if($id>0){
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_cliente'><i class='fas fa-file-invoice'></i>Clientes</button>";
 									}
 								?>
 								<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>

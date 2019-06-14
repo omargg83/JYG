@@ -32,7 +32,6 @@
 		$("#iva").val(iva);
 		var subtotal=Math.round((monto-iva)*100)/100;
 		$("#subtotal").val(subtotal);
-
 	}
 
 	$(document).on('change','#idproducto_selx',function(e){
@@ -55,7 +54,35 @@
 		});
 	});
 
-
-
-
+function seleccomision(xyId){
+ 		var idoperacion = $("#id").val();
+		var parametros={
+			"id":idoperacion,
+			"idrazon":xyId,
+			"function":"guarda_razon"
+		};
+		$.confirm({
+			title: 'Guardar',
+			content: '¿Desea seleccionar el cliente?',
+			buttons: {
+				Aceptar: function () {
+					$.ajax({
+						data:  parametros,
+							url:   "a_operaciones/db_operaciones.php",
+						type: "post",
+						beforeSend: function () {
+							$("#trabajo").html("cargando..");
+						},
+						success:  function (response) {
+							$("#trabajo").load("a_operaciones/editar.php?id="+idoperacion);
+							$('#myModal').modal('hide');
+						}
+					});
+				},
+				Cancelar: function () {
+					$.alert('Canceled!');
+				}
+			}
+		});
+}
 </script>
