@@ -32,12 +32,12 @@ class Comisionistas extends Sagyc{
 		}
 	}
 
-	public function comisionista_edit($id){
+	public function comisionista_edit($idcom){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM comisionistas where id=:id";
+			$sql="SELECT * FROM comisionistas where idcom=:idcom";
 			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":id",$id);
+			$sth->bindValue(":idcom",$idcom);
 			$sth->execute();
 			$res=$sth->fetch();
 			return $res;
@@ -74,7 +74,7 @@ class Comisionistas extends Sagyc{
 			$x.=$this->insert('comisionistas', $arreglo);
 		}
 		else{
-			$x.=$this->update('comisionistas',array('id'=>$id), $arreglo);
+			$x.=$this->update('comisionistas',array('idcom'=>$id), $arreglo);
 		}
 		return $x;
 	}

@@ -15,11 +15,11 @@
 		<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 		<input type="hidden" value="<?php echo $idcliente; ?>" name="idcliente" id="idcliente">
 		<div class="card">
-			<div class="card-header">Razon social</div>
+			<div class="card-header">Razón social</div>
 			<div class="card-body">
 				<div class="row">
 					<div class="col-6">
-						<label for="razon">Razon</label>
+						<label for="razon">Razón</label>
 						<input type="text" placeholder="Razon" id="razon" name="razon" value="<?php echo $razon; ?>" class="form-control">
 					</div>
 				</div>

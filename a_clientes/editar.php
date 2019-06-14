@@ -74,6 +74,8 @@ else{
 							if($id>0){
 
 								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_clientes/form_razon' title='Razon'><i class='fas fa-pencil-alt'></i>Nueva razon</button>";
+								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id3='$id' data-lugar='a_clientes/form_comi' title='Comi'><i class='fas fa-pencil-alt'></i>Agregar Comisionista</button>";
+
 							}
 
 							?>
@@ -91,11 +93,10 @@ else{
 
 				</div>
 
-
-
 				<?php
 			}
 			?>
+
 		</div>
 	</form>
 </div>
@@ -104,5 +105,13 @@ else{
 $(function() {
 	var id= $("#id").val();
 	$("#social").load("a_clientes/lista_razon.php?id="+id);
+});
+
+</script>
+
+<script>
+$(function() {
+	var id= $("#id").val();
+	$("#social").load("a_clientes/lista_comi.php?id="+id);
 });
 </script>

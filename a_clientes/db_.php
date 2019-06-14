@@ -55,6 +55,24 @@ class Clientes extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function comisionistas(){
+		try{
+			parent::set_names();
+			if($_SESSION['tipousuario']=="administrativo"){
+				$sql="SELECT * FROM comisionistas";
+			}
+			else{
+				$sql="SELECT * FROM comisionistas";
+			}
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
 	public function cliente_edit($id){
 		try{
 			parent::set_names();
@@ -89,6 +107,34 @@ class Clientes extends Sagyc{
 			$sql="SELECT * FROM clientes_razon where idrazon=:idrazon";
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":idrazon",$id);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function comi($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM clientes_comi where idcliente=:idcliente";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idcliente",$id);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function comi_edit($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM clientes_comi where idcomi=:idcomi";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idcomi",$id);
 			$sth->execute();
 			$res=$sth->fetch();
 			return $res;
@@ -149,6 +195,36 @@ class Clientes extends Sagyc{
 		}
 		else{
 			$x.=$this->update('clientes_razon',array('idrazon'=>$id), $arreglo);
+		}
+		if(is_numeric($x)){
+			return $idcliente;
+		}
+		else{
+			return $x;
+		}
+
+	}
+	public function guardar_comi(){
+		$x="";
+		parent::set_names();
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		$arreglo =array();
+		if (isset($_REQUEST['comisionista'])){
+			$arreglo+=array('comisionista'=>$_REQUEST['comisionista']);
+		}
+		if (isset($_REQUEST['comision'])){
+			$arreglo+=array('comision'=>$_REQUEST['comision']);
+		}
+		if (isset($_REQUEST['idcliente'])){
+			$idcliente=$_REQUEST['idcliente'];
+			$arreglo+=array('idcliente'=>$idcliente);
+		}
+
+		if($id==0){
+			$x.=$this->insert('clientes_comi', $arreglo);
+		}
+		else{
+			$x.=$this->update('clientes_comi',array('idcomi'=>$id), $arreglo);
 		}
 		if(is_numeric($x)){
 			return $idcliente;
