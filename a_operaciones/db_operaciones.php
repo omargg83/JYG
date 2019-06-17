@@ -122,6 +122,10 @@ class Operaciones extends Sagyc{
 		$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
 		return $x;
 	}
+
+
+
+
 	public function empresa($idempresa){
 		try{
 			parent::set_names();
@@ -137,6 +141,93 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function buscar_empresa($texto){
+		try{
+			parent::set_names();
+
+			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where (empresas.razon like :texto or despachos.nombre like :texto)";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":texto","%$texto%");
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function uso_buscar(){
+		try{
+			parent::set_names();
+			$x="";
+			$texto=$_REQUEST['valor'];
+			$sql="SELECT * FROM sat_uso where descripcion like '%$texto%'";
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			$x.="<table class='table table-sm' id='usotb' style='font-size:10px'>";
+			$x.="<tr><td>Uso</td></tr>";
+			foreach ($res as $key) {
+				$x.="<tr><td>";
+				$x.=$key['descripcion'];
+				$x.="</td></tr>";
+			}
+			$x.="</table>";
+			return $x;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function forma_buscar(){
+		try{
+			parent::set_names();
+			$x="";
+			$texto=$_REQUEST['valor'];
+			$sql="SELECT * FROM sat_fpago where pago like '%$texto%'";
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			$x.="<table class='table table-sm' id='formatb' style='font-size:10px'>";
+			$x.="<tr><td>Pago</td></tr>";
+			foreach ($res as $key) {
+				$x.="<tr><td>";
+				$x.=$key['pago'];
+				$x.="</td></tr>";
+			}
+			$x.="</table>";
+			return $x;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function producto_buscar(){
+		try{
+			parent::set_names();
+			$x="";
+			$texto=$_REQUEST['valor'];
+			$sql="SELECT * FROM sat_prodserv where descripcion like '%$texto%'";
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			$x.="<table class='table table-sm' id='formatb' style='font-size:10px'>";
+			$x.="<tr><td>Descripción</td></tr>";
+			foreach ($res as $key) {
+				$x.="<tr><td>";
+				$x.=$key['descripcion'];
+				$x.="</td></tr>";
+			}
+			$x.="</table>";
+			return $x;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+
+
+
 	public function personal_edit($id){
 		try{
 			parent::set_names();
@@ -316,12 +407,16 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('iva'=>$_REQUEST['iva']);
 		}
 
-		if (isset($_REQUEST['iduso'])){
-			$arreglo+=array('iduso'=>$_REQUEST['iduso']);
+		if (isset($_REQUEST['uso'])){
+			$arreglo+=array('uso'=>$_REQUEST['uso']);
 		}
 
-		if (isset($_REQUEST['idforma'])){
-			$arreglo+=array('idforma'=>$_REQUEST['idforma']);
+		if (isset($_REQUEST['forma'])){
+			$arreglo+=array('forma'=>$_REQUEST['forma']);
+		}
+
+		if (isset($_REQUEST['producto'])){
+			$arreglo+=array('producto'=>$_REQUEST['producto']);
 		}
 
 		if (isset($_REQUEST['descripcion'])){
@@ -459,19 +554,6 @@ class Operaciones extends Sagyc{
 		return $x;
 	}
 
-	public function uso_fact(){
-		try{
-			parent::set_names();
-			$sql="SELECT * FROM sat_uso";
-			$sth = $this->dbh->prepare($sql);
-			$sth->execute();
-			$res=$sth->fetchAll();
-			return $res;
-		}
-		catch(PDOException $e){
-			return "Database access FAILED! ".$e->getMessage();
-		}
-	}
 	public function forma(){
 		try{
 			parent::set_names();

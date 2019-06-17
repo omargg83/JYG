@@ -1,7 +1,6 @@
 <?php
 require_once("db_operaciones.php");
 
-$uso=$db->uso_fact();
 $forma=$db->forma();
 if (isset($_REQUEST['id'])){
 	$id=$_REQUEST['id'];
@@ -17,20 +16,22 @@ if($id>0){
 	$row=$db->facturas_edit($id);
 	$fecha=fecha($row['fecha']);
 	$monto=$row['monto'];
-	$iduso=$row['iduso'];
-	$idforma=$row['idforma'];
+	$uso=$row['uso'];
+	$forma=$row['forma'];
+	$producto=$row['producto'];
 	$descripcion=$row['descripcion'];
 	$iva=$row['iva'];
 	$subtotal=$row['subtotal'];
 }
 else{
 	$fecha=date("d-m-Y");
-	$monto=0;
-	$iduso="";
-	$idforma="";
+	$monto="";
+	$uso="";
+	$forma="";
+	$producto="";
 	$descripcion="";
-	$iva=0;
-	$subtotal=0;
+	$iva="";
+	$subtotal="";
 }
 if($id3>0){
 	echo "<form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='guardar_factura' data-destino='a_operaciones/op_facturas' data-div='facturas'>";
@@ -50,49 +51,47 @@ else{
 		<div class='row'>
 			<div class="col-3">
 				<label for="fecha_fact">Fecha</label>
-				<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off>
+				<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off required>
 			</div>
 
-			<div class="col-5">
-				<label for="uso">Uso de la factura</label>
-				<select class="form-control" id="iduso" name="iduso">
-					<?php
-					foreach ($uso as $key) {
-						echo "<option value='".$key['id']."'"; if($iduso==$key['id']){ echo " selected";} echo ">".$key['clave']." - ".$key['desc']."</option>";
-					}
-					?>
-				</select>
-			</div>
-
-			<div class="col-4">
-				<label for="uso">Forma de pago</label>
-				<select class="form-control" id="idforma" name="idforma">
-					<?php
-					foreach ($forma as $key) {
-						echo "<option value='".$key['id']."'"; if($idforma==$key['id']){ echo " selected";} echo ">".$key['pago']."</option>";
-					}
-					?>
-				</select>
-			</div>
-			
-			<div class="col-12">
+			<div class="col-9">
 				<label>Descripción</label>
 				<input type="text" placeholder="descripcion" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" class="form-control" autocomplete=off>
 			</div>
 
+			<div class="col-6">
+				<label for="uso">Uso de la factura</label>
+				<input type="text" placeholder="Uso" id="uso" name="uso" value="<?php echo $uso; ?>" class="form-control" autocomplete=off>
+				<div id='uso_auto' class='flotante'></div>
+			</div>
+
+			<div class="col-6">
+				<label for="uso">Forma de pago</label>
+				<input type="text" placeholder="Forma" id="forma" name="forma" value="<?php echo $forma; ?>" class="form-control" autocomplete=off>
+				<div id='forma_auto' class='flotante'></div>
+			</div>
+
+			<div class="col-6">
+				<label for="uso">Servicio</label>
+				<input type="text" placeholder="servicio" id="producto" name="producto" value="<?php echo $producto; ?>" class="form-control" autocomplete=off>
+				<div id='producto_auto' class='flotante'></div>
+			</div>
+
+
+
 			<div class="col-3">
 				<label>Monto</label>
-				<input type="text" placeholder="Monto" id="monto_fact" name="monto_fact" value="<?php echo $monto; ?>" class="form-control" autocomplete=off onchange='desgloce()'>
+				<input type="text" placeholder="Monto" id="monto_fact" name="monto_fact" value="<?php echo $monto; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
 			<div class="col-3">
 				<label>Subtotal</label>
-				<input type="text" placeholder="Subtotal" id="subtotal" name="subtotal" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()'>
+				<input type="text" placeholder="Subtotal" id="subtotal" name="subtotal" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
 			<div class="col-3">
 				<label>Iva</label>
-				<input type="text" placeholder="Iva" id="iva" name="iva" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()'>
+				<input type="text" placeholder="Iva" id="iva" name="iva" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
 		</div>

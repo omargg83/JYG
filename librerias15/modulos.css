@@ -2,12 +2,12 @@ body {
 	background-color: #cccccc;
 	background-repeat: no-repeat;
 	background-attachment: fixed ;
-	background-position: top ; 
+	background-position: top ;
 	-webkit-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 	height: 100%;
-	overflow: hidden;	
+	overflow: hidden;
 }
 #trabajo{
 	margin:10px;
@@ -16,7 +16,7 @@ body {
 	position: absolute;
 	top: 70px;
 	left: 10px;
-	right: 10px; 
+	right: 10px;
 }
 
 .autocompletar{
@@ -26,11 +26,11 @@ body {
 	background-color: #f6f6f6;
 	width: 500px;
 	overflow: auto;
-	max-height:300px; 
+	max-height:300px;
 	display:none;
 	border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.12); 
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.12);
 	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.12);
 	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.12);
 }
@@ -39,10 +39,10 @@ body {
     font-family: "myriad-pro",sans-serif;
     font-style: normal;
     font-weight: 100;
-    
+
     margin-bottom:25px;
     margin-top:50px;
-	
+
 	max-width: 350px;
 	background-color: #FFFFFF;
     /* just in case there no content*/
@@ -66,8 +66,8 @@ body {
 .flotante{
 	border: 1px solid silver;
     position: absolute;
-    width: 800px;
-    height: 300px;
+    width: 300px;
+    height: 200px;
     z-index: 50;
     background-color: white;
     overflow: auto;
@@ -107,7 +107,7 @@ label{
 	transition: 0.5s all;
 	background-repeat: no-repeat;
     background-attachment: fixed ;
-    background-position: top ; 
+    background-position: top ;
 	-webkit-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
@@ -121,7 +121,7 @@ label{
 
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .dropdown-container {
-	
+
 	background-color: #262626;
 	padding-left: 8px;
 }
@@ -198,7 +198,7 @@ DIV.box1{  /*ventana donde esta el iframe*/
 }
 
 .card {
-	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.12); 
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.12);
 	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.12);
 	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.12);
 }
@@ -250,57 +250,57 @@ DIV.box1{  /*ventana donde esta el iframe*/
 
 
 #no-more-tables th { text-align: center; }
-#no-more-tables td { 
-	vertical-align: top; 
+#no-more-tables td {
+	vertical-align: top;
 	height:73px;
 }
 
 @media only screen and (max-width: 800px) {
-    
+
     /* Force table to not be like tables anymore */
-    #no-more-tables table, 
-	#no-more-tables thead, 
-	#no-more-tables tbody, 
-	#no-more-tables th, 
-	#no-more-tables td, 
-	#no-more-tables tr { 
-		display: block; 
+    #no-more-tables table,
+	#no-more-tables thead,
+	#no-more-tables tbody,
+	#no-more-tables th,
+	#no-more-tables td,
+	#no-more-tables tr {
+		display: block;
 	}
- 
+
 	/* Hide table headers (but not display: none;, for accessibility) */
-	#no-more-tables thead tr { 
+	#no-more-tables thead tr {
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
 	}
- 
+
 	#no-more-tables tr { border: 1px solid #ccc; }
-	
- 
-	#no-more-tables td { 
+
+
+	#no-more-tables td {
 		/* Behave  like a "row" */
 		border: none;
-		border-bottom: 1px solid #eee; 
+		border-bottom: 1px solid #eee;
 		position: relative;
-		padding-left: 50%; 
+		padding-left: 50%;
 		white-space: normal;
 		text-align:left;
-		
+
 	}
- 
-	#no-more-tables td:before { 
+
+	#no-more-tables td:before {
 		/* Now like a table header */
 		position: absolute;
 		/* Top/left values mimic padding */
 		top: 6px;
 		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
+		width: 45%;
+		padding-right: 10px;
 		white-space: nowrap;
 		text-align:left;
 		font-weight: bold;
 	}
- 
+
 	/*
 	Label the data
 	*/
