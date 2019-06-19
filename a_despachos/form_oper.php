@@ -15,7 +15,7 @@
 ?>
 	<form action="" id="form_oper" data-lugar="a_despachos/db_despachos" data-funcion="guardar_oper" data-destino="a_despachos/editar">
 		<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
-		<input type="hidden" value="<?php echo $idcliente; ?>" name="iddespacho" id="iddespacho">
+		<input type="hidden" value="<?php echo $iddespacho; ?>" name="iddespacho" id="iddespacho">
 		<div class="card">
 			<div class="card-header">Operador del Despacho</div>
 			<div class="card-body">
