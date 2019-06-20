@@ -54,11 +54,11 @@ if($id>0){
 			<div class='row'>
 				<div class="col-4">
 					<label for="fecha_fact">Fecha</label>
-					<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off>
+					<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off required>
 				</div>
 				<div class="col-4">
 					<label for="monto">Productos</label>
-					<select id='idproducto_selx' name='idproducto_selx' class="form-control retorno">
+					<select id='idproducto_selx' name='idproducto_selx' class="form-control retorno" required>
 						<option selected disabled>Seleccione una opcion</option>
 						<?php
 						foreach($prod as $val){
