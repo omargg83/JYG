@@ -124,8 +124,6 @@ class Operaciones extends Sagyc{
 	}
 
 
-
-
 	public function empresa($idempresa){
 		try{
 			parent::set_names();
@@ -202,6 +200,21 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function empresa_despacho($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM empresas where idempresa=:idempresa";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idempresa",$id);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+
 	public function producto_buscar(){
 		try{
 			parent::set_names();
@@ -242,7 +255,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 
 	public function producto_edit($id){
 		try{
@@ -452,13 +464,50 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
 
-		if (isset($_REQUEST['monto'])){
-			$arreglo+=array('monto'=>$_REQUEST['monto']);
+		if (isset($_REQUEST['idproducto_selx'])){
+			$arreglo+=array('idproducto'=>$_REQUEST['idproducto_selx']);
 		}
 
-		if (isset($_REQUEST['tipo'])){
-			$arreglo+=array('tipo'=>$_REQUEST['tipo']);
+		if (isset($_REQUEST['monto_r'])){
+			$arreglo+=array('monto'=>$_REQUEST['monto_r']);
 		}
+
+		if (isset($_REQUEST['pventa'])){
+			$arreglo+=array('pventa'=>$_REQUEST['pventa']);
+		}
+
+		if (isset($_REQUEST['monto_retorno'])){
+			$arreglo+=array('monto_retorno'=>$_REQUEST['monto_retorno']);
+		}
+
+		if (isset($_REQUEST['comision'])){
+			$arreglo+=array('comision'=>$_REQUEST['comision']);
+		}
+
+		if (isset($_REQUEST['pikito'])){
+			$arreglo+=array('pikito'=>$_REQUEST['pikito']);
+		}
+
+		if (isset($_REQUEST['monto_pikito'])){
+			$arreglo+=array('monto_pikito'=>$_REQUEST['monto_pikito']);
+		}
+
+		if (isset($_REQUEST['saldo'])){
+			$arreglo+=array('saldo'=>$_REQUEST['saldo']);
+		}
+
+		if (isset($_REQUEST['despacho'])){
+			$arreglo+=array('despacho'=>$_REQUEST['despacho']);
+		}
+
+		if (isset($_REQUEST['monto_despacho'])){
+			$arreglo+=array('monto_despacho'=>$_REQUEST['monto_despacho']);
+		}
+
+		if (isset($_REQUEST['saldodesp'])){
+			$arreglo+=array('saldodesp'=>$_REQUEST['saldodesp']);
+		}
+
 
 		if($id==0){
 			$x.=$this->insert('retorno', $arreglo);
@@ -475,83 +524,40 @@ class Operaciones extends Sagyc{
 	}
 	public function producto_tipo(){
 		$x="";
-		if (isset($_REQUEST['idproducto'])){
-			$idproducto=$_REQUEST['idproducto'];
-		}
+
+		$idproducto=$_REQUEST['idproducto'];
+		$monto=$_REQUEST['monto'];
+		$pikito=$_REQUEST['pikito'];
+		$despacho=$_REQUEST['despacho'];
+
 		$val=$this->producto_edit($idproducto);
-		$pventa=$val['pventa'];
-		$pcomisionista=$val['pcomisionista'];
-		$psocios=$val['psocios'];
+		$pventa=$val['pventa'];		
 		$producto=$val['producto'];
-		$pikito=$val['pikito'];
-		$monto="";
-		$x.="<div class='row'>";
-		$x.="<div class='col-4'>
-		<label for='monto'>Pventa</label>
-		<input type='text' placeholder='monto' id='pventa' name='pventa' value='$pventa' class='form-control' autocomplete=off readonly>
-		</div>";
 
-		$x.="<div class='col-4'>
-		<label for='monto'>pcomisionista</label>
-		<input type='text' placeholder='pcomisionista' id='pcomisionista' name='pcomisionista' value='$pcomisionista' class='form-control' autocomplete=off readonly>
-		</div>";
 
-		$x.="<div class='col-4'>
-		<label for='monto'>psocios</label>
-		<input type='text' placeholder='psocios' id='psocios' name='psocios' value='$psocios' class='form-control' autocomplete=off readonly>
-		</div>";
 
-		$x.="<div class='col-4'>
-		<label for='monto'>pikito</label>
-		<input type='text' placeholder='pikito' id='pikito' name='pikito' value='$pikito' class='form-control' autocomplete=off readonly>
-		</div>";
-		$x.="</div>";
+		$comision=$monto/$pventa;
+		$retorno=$monto-$comision;
 
-		$total=0;
-		$x.="<div class='row'>";
-		if($producto=="CHEQUE"){
-			$x.="<div class='col-4'>
-			<label for='total'>Total</label>
-			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
-			</div>";
-		}
-		if($producto=="SPEI"){
-			$x.="<div class='col-4'>
-			<label for='total'>Total</label>
-			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
-			</div>";
-		}
-		if($producto=="ASIMILADOS"){
-			$x.="<div class='col-4'>
-			<label for='total'>Total</label>
-			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
-			</div>";
-		}
-		if($producto=="PLAN PRIVADO"){
-			$x.="<div class='col-4'>
-			<label for='total'>Total</label>
-			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
-			</div>";
-		}
-		if($producto=="EFECTIVO"){
-			$x.="<div class='col-4'>
-			<label for='total'>Total</label>
-			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
-			</div>";
-		}
-		if($producto=="CUCA"){
-			$x.="<div class='col-4'>
-			<label for='total'>Total</label>
-			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
-			</div>";
-		}
-		if($producto=="SINDICATO"){
-			$x.="<div class='col-4'>
-			<label for='total'>Total</label>
-			<input type='text' placeholder='total' id='total' name='total' value='$total' class='form-control' autocomplete=off>
-			</div>";
-		}
-		return $x;
+
+		$monto_pikito=($comision*$pikito)/100;
+		$saldo=$comision-$monto_pikito;
+
+		$monto_despacho=($despacho*$saldo)/100;
+		$saldodesp=$saldo-$monto_despacho;
+
+
+
+		$arreglo=array();
+		$arreglo=array('pventa'=>$pventa);
+		$arreglo+=array('comision'=>$comision);
+		$arreglo+=array('retorno'=>$retorno);
+		$arreglo+=array('monto_pikito'=>$monto_pikito);
+		$arreglo+=array('saldo'=>$saldo);
+		$arreglo+=array('monto_despacho'=>$monto_despacho);
+		$arreglo+=array('saldodesp'=>$saldodesp);
+
+		return json_encode($arreglo);
 	}
 
 	public function forma(){
@@ -566,6 +572,11 @@ class Operaciones extends Sagyc{
 		catch(PDOException $e){
 			return "Database access FAILED! ".$e->getMessage();
 		}
+	}
+
+	public function borrar_factura(){
+		if (isset($_POST['id'])){$id=$_POST['id'];}
+		return $this->borrar('facturas',"idfactura",$id);
 	}
 
 }

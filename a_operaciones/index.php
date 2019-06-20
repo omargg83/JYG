@@ -33,25 +33,7 @@
 		var subtotal=Math.round((monto-iva)*100)/100;
 		$("#subtotal").val(subtotal);
 	}
-	$(document).on('change','#idproducto_selx',function(e){
-		e.preventDefault();
-		e.stopPropagation();
-		var xyId = $(this).val();
-		$.ajax({
-			data:  {
-				"idproducto":xyId,
-				"function":"producto_tipo"
-			},
-			url:   "a_operaciones/db_operaciones.php",
-			type:  'post',
-			beforeSend: function () {
-				$("#producto_tipo").html("buscando...");
-			},
-			success:  function (response) {
-				$("#producto_tipo").html(response);
-			}
-		});
-	});
+
 	function seleccomision(xyId){
  		var idoperacion = $("#id").val();
 		var parametros={
@@ -295,6 +277,48 @@ $(document).on('click','#producto_auto tr',function(e){
 	$('#producto').val($(this).find('td:first').html());
 	$("#producto_auto").hide();
 });
+
+$(document).on('change','.retorno',function(e){
+		e.preventDefault();
+		e.stopPropagation();
+
+		var xyId = $("#idproducto_selx").val();
+		var monto=$("#monto_r").val();
+		var pikito=$("#pikito").val();
+		var despacho=$("#despacho").val();
+
+
+		$.ajax({
+			data:  {
+				"monto":monto,
+				"pikito":pikito,
+				"despacho":despacho,
+				"idproducto":xyId,
+				"function":"producto_tipo"
+			},
+			url:   "a_operaciones/db_operaciones.php",
+			type:  'post',
+			beforeSend: function () {
+				
+			},
+			success:  function (response) {
+				var datos = JSON.parse(response);
+				console.log(datos);
+				$("#pventa").val(datos.pventa);
+				$("#comision").val(datos.comision);
+				$("#monto_retorno").val(datos.retorno);
+				$("#monto_pikito").val(datos.monto_pikito);
+				$("#saldo").val(datos.saldo);
+				$("#monto_despacho").val(datos.monto_despacho);
+				$("#saldodesp").val(datos.saldodesp);
+			}
+		});
+
+
+
+	});
+
+
 
 
 
