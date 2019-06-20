@@ -47,17 +47,6 @@ echo "<div class='container'>";
 
 		<div class="card-header">
 			<center>OPERACIÓN <?php echo $id; ?></center>
-			<ul class='nav nav-tabs card-header-tabs nav-fill' id='myTab' role='tablist'>
-				<li class='nav-item'>
-					<a class='nav-link active' id='ssh-tab' data-toggle='tab' href='#ssh' role='ssh' aria-controls='home' aria-selected='true'>Datos</a>
-				</li>
-				<li class='nav-item'>
-					<a class='nav-link <?php echo $disabled; ?>' id='home-tab' data-toggle='tab' href='#home' role='tab' aria-controls='home' aria-selected='true'>Facturas</a>
-				</li>
-				<li class='nav-item'>
-					<a class='nav-link <?php echo $disabled; ?>' id='retorno-tab' data-toggle='tab' href='#retorno' role='tab' aria-controls='retorno' aria-selected='false'>Retornos</a>
-				</li>
-			</ul>
 		</div>
 		<div class="card-body">
 			<div class='tab-content' id='myTabContent'>
@@ -123,6 +112,8 @@ echo "<div class='container'>";
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_empresa'><i class='far fa-building'></i>Empresa</button>";
 										}
 									}
+									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura'><i class='fas fa-file-invoice'></i>Factura</button>";
+									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='$idempresa' data-lugar='a_operaciones/form_retorno'><i class='fas fa-exchange-alt'></i>Retorno</button>";
 								?>
 								<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
 							</div>
@@ -130,17 +121,14 @@ echo "<div class='container'>";
 					</div>
 
 				</div>
-				<div class='tab-pane fade show' id='home' role='tabpanel' aria-labelledby='home-tab'>
-					<div class="row" id='facturas'>
-						<?php include "op_facturas.php"; ?>
-					</div>
+				<div class="row" id='facturas'>
+					<?php include "op_facturas.php"; ?>
 				</div>
 
-				<div class='tab-pane fade show' id='retorno' role='tabpanel' aria-labelledby='retorno-tab'>
-					<div class="row" id='retornos'>
-						<?php include "op_retorno.php"; ?>
-					</div>
+				<div class="row" id='retornos'>
+					<?php include "op_retorno.php"; ?>
 				</div>
+
 			</div>
 
 

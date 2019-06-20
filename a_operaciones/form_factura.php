@@ -33,12 +33,9 @@ else{
 	$iva="";
 	$subtotal="";
 }
-if($id3>0){
-	echo "<form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='guardar_factura' data-destino='a_operaciones/op_facturas' data-div='facturas'>";
-}
-else{
+
 	echo "<form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='guardar_factura' data-destino='a_operaciones/editar'>";
-}
+
 
 ?>
 

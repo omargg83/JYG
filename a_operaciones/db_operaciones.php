@@ -36,7 +36,7 @@ class Operaciones extends Sagyc{
 				left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
 				left outer JOIN empresas ON oper.idempresa = empresas.idempresa
 				left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
-				order by oper.idoperacion desc";
+				order by oper.fecha asc";
 			}
 			else{
 				$sql="SELECT
@@ -53,7 +53,7 @@ class Operaciones extends Sagyc{
 				left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
 				left outer JOIN empresas ON oper.idempresa = empresas.idempresa
 				left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
-				where oper.idpersona='".$_SESSION['idpersona']."' order by oper.idoperacion desc";
+				where oper.idpersona='".$_SESSION['idpersona']."' order by oper.fecha asc";
 			}
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
@@ -122,7 +122,6 @@ class Operaciones extends Sagyc{
 		$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
 		return $x;
 	}
-
 
 	public function empresa($idempresa){
 		try{
@@ -238,9 +237,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
-
-
 	public function personal_edit($id){
 		try{
 			parent::set_names();
@@ -531,7 +527,7 @@ class Operaciones extends Sagyc{
 		$despacho=$_REQUEST['despacho'];
 
 		$val=$this->producto_edit($idproducto);
-		$pventa=$val['pventa'];		
+		$pventa=$val['pventa'];
 		$producto=$val['producto'];
 
 
@@ -577,6 +573,10 @@ class Operaciones extends Sagyc{
 	public function borrar_factura(){
 		if (isset($_POST['id'])){$id=$_POST['id'];}
 		return $this->borrar('facturas',"idfactura",$id);
+	}
+	public function borrar_retorno(){
+		if (isset($_POST['id'])){$id=$_POST['id'];}
+		return $this->borrar('retorno',"idretorno",$id);
 	}
 
 }
