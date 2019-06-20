@@ -21,11 +21,14 @@ else{
 	$telefono="";
 	$idpersona=$_SESSION['idpersona'];
 }
+echo "<div class='container'>";
 ?>
-<div class="container">
+
+
 	<form action="" id="form_personal" data-lugar="a_clientes/db_" data-funcion="guardar_cliente" data-destino='a_clientes/editar'>
 		<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 		<div class="card">
+
 			<div class="card-header">Cliente #<?php echo $id; ?></div>
 			<div class="card-body">
 				<div class="row">
@@ -100,6 +103,7 @@ else{
 		</div>
 	</form>
 </div>
+
 
 <script>
 $(function() {

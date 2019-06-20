@@ -4,23 +4,19 @@
 	$id=$_REQUEST['id'];
 	$despacho=$db->despachos();
 	$tipos=$db->tipos();
-	
+
 	if($id>0){
 		$pers = $db->producto_edit($id);
 		$producto=$pers['producto'];
 		$iddespacho=$pers['iddespacho'];
 		$pventa=$pers['pventa'];
-		$pcomisionista=$pers['pcomisionista'];
-		$psocios=$pers['psocios'];
-		$pikito=$pers['pikito'];
+
 	}
 	else{
 		$producto="";
 		$iddespacho="";
 		$pventa="";
-		$pcomisionista="";
-		$psocios="";
-		$pikito="";
+
 	}
 ?>
 <div class="container">
@@ -32,11 +28,11 @@
 				<div class="row">
 					<div class="col-3">
 						<label for="producto">Producto</label>
-						
+
 						<select class='form-control' id='producto' name='producto'>
 
 						<?php
-							
+
 							echo "<option"; if($producto=='CHEQUE'){ echo " selected"; } echo " value='CHEQUE'>CHEQUE</option>";
 							echo "<option"; if($producto=='SPEI'){ echo " selected"; } echo " value='SPEI'>SPEI</option>";
 							echo "<option"; if($producto=='ASIMILADOS'){ echo " selected"; } echo " value='ASIMILADOS'>ASIMILADOS</option>";
@@ -47,14 +43,14 @@
 
 						?>
 						</select>
-						
+
 					</div>
 					<div class="col-3">
 						<label for="iddespacho">Despacho</label>
 						<select class='form-control' id='iddespacho' name='iddespacho'>
 						<?php
 							foreach ($despacho as $key => $value) {
-								echo "<option"; if($iddespacho==$value['iddespacho']){ echo " selected"; } echo " value='".$value['iddespacho']."'>".$value['nombre']."</option>";							
+								echo "<option"; if($iddespacho==$value['iddespacho']){ echo " selected"; } echo " value='".$value['iddespacho']."'>".$value['nombre']."</option>";
 							}
 						?>
 						</select>
@@ -63,18 +59,8 @@
 						<label for="pventa">% de venta</label>
 						<input type="text" placeholder="% de venta" id="pventa" name="pventa" value="<?php echo $pventa; ?>" class="form-control">
 					</div>
-					<div class="col-2">
-						<label for="pcomisionista">% de comisionista</label>
-						<input type="text" placeholder="% de comisionista" id="pcomisionista" name="pcomisionista" value="<?php echo $pcomisionista; ?>" class="form-control">
-					</div>
-					<div class="col-2">
-						<label for="psocios">% de socios</label>
-						<input type="text" placeholder="% de socios" id="psocios" name="psocios" value="<?php echo $psocios; ?>" class="form-control">
-					</div>
-					<div class="col-2">
-						<label for="pikito">pikito</label>
-						<input type="text" placeholder="pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control">
-					</div>
+
+
 				</div>
 			</div>
 			<div class="card-footer">
