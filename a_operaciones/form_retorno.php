@@ -49,15 +49,19 @@ if($id>0){
 	<input type="hidden" id="id" name="id" value="<?php echo $id; ?>" class="form-control fechaclass" autocomplete=off>
 	<input type="hidden" id="idoper_fact" name="idoper_fact" value="<?php echo $id2; ?>" class="form-control fechaclass" autocomplete=off>
 	<div class='card'>
-		<div class="card-header">Factura</div>
+		<div class="card-header">Retornos</div>
 		<div class='card-body'>
 			<div class='row'>
 				<div class="col-4">
-					<label for="fecha_fact">Fecha</label>
+					<label for="fecha_fact">Fecha de retorno</label>
 					<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off>
 				</div>
 				<div class="col-4">
-					<label for="monto">Productos</label>
+					<label for="monto">Monto a retornar</label>
+					<input type="text" placeholder="Retorno" id="monto_r" name="monto_r" value="<?php echo $monto; ?>" class="form-control retorno" autocomplete=off>
+				</div>
+				<div class="col-4">
+					<label for="monto">Producto</label>
 					<select id='idproducto_selx' name='idproducto_selx' class="form-control retorno">
 						<option selected disabled>Seleccione una opcion</option>
 						<?php
@@ -66,10 +70,6 @@ if($id>0){
 						}
 						?>
 					</select>
-				</div>
-				<div class="col-4">
-					<label for="monto">Monto de retorno</label>
-					<input type="text" placeholder="Retorno" id="monto_r" name="monto_r" value="<?php echo $monto; ?>" class="form-control retorno" autocomplete=off>
 				</div>
 
 			</div>

@@ -85,13 +85,13 @@ else{
 			</div>
 
 			<div class="col-3">
-				<label>Subtotal</label>
-				<input type="text" placeholder="Subtotal" id="subtotal" name="subtotal" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
+				<label>Iva</label>
+				<input type="text" placeholder="Iva" id="iva" name="iva" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
 			<div class="col-3">
-				<label>Iva</label>
-				<input type="text" placeholder="Iva" id="iva" name="iva" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
+				<label>Subtotal</label>
+				<input type="text" placeholder="Subtotal" id="subtotal" name="subtotal" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
 		</div>

@@ -28,10 +28,11 @@
 			monto=0;
 			$("#monto_fact").val(0);
 		}
-		var iva=Math.round((monto/1.16)*100)/100;
-		$("#iva").val(iva);
-		var subtotal=Math.round((monto-iva)*100)/100;
+		var subtotal=Math.round((monto/1.16)*100)/100;
 		$("#subtotal").val(subtotal);
+		var iva=Math.round((subtotal*.16)*100)/100;
+		$("#iva").val(iva);
+
 	}
 
 	function seleccomision(xyId){
@@ -299,7 +300,7 @@ $(document).on('change','.retorno',function(e){
 			url:   "a_operaciones/db_operaciones.php",
 			type:  'post',
 			beforeSend: function () {
-				
+
 			},
 			success:  function (response) {
 				var datos = JSON.parse(response);
