@@ -10,7 +10,7 @@
 	}
 	else{
 		$operador="";
-		$email="";
+		$correo="";
 	}
 ?>
 	<form action="" id="form_oper" data-lugar="a_despachos/db_despachos" data-funcion="guardar_oper" data-destino="a_despachos/editar">
