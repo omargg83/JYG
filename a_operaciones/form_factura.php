@@ -8,9 +8,6 @@ if (isset($_REQUEST['id'])){
 if (isset($_REQUEST['id2'])){
 	$id2=$_REQUEST['id2'];
 }
-if (isset($_REQUEST['id3'])){
-	$id3=$_REQUEST['id3'];
-}
 
 if($id>0){
 	$row=$db->facturas_edit($id);
@@ -73,8 +70,9 @@ else{
 				<input type="text" placeholder="servicio" id="producto" name="producto" value="<?php echo $producto; ?>" class="form-control" autocomplete=off>
 				<div id='producto_auto' class='flotante'></div>
 			</div>
+		</div>
 
-
+		<div class='row'>
 
 			<div class="col-3">
 				<label>Monto</label>

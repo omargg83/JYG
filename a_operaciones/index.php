@@ -32,9 +32,7 @@
 		$("#subtotal").val(subtotal);
 		var iva=Math.round((subtotal*.16)*100)/100;
 		$("#iva").val(iva);
-
 	}
-
 	function seleccomision(xyId){
  		var idoperacion = $("#id").val();
 		var parametros={
@@ -65,7 +63,7 @@
 				}
 			}
 		});
-}
+	}
 	function seleccliente(xyId){
  		var idoperacion = $("#id").val();
 		var parametros={
@@ -97,230 +95,219 @@
 			}
 		});
 	}
+	$(document).on('keyup','#uso',function(e){
+		var e = window.event;
+		var tecla = (document.all) ? e.keyCode : e.which;
+		var valor=$(this).val();
+		var division=valor.length%2;
 
+		if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
+				$.ajax({
+					data:  {
+						"valor":valor,
+						"function":"uso_buscar"
+					},
+					url:   "a_operaciones/db_operaciones.php",
+					type:  'post',
+					beforeSend: function () {
 
-$(document).on('keyup','#uso',function(e){
-	var e = window.event;
-	var tecla = (document.all) ? e.keyCode : e.which;
-	var valor=$(this).val();
-	var division=valor.length%2;
-
-	if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
-			$.ajax({
-				data:  {
-					"valor":valor,
-					"function":"uso_buscar"
-				},
-				url:   "a_operaciones/db_operaciones.php",
-				type:  'post',
-				beforeSend: function () {
-
-				},
-				success:  function (response) {
-					fila = 0;
-					$("#uso_auto").html(response);
+					},
+					success:  function (response) {
+						fila = 0;
+						$("#uso_auto").html(response);
+					}
+				});
+				$("#uso_auto").show();
+		}
+		if(tecla == 27 || tecla==9){
+			$("#uso_auto").hide();
+		}
+		if ( $("#usotb").length ) {
+			var tab = document.getElementById('usotb');
+			var filas = tab.getElementsByTagName('tr');
+			if(filas.length>1){
+				if(tecla==13){
+					if(fila==0){
+						$('#uso').val(filas[1].getElementsByTagName("td")[0].innerHTML);
+					}
+					else{
+						$('#uso').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
+					}
+					$("#uso_auto").hide();
+					$("#anexos").focus();
 				}
-			});
-			$("#uso_auto").show();
-	}
-	if(tecla == 27 || tecla==9){
-		$("#uso_auto").hide();
-	}
-	if ( $("#usotb").length ) {
-		var tab = document.getElementById('usotb');
-		var filas = tab.getElementsByTagName('tr');
-		if(filas.length>1){
-			if(tecla==13){
-				if(fila==0){
-					$('#uso').val(filas[1].getElementsByTagName("td")[0].innerHTML);
-				}
-				else{
-					$('#uso').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
-				}
-				$("#uso_auto").hide();
-				$("#anexos").focus();
+			}
+			if (e.keyCode==38 && fila>0) num=-1;
+			else if(e.keyCode==40 && fila<filas.length-1) num=1;
+			else return;
+			filas[fila].style.background = 'white';
+			fila+=num;
+			filas[fila].style.background = 'silver';
+			if(fila==0){
+				filas[fila].style.background = 'white';
 			}
 		}
-		if (e.keyCode==38 && fila>0) num=-1;
-		else if(e.keyCode==40 && fila<filas.length-1) num=1;
-		else return;
-		filas[fila].style.background = 'white';
-		fila+=num;
-		filas[fila].style.background = 'silver';
-
-		if(fila==0){
-			filas[fila].style.background = 'white';
-		}
-	}
-});
-$(document).on('click','#uso_auto tr',function(e){
-		$('#uso').val($(this).find('td:first').html());
-		$("#uso_auto").hide();
 	});
-
-$(document).on('keyup','#forma',function(e){
-	var e = window.event;
-	var tecla = (document.all) ? e.keyCode : e.which;
-	var valor=$(this).val();
-	var division=valor.length%2;
-
-	if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
-		if(valor.length>2 && division==0){
-			$.ajax({
-				data:  {
-					"valor":valor,
-					"function":"forma_buscar"
-				},
-				url:   "a_operaciones/db_operaciones.php",
-				type:  'post',
-				beforeSend: function () {
-
-				},
-				success:  function (response) {
-					fila = 0;
-					$("#forma_auto").html(response);
-				}
-			});
-			$("#forma_auto").show();
-		}
-	}
-	if(tecla == 27 || tecla==9){
-		$("#forma_auto").hide();
-	}
-	if ( $("#formatb").length ) {
-		var tab = document.getElementById('formatb');
-		var filas = tab.getElementsByTagName('tr');
-		if(filas.length>1){
-			if(tecla==13){
-				if(fila==0){
-					$('#forma').val(filas[1].getElementsByTagName("td")[0].innerHTML);
-				}
-				else{
-					$('#forma').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
-				}
-				$("#forma_auto").hide();
-				$("#anexos").focus();
-			}
-		}
-		if (e.keyCode==38 && fila>0) num=-1;
-		else if(e.keyCode==40 && fila<filas.length-1) num=1;
-		else return;
-		filas[fila].style.background = 'white';
-		fila+=num;
-		filas[fila].style.background = 'silver';
-
-		if(fila==0){
-			filas[fila].style.background = 'white';
-		}
-	}
-});
-$(document).on('click','#forma_auto tr',function(e){
-	$('#forma').val($(this).find('td:first').html());
-	$("#forma_auto").hide();
-});
-
-$(document).on('keyup','#producto',function(e){
-	var e = window.event;
-	var tecla = (document.all) ? e.keyCode : e.which;
-	var valor=$(this).val();
-	var division=valor.length%2;
-
-	if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
-		if(valor.length>2 && division==0){
-			$.ajax({
-				data:  {
-					"valor":valor,
-					"function":"producto_buscar"
-				},
-				url:   "a_operaciones/db_operaciones.php",
-				type:  'post',
-				beforeSend: function () {
-
-				},
-				success:  function (response) {
-					fila = 0;
-					$("#producto_auto").html(response);
-				}
-			});
-			$("#producto_auto").show();
-		}
-	}
-	if(tecla == 27 || tecla==9){
-		$("#producto_auto").hide();
-	}
-	if ( $("#productotb").length ) {
-		var tab = document.getElementById('productotb');
-		var filas = tab.getElementsByTagName('tr');
-		if(filas.length>1){
-			if(tecla==13){
-				if(fila==0){
-					$('#producto').val(filas[1].getElementsByTagName("td")[0].innerHTML);
-				}
-				else{
-					$('#producto').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
-				}
-				$("#producto_auto").hide();
-			}
-		}
-		if (e.keyCode==38 && fila>0) num=-1;
-		else if(e.keyCode==40 && fila<filas.length-1) num=1;
-		else return;
-		filas[fila].style.background = 'white';
-		fila+=num;
-		filas[fila].style.background = 'silver';
-
-		if(fila==0){
-			filas[fila].style.background = 'white';
-		}
-	}
-});
-$(document).on('click','#producto_auto tr',function(e){
-	$('#producto').val($(this).find('td:first').html());
-	$("#producto_auto").hide();
-});
-
-$(document).on('change','.retorno',function(e){
-		e.preventDefault();
-		e.stopPropagation();
-
-		var xyId = $("#idproducto_selx").val();
-		var monto=$("#monto_r").val();
-		var pikito=$("#pikito").val();
-		var despacho=$("#despacho").val();
-
-
-		$.ajax({
-			data:  {
-				"monto":monto,
-				"pikito":pikito,
-				"despacho":despacho,
-				"idproducto":xyId,
-				"function":"producto_tipo"
-			},
-			url:   "a_operaciones/db_operaciones.php",
-			type:  'post',
-			beforeSend: function () {
-
-			},
-			success:  function (response) {
-				var datos = JSON.parse(response);
-				console.log(datos);
-				$("#pventa").val(datos.pventa);
-				$("#comision").val(datos.comision);
-				$("#monto_retorno").val(datos.retorno);
-				$("#monto_pikito").val(datos.monto_pikito);
-				$("#saldo").val(datos.saldo);
-				$("#monto_despacho").val(datos.monto_despacho);
-				$("#saldodesp").val(datos.saldodesp);
-			}
+	$(document).on('click','#uso_auto tr',function(e){
+			$('#uso').val($(this).find('td:first').html());
+			$("#uso_auto").hide();
 		});
+	$(document).on('keyup','#forma',function(e){
+		var e = window.event;
+		var tecla = (document.all) ? e.keyCode : e.which;
+		var valor=$(this).val();
+		var division=valor.length%2;
 
+		if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
+			if(valor.length>2 && division==0){
+				$.ajax({
+					data:  {
+						"valor":valor,
+						"function":"forma_buscar"
+					},
+					url:   "a_operaciones/db_operaciones.php",
+					type:  'post',
+					beforeSend: function () {
 
+					},
+					success:  function (response) {
+						fila = 0;
+						$("#forma_auto").html(response);
+					}
+				});
+				$("#forma_auto").show();
+			}
+		}
+		if(tecla == 27 || tecla==9){
+			$("#forma_auto").hide();
+		}
+		if ( $("#formatb").length ) {
+			var tab = document.getElementById('formatb');
+			var filas = tab.getElementsByTagName('tr');
+			if(filas.length>1){
+				if(tecla==13){
+					if(fila==0){
+						$('#forma').val(filas[1].getElementsByTagName("td")[0].innerHTML);
+					}
+					else{
+						$('#forma').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
+					}
+					$("#forma_auto").hide();
+					$("#anexos").focus();
+				}
+			}
+			if (e.keyCode==38 && fila>0) num=-1;
+			else if(e.keyCode==40 && fila<filas.length-1) num=1;
+			else return;
+			filas[fila].style.background = 'white';
+			fila+=num;
+			filas[fila].style.background = 'silver';
 
+			if(fila==0){
+				filas[fila].style.background = 'white';
+			}
+		}
 	});
+	$(document).on('click','#forma_auto tr',function(e){
+		$('#forma').val($(this).find('td:first').html());
+		$("#forma_auto").hide();
+	});
+	$(document).on('keyup','#producto',function(e){
+		var e = window.event;
+		var tecla = (document.all) ? e.keyCode : e.which;
+		var valor=$(this).val();
+		var division=valor.length%2;
+
+		if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
+			if(valor.length>2 && division==0){
+				$.ajax({
+					data:  {
+						"valor":valor,
+						"function":"producto_buscar"
+					},
+					url:   "a_operaciones/db_operaciones.php",
+					type:  'post',
+					beforeSend: function () {
+
+					},
+					success:  function (response) {
+						fila = 0;
+						$("#producto_auto").html(response);
+					}
+				});
+				$("#producto_auto").show();
+			}
+		}
+		if(tecla == 27 || tecla==9){
+			$("#producto_auto").hide();
+		}
+		if ( $("#productotb").length ) {
+			var tab = document.getElementById('productotb');
+			var filas = tab.getElementsByTagName('tr');
+			if(filas.length>1){
+				if(tecla==13){
+					if(fila==0){
+						$('#producto').val(filas[1].getElementsByTagName("td")[0].innerHTML);
+					}
+					else{
+						$('#producto').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
+					}
+					$("#producto_auto").hide();
+				}
+			}
+			if (e.keyCode==38 && fila>0) num=-1;
+			else if(e.keyCode==40 && fila<filas.length-1) num=1;
+			else return;
+			filas[fila].style.background = 'white';
+			fila+=num;
+			filas[fila].style.background = 'silver';
+
+			if(fila==0){
+				filas[fila].style.background = 'white';
+			}
+		}
+	});
+	$(document).on('click','#producto_auto tr',function(e){
+		$('#producto').val($(this).find('td:first').html());
+		$("#producto_auto").hide();
+	});
+	$(document).on('change','.retorno',function(e){
+			e.preventDefault();
+			e.stopPropagation();
+
+			var xyId = $("#idproducto_selx").val();
+			var monto=$("#monto_r").val();
+			var pikito=$("#pikito").val();
+			var despacho=$("#despacho").val();
+
+
+			$.ajax({
+				data:  {
+					"monto":monto,
+					"pikito":pikito,
+					"despacho":despacho,
+					"idproducto":xyId,
+					"function":"producto_tipo"
+				},
+				url:   "a_operaciones/db_operaciones.php",
+				type:  'post',
+				beforeSend: function () {
+
+				},
+				success:  function (response) {
+					var datos = JSON.parse(response);
+					console.log(datos);
+					$("#pventa").val(datos.pventa);
+					$("#comision").val(datos.comision);
+					$("#monto_retorno").val(datos.retorno);
+					$("#monto_pikito").val(datos.monto_pikito);
+					$("#saldo").val(datos.saldo);
+					$("#monto_despacho").val(datos.monto_despacho);
+					$("#saldodesp").val(datos.saldodesp);
+				}
+			});
 
 
 
-
-
+		});
 </script>

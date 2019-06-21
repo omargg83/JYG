@@ -8,8 +8,8 @@
 		<div class="content table-responsive table-full-width">
 			<table class="table-sm display compact hover" id="x_lista">
 			<thead>
+			<th>Operación</th>
 			<th>#</th>
-			<th>-</th>
 			<th>Fecha</th>
 			<th>Cliente</th>
 			<th>Razon</th>
@@ -22,20 +22,19 @@
 			<?php
 				for($i=0;$i<count($pd);$i++){
 					echo "<tr id=".$pd[$i]['idoperacion']." class='edit-t'>";
-					echo "<td>";
+					echo "<td><center>";
 					echo $pd[$i]["idoperacion"];
+					echo "</center>";
 					echo "</td>";
+
 					echo "<td>";
-
-					echo "<div class='btn-group'>";
-					echo "<button class='btn btn-outline-secondary btn-sm' id='edit_persona' title='Editar' data-lugar='a_operaciones/editar'><i class='fas fa-pencil-alt'></i></button>";
-					echo "</div>";
-
+						echo "<button class='btn btn-outline-secondary btn-sm' id='edit_persona' title='Editar' data-lugar='a_operaciones/editar'><i class='fas fa-pencil-alt'></i></button>";
 					echo "</td>";
+
 					echo "<td>";
 					echo fecha($pd[$i]["fecha"]);
 					echo "</td>";
-
+					
 					echo "<td>";
 					echo $pd[$i]["cliente"];
 					echo "</td>";
