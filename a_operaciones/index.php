@@ -99,7 +99,6 @@
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;
 		var valor=$(this).val();
-		var division=valor.length%2;
 
 		if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
 				$.ajax({
@@ -148,6 +147,7 @@
 			}
 		}
 	});
+
 	$(document).on('click','#uso_auto tr',function(e){
 			$('#uso').val($(this).find('td:first').html());
 			$("#uso_auto").hide();
@@ -156,10 +156,8 @@
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;
 		var valor=$(this).val();
-		var division=valor.length%2;
-
 		if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
-			if(valor.length>2 && division==0){
+			if(valor.length>2){
 				$.ajax({
 					data:  {
 						"valor":valor,
@@ -216,10 +214,9 @@
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;
 		var valor=$(this).val();
-		var division=valor.length%2;
 
 		if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
-			if(valor.length>2 && division==0){
+			if(valor.length>2){
 				$.ajax({
 					data:  {
 						"valor":valor,

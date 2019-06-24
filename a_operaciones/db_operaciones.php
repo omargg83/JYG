@@ -64,13 +64,26 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function razon($idrazon){
 		try{
 			parent::set_names();
 			$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente where idrazon=:idrazon";
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":idrazon",$idrazon);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function comisionista($idcliente){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM clientes_comi where idcliente=:idcliente";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idcliente",$idcliente);
 			$sth->execute();
 			$res=$sth->fetchAll();
 			return $res;
@@ -122,16 +135,14 @@ class Operaciones extends Sagyc{
 		$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
 		return $x;
 	}
-
 	public function empresa($idempresa){
 		try{
 			parent::set_names();
-
 			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where idempresa=:idempresa";
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":idempresa",$idempresa);
 			$sth->execute();
-			$res=$sth->fetchAll();
+			$res=$sth->fetch();
 			return $res;
 		}
 		catch(PDOException $e){
@@ -158,15 +169,15 @@ class Operaciones extends Sagyc{
 			parent::set_names();
 			$x="";
 			$texto=$_REQUEST['valor'];
-			$sql="SELECT * FROM sat_uso where descripcion like '%$texto%'";
+			$sql="SELECT * FROM sat_uso where descripcion like '%$texto%' or clave like '%$texto%'";
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();
-			$x.="<table class='table table-sm' id='usotb' style='font-size:10px'>";
-			$x.="<tr><td>Uso</td></tr>";
+			$x.="<table class='table table-sm' id='usotb' style='font-size:12px'>";
+			$x.="<tr><th>Uso de la factura</th></tr>";
 			foreach ($res as $key) {
 				$x.="<tr><td>";
-				$x.=$key['descripcion'];
+				$x.=$key['clave']." - ".$key['descripcion'];
 				$x.="</td></tr>";
 			}
 			$x.="</table>";
@@ -185,8 +196,8 @@ class Operaciones extends Sagyc{
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();
-			$x.="<table class='table table-sm' id='formatb' style='font-size:10px'>";
-			$x.="<tr><td>Pago</td></tr>";
+			$x.="<table class='table table-sm' id='formatb' style='font-size:12px'>";
+			$x.="<tr><th>Forma de pago</th></tr>";
 			foreach ($res as $key) {
 				$x.="<tr><td>";
 				$x.=$key['pago'];
@@ -213,7 +224,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function producto_buscar(){
 		try{
 			parent::set_names();
@@ -223,11 +233,11 @@ class Operaciones extends Sagyc{
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();
-			$x.="<table class='table table-sm' id='formatb' style='font-size:10px'>";
-			$x.="<tr><td>Descripción</td></tr>";
+			$x.="<table class='table table-sm' id='formatb' style='font-size:12px'>";
+			$x.="<tr><th>Descripción</th></tr>";
 			foreach ($res as $key) {
 				$x.="<tr><td>";
-				$x.=$key['descripcion'];
+				$x.=$key['claveprod']." - ".$key['descripcion'];
 				$x.="</td></tr>";
 			}
 			$x.="</table>";
@@ -251,7 +261,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function producto_edit($id){
 		try{
 			parent::set_names();
@@ -280,7 +289,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function operacion_edit($id){
 		try{
 			self::set_names();
@@ -555,7 +563,6 @@ class Operaciones extends Sagyc{
 
 		return json_encode($arreglo);
 	}
-
 	public function forma(){
 		try{
 			parent::set_names();
@@ -569,7 +576,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
 	public function borrar_factura(){
 		if (isset($_POST['id'])){$id=$_POST['id'];}
 		return $this->borrar('facturas',"idfactura",$id);

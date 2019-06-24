@@ -38,17 +38,21 @@ if($bloqueo>0 ){
 	$readonly="readonly";
 }
 $ejecutivo=$db->personal_edit($idpersonal);
+$nombre=$ejecutivo['nombre'];
 
 $cli=$db->razon($idrazon);
 $empresa=$db->empresa($idempresa);
-$nombre=$ejecutivo['nombre'];
+
 ?>
 <div id="accordion">
 	<div class='container'>
 		<div class="card">
 			<form action="" id="form_operacion" data-lugar="a_operaciones/db_operaciones" data-funcion="guardar_operacion" data-destino='a_operaciones/editar'>
 				<div class="card-header bg-light">
+					#<?php echo $id; ?> Operación <br>
+					<hr>
 					<div class='btn-group'>
+
 						<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
 						<?php
 							if($id>0){
@@ -56,14 +60,12 @@ $nombre=$ejecutivo['nombre'];
 									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
 								}
 								if($idempresa>0){
-									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='$idempresa' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
+									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
 								}
 							}
 						?>
 						<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
 					</div>
-					<hr>
-					#<?php echo $id; ?> Operación
 
 				</div>
 				<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -101,9 +103,7 @@ $nombre=$ejecutivo['nombre'];
 										}
 										echo "</div>";
 										echo "<select id='idrazon' name='idrazon' class='form-control' required $readonly >";
-										foreach ($cli as $key ) {
-											echo "<option value='".$key['idrazon']."'"; if($idrazon==$key['idrazon']) { echo "selected"; } echo ">".$key['cliente']." - ".$key['razon']."</option>";
-										}
+											echo "<option value='".$cli['idrazon']."'>".$cli['cliente']." - ".$cli['razon']."</option>";
 										echo "</select>";
 									echo "</div>";
 								echo "</div>";
@@ -117,9 +117,7 @@ $nombre=$ejecutivo['nombre'];
 										}
 										echo "</div>";
 										echo "<select id='idempresa' name='idempresa' class='form-control' required $readonly >";
-										foreach ($empresa as $key ) {
-											echo "<option value='".$key['idempresa']."'"; if($idempresa==$key['idempresa']) { echo "selected"; } echo ">".$key['nombre']." - ".$key['razon']."</option>";
-										}
+											echo "<option value='".$empresa['idempresa']."'>".$empresa['nombre']." - ".$empresa['razon']."</option>";
 										echo "</select>";
 									echo "</div>";
 								echo "</div>";
@@ -143,12 +141,12 @@ $nombre=$ejecutivo['nombre'];
 
 			<!--............................................inicio facturas...................................... -->
 			<div class="card-header">
-				<div class='btn-group'>
-					<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
+				<div class='btn-group pull-right'>
+					<button type='button' class="btn btn-outline-secondary btn-sm " data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
 				</div>
 				Facturas
 			</div>
-			<div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+			<div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 				<div class="card-body">
 					<div class="row" id='facturas'>
 						<div class="content table-responsive table-full-width">
@@ -156,7 +154,6 @@ $nombre=$ejecutivo['nombre'];
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Fecha</th>
 										<th>Descripción</th>
 										<th>Documentos</th>
 										<th>Monto</th>
@@ -167,6 +164,7 @@ $nombre=$ejecutivo['nombre'];
 									$suma=0;
 									foreach($fact as $key){
 										echo "<tr id=".$key['idfactura']." class='edit-t'>";
+
 										echo "<td>";
 										echo "<div class='btn-group'>";
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idfactura']."' data-id2='$id' data-lugar='a_operaciones/form_factura'><i class='fas fa-pencil-alt'></i></button>";
@@ -174,11 +172,15 @@ $nombre=$ejecutivo['nombre'];
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='imprimir_formato' title='Imprimir' data-lugar='a_operaciones/imprimir' data-tipo='1'><i class='far fa-file-pdf'></i></button>";
 										echo "</div>";
 										echo "</td>";
-										echo "<td>";
-										echo fecha($key["fecha"]);
-										echo "</td>";
+
 										echo "<td>";
 										echo $key["descripcion"];
+										echo "<span style='font-size:10px'>";
+										echo "<br><b>Uso:</b> ".$key["uso"];
+										echo "<br><b>Forma de pago:</b> ".$key["forma"];
+										echo "<br><b>Producto:</b> ".$key["producto"];
+										echo "<br><b>Fecha:</b> ".fecha($key["fecha"]);
+										echo "</span>";
 										echo "</td>";
 
 										echo "<td>";
@@ -284,7 +286,7 @@ $nombre=$ejecutivo['nombre'];
 				<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapsetres" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
 				Retornos
 			</div>
-			<div id="collapsetres" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+			<div id="collapsetres" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 				<div class="card-body">
 					<div class="row" id='retornos'>
 						<div class="content table-responsive table-full-width">
@@ -299,13 +301,14 @@ $nombre=$ejecutivo['nombre'];
 								</thead>
 								<tbody>
 									<?php
-
+									$retorno=0;
 									for($i=0;$i<count($ret);$i++){
 										echo "<tr id=".$ret[$i]['idretorno']." class='edit-t'>";
 
 										echo "<td>";
 										echo "<div class='btn-group'>";
-										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$ret[$i]['idretorno']."' data-id2='$id' data-id3='$idempresa' data-lugar='a_operaciones/form_retorno'><i class='fas fa-pencil-alt'></i></button>";
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$ret[$i]['idretorno']."' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-pencil-alt'></i></button>";
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$ret[$i]['idretorno']."' data-id2='$id' data-lugar='a_operaciones/form_comisionista'><i class='fas fa-user-friends'></i></button>";
 										echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_retorno' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$ret[$i]['idretorno']."' data-funcion='borrar_retorno' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
 										echo "</div>";
 										echo "</td>";
@@ -319,6 +322,7 @@ $nombre=$ejecutivo['nombre'];
 										echo "</td>";
 
 										echo "<td>";
+										$retorno+=$ret[$i]["monto"];
 										echo moneda($ret[$i]["monto"]);
 										echo "</td>";
 
@@ -337,7 +341,20 @@ $nombre=$ejecutivo['nombre'];
 				Resumen
 			</div>
 			<div class="card-body">
-				resumen
+				<?php
+				echo "Monto de la operación:";
+				echo moneda($monto);
+
+				echo "Monto de facturas:";
+				echo moneda($suma);
+
+				echo "Monto de retorno:";
+				echo moneda($retorno);
+
+
+
+
+				?>
 			</div>
 		</div>
 	</div>

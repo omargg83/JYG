@@ -1,7 +1,6 @@
 <?php
 require_once("db_operaciones.php");
-
-$forma=$db->forma();
+//$forma=$db->forma();
 if (isset($_REQUEST['id'])){
 	$id=$_REQUEST['id'];
 }
@@ -30,13 +29,8 @@ else{
 	$iva="";
 	$subtotal="";
 }
-
-	echo "<form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='guardar_factura' data-destino='a_operaciones/editar'>";
-
-
 ?>
-
-
+<form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='guardar_factura' data-destino='a_operaciones/editar'>
 <input type="hidden" id="id" name="id" value="<?php echo $id; ?>" class="form-control fechaclass" autocomplete=off>
 <input type="hidden" id="idoper_fact" name="idoper_fact" value="<?php echo $id2; ?>" class="form-control fechaclass" autocomplete=off>
 <div class='card'>
@@ -50,22 +44,22 @@ else{
 
 			<div class="col-9">
 				<label>Descripción</label>
-				<input type="text" placeholder="descripcion" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" class="form-control" autocomplete=off>
+				<input type="text" placeholder="Descripción" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" class="form-control" autocomplete=off>
 			</div>
 
-			<div class="col-6">
+			<div class="col-12">
 				<label for="uso">Uso de la factura</label>
-				<input type="text" placeholder="Uso" id="uso" name="uso" value="<?php echo $uso; ?>" class="form-control" autocomplete=off>
+				<input type="text" placeholder="Uso de la factura" id="uso" name="uso" value="<?php echo $uso; ?>" class="form-control" autocomplete=off>
 				<div id='uso_auto' class='flotante'></div>
 			</div>
 
-			<div class="col-6">
+			<div class="col-12">
 				<label for="uso">Forma de pago</label>
-				<input type="text" placeholder="Forma" id="forma" name="forma" value="<?php echo $forma; ?>" class="form-control" autocomplete=off>
+				<input type="text" placeholder="Forma de pago" id="forma" name="forma" value="<?php echo $forma; ?>" class="form-control" autocomplete=off>
 				<div id='forma_auto' class='flotante'></div>
 			</div>
 
-			<div class="col-6">
+			<div class="col-12">
 				<label for="uso">Servicio</label>
 				<input type="text" placeholder="servicio" id="producto" name="producto" value="<?php echo $producto; ?>" class="form-control" autocomplete=off>
 				<div id='producto_auto' class='flotante'></div>
@@ -74,17 +68,17 @@ else{
 
 		<div class='row'>
 
-			<div class="col-3">
+			<div class="col-4">
 				<label>Monto</label>
 				<input type="text" placeholder="Monto" id="monto_fact" name="monto_fact" value="<?php echo $monto; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
-			<div class="col-3">
+			<div class="col-4">
 				<label>Iva</label>
 				<input type="text" placeholder="Iva" id="iva" name="iva" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
-			<div class="col-3">
+			<div class="col-4">
 				<label>Subtotal</label>
 				<input type="text" placeholder="Subtotal" id="subtotal" name="subtotal" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>

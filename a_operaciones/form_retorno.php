@@ -6,9 +6,11 @@ if (isset($_REQUEST['id'])){
 if (isset($_REQUEST['id2'])){
 	$id2=$_REQUEST['id2'];
 }
-if (isset($_REQUEST['id3'])){
-	$idempresa=$_REQUEST['id3'];
-}
+
+$pers = $db->operacion_edit($id2);
+$idempresa=$pers['idempresa'];
+$idrazon=$pers['idrazon'];
+
 $despa=$db->empresa_despacho($idempresa);
 $iddespacho=$despa['iddespacho'];
 $prod=$db->producto_despacho($iddespacho);
@@ -69,7 +71,6 @@ if($id>0){
 						?>
 					</select>
 				</div>
-
 			</div>
 
 			<div id='producto_tipo'>
@@ -108,11 +109,9 @@ if($id>0){
 						<label for='saldo'>Saldo</label>
 						<input type='text' placeholder='Saldo' id='saldo' name='saldo' value='<?php echo $saldo; ?>' class='form-control' autocomplete=off>
 					</div>
-
 				</div>
 
 				<div class='row'>
-
 					<div class='col-4'>
 						<label for='despacho'>% Despacho</label>
 						<input type='text' placeholder='Despacho' id='despacho' name='despacho' value='<?php echo $despacho; ?>' class='form-control retorno' autocomplete=off>
@@ -127,12 +126,7 @@ if($id>0){
 						<label for='saldo'>Saldo</label>
 						<input type='text' placeholder='Saldo' id='saldodesp' name='saldodesp' value='<?php echo $saldodesp; ?>' class='form-control' autocomplete=off>
 					</div>
-
 				</div>
-
-
-
-
 			</div>
 
 		</div>
