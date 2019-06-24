@@ -1,6 +1,7 @@
 <?php
 	require_once("db_operaciones.php");
 	$id=$_REQUEST['id'];
+	$tipo=$_REQUEST['tipo'];
 
 
 	//$row = $comision->comision_imprime($idcomision);
