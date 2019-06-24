@@ -168,8 +168,10 @@ $empresa=$db->empresa($idempresa);
 										echo "<td>";
 										echo "<div class='btn-group'>";
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idfactura']."' data-id2='$id' data-lugar='a_operaciones/form_factura'><i class='fas fa-pencil-alt'></i></button>";
-										echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_factura' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$key['idfactura']."' data-funcion='borrar_factura' data-iddest='$id'><i class='far fa-trash-alt'></i></i></button>";
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='imprimir_formato' title='Imprimir' data-lugar='a_operaciones/imprimir' data-tipo='1'><i class='far fa-file-pdf'></i></button>";
+										echo "<button class='btn btn-outline-danger btn-sm' id='eliminar_factura' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$key['idfactura']."' data-funcion='borrar_factura' data-iddest='$id'>
+										<i class='far fa-trash-alt' style='color:red'></i></button>";
+
 										echo "</div>";
 										echo "</td>";
 

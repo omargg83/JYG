@@ -1,19 +1,27 @@
 <?php
 	require_once("db_operaciones.php");
-	$idcomision=$_REQUEST['id'];
-	$tipo=$_REQUEST['tipo'];
+	$id=$_REQUEST['id'];
+
 
 	//$row = $comision->comision_imprime($idcomision);
 
-	if($tipo==1){			/////////////////Narrativo
+	if($tipo==1){			/////////////////solicitud factura
+		$row=$db->facturas_edit($id);
+
     set_include_path('../librerias15/pdf2/src/'.PATH_SEPARATOR.get_include_path());
     include 'Cezpdf.php';
     $pdf = new Cezpdf('letter','portrait','color',array(255,255,255));
     $pdf->selectFont('../librerias15/fonts/Courier');
+		//$pdf->addJpegFromFile("../img/ssh.jpg",56,528,70);
 
-    $pdf->addText(0,510,12,"<b>SERVICIOS DE SALUD DE HIDALGO</b>",800,'center');
-    $pdf->addText(0,495,12,"<b>FORMATO ÚNICO DE COMISIÓN</b>",800,'center');
-    $pdf->addText(0,480,12,"<b>INFORME NARRATIVO</b>",800,'center');
+		$pdf->addPngFromFile("formato.png",27,0,555);
+		$pdf->addText(0,730,16,"<b>FORMATO DE SOLICITUD DE FACTURA</b>",600,'center');
+
+		$x=665;
+		$pdf->addText(40,$x-=15,12,"RAZON SOCIAL:",200,'left');
+		$pdf->addText(40,$x-=15,12,"R.F.C.:",200,'left');
+		$pdf->addText(40,$x-=15,12,"REGIMEN FISCAL:",200,'left');
+
 /*
 		$pdf->addJpegFromFile("../img/ssh.jpg",56,528,70);
 		$pdf->addJpegFromFile("../img/gobierno.jpg",360,540,85);
