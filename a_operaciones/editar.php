@@ -8,17 +8,15 @@ if($id>0){
 	$pers = $db->operacion_edit($id);
 	$fact = $db->facturas($id);
 	$ret = $db->retorno($id);
+
 	$idempresa=$pers['idempresa'];
-
-
 	$fecha=fecha($pers['fecha']);
 	$monto=$pers['monto'];
 	$idrazon=$pers['idrazon'];
 	$idempresa=$pers['idempresa'];
 	$disabled="";
-
-	$bloqueo=count($fact);
 	$idpersonal=$pers['idpersona'];
+	$bloqueo=count($fact);
 }
 else{
 	$disabled=0;
@@ -39,20 +37,34 @@ if(strlen($idrazon)==0 or strlen($idempresa)==0){
 if($bloqueo>0 ){
 	$readonly="readonly";
 }
+$ejecutivo=$db->personal_edit($idpersonal);
+
 $cli=$db->razon($idrazon);
 $empresa=$db->empresa($idempresa);
-$ejecutivo=$db->personal_edit($idpersonal);
 $nombre=$ejecutivo['nombre'];
 ?>
 <div id="accordion">
 	<div class='container'>
 		<div class="card">
 			<form action="" id="form_operacion" data-lugar="a_operaciones/db_operaciones" data-funcion="guardar_operacion" data-destino='a_operaciones/editar'>
-				<input type="hidden" id="idrazon" name="idrazon" value="<?php echo $idrazon; ?>" class="form-control">
-				<input type="hidden" id="idempresa" name="idempresa" value="<?php echo $idempresa; ?>" class="form-control">
-				<div class="card-header">
-					<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
+				<div class="card-header bg-light">
+					<div class='btn-group'>
+						<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
+						<?php
+							if($id>0){
+								if($idrazon>0){
+									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
+								}
+								if($idempresa>0){
+									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='$idempresa' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
+								}
+							}
+						?>
+						<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
+					</div>
+					<hr>
 					#<?php echo $id; ?> Operación
+
 				</div>
 				<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 					<div class="card-body">
@@ -119,18 +131,9 @@ $nombre=$ejecutivo['nombre'];
 								<div class="btn-group">
 									<?php
 									if($bloqueo==0){
-										echo "<button class='btn btn-outline-secondary btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
-									}
-									if($id>0){
-										if($idrazon>0){
-											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura'><i class='fas fa-file-invoice'></i>+ Factura</button>";
-										}
-										if($idempresa>0){
-											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='$idempresa' data-lugar='a_operaciones/form_retorno'><i class='fas fa-exchange-alt'></i>+ Retorno</button>";
-										}
+										echo "<button class='btn btn-outline-danger btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
 									}
 									?>
-									<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
 								</div>
 							</div>
 						</div>
@@ -140,10 +143,12 @@ $nombre=$ejecutivo['nombre'];
 
 			<!--............................................inicio facturas...................................... -->
 			<div class="card-header">
-				<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
+				<div class='btn-group'>
+					<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
+				</div>
 				Facturas
 			</div>
-			<div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+			<div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 				<div class="card-body">
 					<div class="row" id='facturas'>
 						<div class="content table-responsive table-full-width">
@@ -269,11 +274,6 @@ $nombre=$ejecutivo['nombre'];
 									?>
 								</tbody>
 							</table>
-
-							<?php
-							echo "Total";
-							echo moneda($suma);
-							?>
 						</div>
 					</div>
 				</div>
@@ -284,7 +284,7 @@ $nombre=$ejecutivo['nombre'];
 				<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapsetres" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
 				Retornos
 			</div>
-			<div id="collapsetres" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+			<div id="collapsetres" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 				<div class="card-body">
 					<div class="row" id='retornos'>
 						<div class="content table-responsive table-full-width">
@@ -334,13 +334,10 @@ $nombre=$ejecutivo['nombre'];
 			<!--...........................................FIN RETORNO ...................................... -->
 
 			<div class="card-header">
-				<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapsecuatro" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
 				Resumen
 			</div>
-			<div id="collapsecuatro" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-				<div class="card-body">
-					resumen
-				</div>
+			<div class="card-body">
+				resumen
 			</div>
 		</div>
 	</div>
