@@ -12,12 +12,25 @@ $idrazon=$pers['idrazon'];
 $razon = $db->razon($idrazon);
 $comision=$db->comisionista($razon['idcliente']);
 
-
-echo print_r($comision);
 $row=$db->retorno_edit($id);
 $saldodesp=$row['saldodesp'];
 
 echo $saldodesp;
+
+echo "<table class='table table-sm'>";
+	echo "<tr>";
+	echo "</tr>";
+	foreach($comision as $key){
+		echo "<tr>";
+			echo "<td>";
+			echo $key['comisionista'];
+			echo "</td>";
+		echo "</tr>";
+	}
+
+echo "</table>";
+
+
 
 ?>
 
