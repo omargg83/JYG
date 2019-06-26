@@ -1,6 +1,5 @@
 <?php
 require_once("db_.php");
-
 $id=$_REQUEST['id'];
 $pd=$db->razon($id);
 
@@ -21,9 +20,9 @@ foreach($pd as $key){
 
 	echo "<td>";
 	if(strlen($key['acta'])<2 or !file_exists("../".$db->doc.trim($key['acta']))){
-		echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar logo' data-toggle='modal' data-target='#myModal'
+		echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar acta' data-toggle='modal' data-target='#myModal'
 		id='fileup_logo' data-ruta='".$db->doc."' data-tabla='clientes_razon' data-campo='acta' data-tipo='1' data-id='$id' data-keyt='idrazon'
-		data-destino='a_clientes/editar' data-iddest='$id' data-ext='.pdf' ><i class='fas fa-cloud-upload-alt'></i></button>";
+		data-destino='a_clientes/lista_razon' data-iddest='$id' data-div='razon' data-ext='.pdf' ><i class='fas fa-cloud-upload-alt'></i></button>";
 	}
 	else{
 		echo "<div class='btn-group' role='group'>";
