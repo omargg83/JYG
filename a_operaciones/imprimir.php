@@ -8,6 +8,9 @@
 
 	if($tipo==1){			/////////////////solicitud factura
 		$row=$db->facturas_edit($id);
+		$pers = $db->operacion_edit($id);
+			$idrazon=$pers['idrazon'];
+		$cli=$db->razon($idrazon);
 
     set_include_path('../librerias15/pdf2/src/'.PATH_SEPARATOR.get_include_path());
     include 'Cezpdf.php';
@@ -16,13 +19,24 @@
 		//$pdf->addJpegFromFile("../img/ssh.jpg",56,528,70);
 
 		$pdf->addPngFromFile("formato.png",27,0,555);
-		$pdf->addText(0,730,16,"<b>FORMATO DE SOLICITUD DE FACTURA</b>",600,'center');
+	/*	$pdf->addText(0,730,16,"<b>FORMATO DE SOLICITUD DE FACTURA</b>",600,'center'); */
 
 		$x=665;
-		$pdf->addText(40,$x-=15,12,"RAZON SOCIAL:",200,'left');
-		$pdf->addText(40,$x-=15,12,"R.F.C.:",200,'left');
-		$pdf->addText(40,$x-=15,12,"REGIMEN FISCAL:",200,'left');
-
+		$pdf->addText(170,$x-=45,12,$cli['razon'],200,'left');
+		$pdf->addText(170,$x-=20,12,"R.F.C.:",200,'left');
+		$pdf->addText(170,$x-=20,12,"REGIMEN FISCAL:",200,'left');
+		$pdf->addText(170,$x-=20,12,"USO FACTURA:",200,'left');
+		$pdf->addText(170,$x-=20,12,"FECHA",200,'left');
+		$pdf->addText(170,$x-=20,12,"CALLE",200,'left');
+		$pdf->addText(170,$x-=20,12,"COLONIA",200,'left');
+		$pdf->addText(350,500,12,"CODIGO",200,'right');
+		$pdf->addText(170,$x-=20,12,"DELEGACION",200,'left');
+		$pdf->addText(170,$x-=20,12,"CIUDAD",200,'left');
+		$pdf->addText(170,$x-=20,12,"ESTADO",200,'left');
+		$pdf->addText(170,$x-=47,12,"EMPRESA FACT",200,'left');
+		$pdf->addText(170,$x-=20,12,"DEPOSITO",200,'left');
+		$pdf->addText(390,373,12,"FORMA",200,'rigth');
+		$pdf->addText(170,$x-=20,12,"FECHA2",200,'left');
 /*
 		$pdf->addJpegFromFile("../img/ssh.jpg",56,528,70);
 		$pdf->addJpegFromFile("../img/gobierno.jpg",360,540,85);
