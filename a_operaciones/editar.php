@@ -11,22 +11,38 @@ if($id>0){
 
 	$idempresa=$pers['idempresa'];
 	$fecha=fecha($pers['fecha']);
+	
+	$subtotal=$pers['subtotal'];
+	$iva=$pers['iva'];
 	$monto=$pers['monto'];
+	$comision=$pers['comision'];
+	$creal=$pers['creal'];
+	$retorno=$pers['retorno'];
+	$esquema=$pers['esquema'];
 	$idrazon=$pers['idrazon'];
+	$tcomision=$pers['tcomision'];
 	$idempresa=$pers['idempresa'];
 	$disabled="";
 	$idpersonal=$pers['idpersona'];
 	$bloqueo=count($fact);
+
 }
 else{
 	$disabled=0;
 	$disabled='disabled';
 	$monto="";
+	$subtotal="";
+	$iva="";
 	$bloqueo=0;
 	$idrazon="";
 	$idempresa="";
 	$fecha=date("d-m-Y");
 	$idpersonal=$_SESSION['idpersona'];
+	$comision=0;
+	$esquema=0;
+	$creal=0;
+	$retorno=0;
+	$tcomision=0;
 }
 $readonly="";
 
@@ -76,21 +92,34 @@ $empresa=$db->empresa($idempresa);
 								<input type="text" placeholder="Número" id="id" name="id" value="<?php echo $id; ?>" class="form-control" readonly>
 							</div>
 
-							<div class="col-3">
+							<div class="col-2">
 								<label for="fecha">Fecha</label>
 								<input type="text" placeholder="Fecha" id="fecha" name="fecha" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off <?php echo $readonly; ?> >
 							</div>
 
-							<div class="col-3">
-								<label for="monto">Monto</label>
-								<input type="number" step='any' placeholder="Monto" id="monto" name="monto" value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
-							</div>
-
-							<div class="col-4">
+							<div class="col-8">
 								<label for="ejecutivo">Ejecutivo</label>
 								<input type="text" placeholder="Ejecutivo" id="ejecutivo" name="ejecutivo" value="<?php echo $nombre; ?>" class="form-control" autocomplete=off readonly >
 							</div>
 						</div>
+
+						<div class="row">
+							<div class="col-4">
+								<label for="monto">Monto</label>
+								<input type="number" step='any' placeholder="Monto" id="monto" name="monto" onchange='opersuma()' value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
+							</div>
+
+							<div class="col-4">
+								<label for="subtotal">Subtotal</label>
+								<input type="number" step='any' placeholder="Subtotal" id="subtotal" name="subtotal" onchange='opersuma()' value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
+							</div>
+
+							<div class="col-4">
+								<label for="iva">Iva</label>
+								<input type="number" step='any' placeholder="Iva" id="iva" name="iva" onchange='opersuma()' value="<?php echo $iva; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
+							</div>
+						</div>
+
 						<div class='row'>
 							<?php
 							if($id>0){
@@ -124,6 +153,42 @@ $empresa=$db->empresa($idempresa);
 							}
 							?>
 						</div>
+
+						<div class='row'>
+							<div class="col-2">
+								<label for="comision">Comisión pactada</label>
+								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+							<div class="col-2">
+								<label for="creal">Comisión real</label>
+								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+							<div class="col-4">
+								<label for="Esquema">Esquema</label>
+								<?php
+									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()'>";
+										echo "<option selected disabled>Seleccione una opción</option>";
+										echo "<option value='1' "; if ($esquema==1) { echo "selected";} echo ">1. Total</option>";
+										echo "<option value='2' "; if ($esquema==2) { echo "selected";} echo ">2. Subtotal</option>";
+										echo "<option value='3' "; if ($esquema==3) { echo "selected";} echo ">3. Total + Iva</option>";
+										echo "<option value='4' "; if ($esquema==4) { echo "selected";} echo ">4. Subtotal + Iva</option>";
+										echo "<option value='5' "; if ($esquema==5) { echo "selected";} echo ">5. Retorno</option>";
+									echo "</select>";
+								?>
+							</div>
+							<div class="col-2">
+								<label for="tcomision">Comisión</label>
+								<input type="text" placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+							<div class="col-2">
+								<label for="retorno">Retorno</label>
+								<input type="text" placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+						</div>
+
 						<div class="row">
 							<div class="col-12">
 								<div class="btn-group">

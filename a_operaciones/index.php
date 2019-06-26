@@ -22,6 +22,59 @@
 	echo "</div>";
 ?>
 <script type="text/javascript">
+	function opersuma(){
+		var monto=parseFloat($("#monto").val());
+		if (isNaN(monto)){
+			monto=0;
+			$("#monto").val(0);
+		}
+		var subtotal=Math.round((monto/1.16)*100)/100;
+		$("#subtotal").val(subtotal);
+		var iva=Math.round((subtotal*.16)*100)/100;
+		$("#iva").val(iva);
+	}
+
+	function retornooper(){
+		var monto=parseFloat($("#monto").val());
+		var subtotal=parseFloat($("#subtotal").val());
+		var iva=parseFloat($("#iva").val());
+		var esquema=$("#esquema").val();
+		var com=parseInt($("#comision").val());
+		var gtotal=0;
+
+		var creal=parseInt($("#creal").val());
+		if(creal>0){
+			com=creal;
+		}
+
+		if(esquema==1){
+			gtotal=(monto*com)/100;
+			$("#tcomision").val(gtotal);
+			retorno=monto-gtotal;
+			$("#retorno").val(retorno);
+		}
+		if(esquema==2){
+			gtotal=(subtotal*com)/100;
+			$("#tcomision").val(gtotal);
+
+			retorno=monto-gtotal;
+			$("#retorno").val(retorno);
+		}
+		if(esquema==3){
+			gtotal=iva+((monto*com)/100);
+			$("#tcomision").val(gtotal);
+			retorno=monto-gtotal;
+			$("#retorno").val(retorno);
+		}
+		if(esquema==4){
+			gtotal=iva+((subtotal*com)/100);
+			$("#tcomision").val(gtotal);
+
+			retorno=monto-gtotal;
+			$("#retorno").val(retorno);
+		}
+	}
+
 	function desgloce(){
 		var monto=parseFloat($("#monto_fact").val());
 		if (isNaN(monto)){

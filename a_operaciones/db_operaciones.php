@@ -372,7 +372,12 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['monto'])){
 			$arreglo+=array('monto'=>$_REQUEST['monto']);
 		}
-
+		if (isset($_REQUEST['subtotal'])){
+			$arreglo+=array('subtotal'=>$_REQUEST['subtotal']);
+		}
+		if (isset($_REQUEST['iva'])){
+			$arreglo+=array('iva'=>$_REQUEST['iva']);
+		}
 		if (isset($_REQUEST['idrazon']) and strlen($_REQUEST['idrazon'])>0){
 			$arreglo+=array('idrazon'=>$_REQUEST['idrazon']);
 		}
@@ -385,7 +390,21 @@ class Operaciones extends Sagyc{
 		else{
 			$arreglo+=array('idempresa'=>null);
 		}
-
+		if (isset($_REQUEST['comision'])){
+			$arreglo+=array('comision'=>$_REQUEST['comision']);
+		}
+		if (isset($_REQUEST['esquema'])){
+			$arreglo+=array('esquema'=>$_REQUEST['esquema']);
+		}
+		if (isset($_REQUEST['retorno'])){
+			$arreglo+=array('retorno'=>$_REQUEST['retorno']);
+		}
+		if (isset($_REQUEST['creal'])){
+			$arreglo+=array('creal'=>$_REQUEST['creal']);
+		}
+		if (isset($_REQUEST['tcomision'])){
+			$arreglo+=array('tcomision'=>$_REQUEST['tcomision']);
+		}
 		if($id==0){
 			$arreglo+=array('idpersona'=>$_SESSION['idpersona']);
 			$x.=$this->insert('operaciones', $arreglo);
