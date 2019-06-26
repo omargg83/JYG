@@ -82,9 +82,9 @@
 			$("#monto_fact").val(0);
 		}
 		var subtotal=Math.round((monto/1.16)*100)/100;
-		$("#subtotal").val(subtotal);
+		$("#subtotal_fact").val(subtotal);
 		var iva=Math.round((subtotal*.16)*100)/100;
-		$("#iva").val(iva);
+		$("#iva_fact").val(iva);
 	}
 	function seleccomision(xyId){
  		var idoperacion = $("#id").val();

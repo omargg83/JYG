@@ -75,12 +75,12 @@ else{
 
 			<div class="col-4">
 				<label>Iva</label>
-				<input type="text" placeholder="Iva" id="iva" name="iva" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
+				<input type="text" placeholder="Iva" id="iva_fact" name="iva_fact" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
 			<div class="col-4">
 				<label>Subtotal</label>
-				<input type="text" placeholder="Subtotal" id="subtotal" name="subtotal" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
+				<input type="text" placeholder="Subtotal" id="subtotal_fact" name="subtotal_fact" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
 			</div>
 
 		</div>

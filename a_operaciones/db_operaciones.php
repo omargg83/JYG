@@ -434,12 +434,12 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('monto'=>$_REQUEST['monto_fact']);
 		}
 
-		if (isset($_REQUEST['subtotal'])){
-			$arreglo+=array('subtotal'=>$_REQUEST['subtotal']);
+		if (isset($_REQUEST['subtotal_fact'])){
+			$arreglo+=array('subtotal'=>$_REQUEST['subtotal_fact']);
 		}
 
-		if (isset($_REQUEST['iva'])){
-			$arreglo+=array('iva'=>$_REQUEST['iva']);
+		if (isset($_REQUEST['iva_fact'])){
+			$arreglo+=array('iva'=>$_REQUEST['iva_fact']);
 		}
 
 		if (isset($_REQUEST['uso'])){

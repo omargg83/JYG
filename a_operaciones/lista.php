@@ -13,8 +13,8 @@
 			<th>Fecha</th>
 			<th>Cliente</th>
 			<th>Razon</th>
-			<th>Empresa</th>
 			<th>Despacho</th>
+			<th>Empresa</th>
 			<th>Monto</th>
 			</tr>
 			</thead>
@@ -34,7 +34,7 @@
 					echo "<td>";
 					echo fecha($pd[$i]["fecha"]);
 					echo "</td>";
-					
+
 					echo "<td>";
 					echo $pd[$i]["cliente"];
 					echo "</td>";
