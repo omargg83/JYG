@@ -168,7 +168,7 @@ $empresa=$db->empresa($idempresa);
 							<div class="col-3">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
-									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()'>";
+									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' <?php echo $readonly; ?> >";
 										echo "<option selected disabled>Seleccione una opción</option>";
 										echo "<option value='1' "; if ($esquema==1) { echo "selected";} echo ">1. Total</option>";
 										echo "<option value='2' "; if ($esquema==2) { echo "selected";} echo ">2. Subtotal</option>";

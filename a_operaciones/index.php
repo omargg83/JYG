@@ -75,6 +75,26 @@ require_once("db_operaciones.php");
 			retorno=monto-gtotal;
 			$("#retorno").val(retorno);
 		}
+		if(esquema==5){
+			$("#tcomision").val(0);
+			$("#retorno").val(0);
+		}
+	}
+
+	function retornoret(){
+
+		var monto=parseFloat($("#monto_r").val());
+		var com=parseInt($("#comision_r").val());
+		var gtotal=0;
+
+		var creal=parseInt($("#creal_r").val());
+		if(creal>0){
+			com=creal;
+		}
+		gtotal=(monto*com)/100;
+		$("#tcomision_r").val(gtotal);
+		retorno=monto-gtotal;
+		$("#retorno_r").val(retorno);
 	}
 
 	function desgloce(){

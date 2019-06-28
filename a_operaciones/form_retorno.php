@@ -10,6 +10,7 @@ if (isset($_REQUEST['id2'])){
 $pers = $db->operacion_edit($id2);
 $idempresa=$pers['idempresa'];
 $idrazon=$pers['idrazon'];
+$esquema=$pers['esquema'];
 
 $despa=$db->empresa_despacho($idempresa);
 $iddespacho=$despa['iddespacho'];
@@ -54,15 +55,16 @@ if($id>0){
 			<div class='row'>
 				<div class="col-4">
 					<label for="fecha_fact">Fecha de retorno</label>
-					<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off>
+					<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off onchange="retornoret()">
 				</div>
 				<div class="col-4">
 					<label for="monto">Monto a retornar</label>
-					<input type="text" placeholder="Retorno" id="monto_r" name="monto_r" value="<?php echo $monto; ?>" class="form-control retorno" autocomplete=off>
+					<input type="text" placeholder="Retorno" id="monto_r" name="monto_r" value="<?php echo $monto; ?>" class="form-control retorno" autocomplete=off onchange="retornoret()">
 				</div>
+
 				<div class="col-4">
 					<label for="monto">Producto</label>
-					<select id='idproducto_selx' name='idproducto_selx' class="form-control retorno">
+					<select id='idproducto_selx' name='idproducto_selx' class="form-control" onchange="retornoret()">
 						<option selected disabled>Seleccione una opcion</option>
 						<?php
 						foreach($prod as $val){
@@ -74,59 +76,35 @@ if($id>0){
 			</div>
 
 			<div id='producto_tipo'>
+				<?php
+					if($esquema==5){
+				?>
+
 				<div class='row'>
-
-					<div class='col-4'>
-						<label for='pventa'>% de venta pactado</label>
-						<input type='text' placeholder='Porcentaje' id='pventa' name='pventa' value='<?php echo $pventa; ?>' class='form-control' autocomplete=off readonly>
+					<div class='col-3'>
+						<label for='comision_r'>Comisión Cli./Desp.</label>
+						<input type='text' placeholder='Comisión' id='comision_r' name='comision_r' value='<?php echo $pventa; ?>' class='form-control' autocomplete=off onchange="retornoret()" >
 					</div>
 
-					<div class='col-4'>
-						<label for='monto_retorno'>Monto a retornar</label>
-						<input type='text' placeholder='monto' id='monto_retorno' name='monto_retorno' value='<?php echo $monto_retorno; ?>' class='form-control' autocomplete=off >
+					<div class='col-3'>
+						<label for='creal_r'>Comisión J&G</label>
+						<input type='text' placeholder='Comisión' id='creal_r' name='creal_r' value='<?php echo $pventa; ?>' class='form-control' autocomplete=off onchange="retornoret()">
 					</div>
 
-					<div class='col-4'>
-						<label for='comision'>Comisión</label>
-						<input type='text' placeholder='Comisión' id='comision' name='comision' value='<?php echo $comision; ?>' class='form-control' autocomplete=off >
+					<div class='col-3'>
+						<label for='tcomision_r'>Comisión</label>
+						<input type='text' placeholder='Comisión' id='tcomision_r' name='tcomision_r' value='<?php echo $comision; ?>' class='form-control' autocomplete=off >
+					</div>
+
+					<div class='col-3'>
+						<label for='retorno_r'>Retorno</label>
+						<input type='text' placeholder='Retorno' id='retorno_r' name='retorno_r' value='<?php echo $retorno; ?>' class='form-control' autocomplete=off >
 					</div>
 
 				</div>
-
-				<div class='row'>
-
-					<div class='col-4'>
-						<label for='pikito'>% Pikito</label>
-						<input type='text' placeholder='% Pikito' id='pikito' name='pikito' value='<?php echo $pikito; ?>' class='form-control retorno' autocomplete=off>
-					</div>
-
-					<div class='col-4'>
-						<label for='monto_pikito'>Pikito</label>
-						<input type='text' placeholder='Pikito' id='monto_pikito' name='monto_pikito' value='<?php echo $monto_pikito; ?>' class='form-control' autocomplete=off>
-					</div>
-
-					<div class='col-4'>
-						<label for='saldo'>Saldo</label>
-						<input type='text' placeholder='Saldo' id='saldo' name='saldo' value='<?php echo $saldo; ?>' class='form-control' autocomplete=off>
-					</div>
-				</div>
-
-				<div class='row'>
-					<div class='col-4'>
-						<label for='despacho'>% Despacho</label>
-						<input type='text' placeholder='Despacho' id='despacho' name='despacho' value='<?php echo $despacho; ?>' class='form-control retorno' autocomplete=off>
-					</div>
-
-					<div class='col-4'>
-						<label for='monto_despacho'>Monto despacho</label>
-						<input type='text' placeholder='Monto despacho' id='monto_despacho' name='monto_despacho' value='<?php echo $monto_despacho; ?>' class='form-control' autocomplete=off readonly>
-					</div>
-
-					<div class='col-4'>
-						<label for='saldo'>Saldo</label>
-						<input type='text' placeholder='Saldo' id='saldodesp' name='saldodesp' value='<?php echo $saldodesp; ?>' class='form-control' autocomplete=off>
-					</div>
-				</div>
+				<?php
+					}
+			 ?>
 			</div>
 
 		</div>
