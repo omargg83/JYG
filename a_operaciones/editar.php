@@ -11,7 +11,7 @@ if($id>0){
 
 	$idempresa=$pers['idempresa'];
 	$fecha=fecha($pers['fecha']);
-	
+
 	$subtotal=$pers['subtotal'];
 	$iva=$pers['iva'];
 	$monto=$pers['monto'];
@@ -156,17 +156,17 @@ $empresa=$db->empresa($idempresa);
 
 						<div class='row'>
 							<div class="col-2">
-								<label for="comision">Comisión pactada</label>
+								<label for="comision">Comisión Cli./Desp.</label>
 								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
 							</div>
 
 							<div class="col-2">
-								<label for="creal">Comisión real</label>
+								<label for="creal">Comisión J&G</label>
 								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
 							</div>
 
-							<div class="col-4">
-								<label for="Esquema">Esquema</label>
+							<div class="col-3">
+								<label for="Esquema">Tipo de Comisión</label>
 								<?php
 									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()'>";
 										echo "<option selected disabled>Seleccione una opción</option>";
@@ -174,7 +174,7 @@ $empresa=$db->empresa($idempresa);
 										echo "<option value='2' "; if ($esquema==2) { echo "selected";} echo ">2. Subtotal</option>";
 										echo "<option value='3' "; if ($esquema==3) { echo "selected";} echo ">3. Total + Iva</option>";
 										echo "<option value='4' "; if ($esquema==4) { echo "selected";} echo ">4. Subtotal + Iva</option>";
-										echo "<option value='5' "; if ($esquema==5) { echo "selected";} echo ">5. Retorno</option>";
+										echo "<option value='5' "; if ($esquema==5) { echo "selected";} echo ">5. Al hacer el Retorno</option>";
 									echo "</select>";
 								?>
 							</div>

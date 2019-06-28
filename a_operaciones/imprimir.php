@@ -9,7 +9,7 @@
 	if($tipo==1){			/////////////////solicitud factura
 		$row=$db->facturas_edit($id);
 		$pers = $db->operacion_edit($id);
-			$idrazon=$pers['idrazon'];
+		$idrazon=$pers['idrazon'];
 		$cli=$db->razon($idrazon);
 
     set_include_path('../librerias15/pdf2/src/'.PATH_SEPARATOR.get_include_path());
