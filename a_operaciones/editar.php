@@ -131,23 +131,21 @@ $empresa=$db->empresa($idempresa);
 							</div>
 
 						<div class="row">
-							<div class="col-4">
+							<div class="col-3">
 								<label for="monto">Monto</label>
 								<input type="number" step='any' placeholder="Monto" id="monto" name="monto" onchange='opersuma()' value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
 							</div>
 
-							<div class="col-4">
+							<div class="col-3">
 								<label for="subtotal">Subtotal</label>
 								<input type="number" step='any' placeholder="Subtotal" id="subtotal" name="subtotal" onchange='opersuma()' value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
 							</div>
 
-							<div class="col-4">
+							<div class="col-3">
 								<label for="iva">Iva</label>
 								<input type="number" step='any' placeholder="Iva" id="iva" name="iva" onchange='opersuma()' value="<?php echo $iva; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
 							</div>
 						</div>
-
-
 
 						<div class='row'>
 							<div class="col-3">
@@ -362,8 +360,8 @@ $empresa=$db->empresa($idempresa);
 										<th>-</th>
 										<th>Fecha</th>
 										<th>Tipo</th>
-										<th>Monto</th>
 										<th>Retorno</th>
+										<th>Monto</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -389,14 +387,16 @@ $empresa=$db->empresa($idempresa);
 										echo "</td>";
 
 										echo "<td>";
+										echo moneda($ret[$i]["retorno"]);
+										echo "</td>";
+
+
+										echo "<td>";
 										$retorno+=$ret[$i]["monto"];
 										echo moneda($ret[$i]["monto"]);
 										echo "</td>";
 
-										echo "<td>";
-									//	$retorno+=$ret[$i]["retorno"];
-										echo moneda($ret[$i]["retorno"]);
-										echo "</td>";
+
 
 
 										echo "</tr>";
@@ -414,20 +414,30 @@ $empresa=$db->empresa($idempresa);
 				Resumen
 			</div>
 			<div class="card-body">
+				<div class='row'>
+
 				<?php
+
+				echo "<div class='col-2'>";
 				echo "Monto de la operación:";
 				echo moneda($monto);
 
+				echo "</div>";
+				echo "<div class='col-2'>";
 				echo "Monto de facturas:";
 				echo moneda($suma);
+				echo "</div>";
 
+				echo "<div class='col-2'>";
 				echo "Monto de retorno:";
 				echo moneda($retorno);
+				echo "</div>";
 
 
 
 
 				?>
+				</div>
 			</div>
 		</div>
 	</div>
