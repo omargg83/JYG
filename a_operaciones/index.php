@@ -78,6 +78,8 @@ require_once("db_operaciones.php");
 		if(esquema==5){
 			$("#tcomision").val(0);
 			$("#retorno").val(0);
+			$("#comision").val(0);
+			$("#creal").val(0);
 		}
 	}
 
@@ -222,7 +224,6 @@ require_once("db_operaciones.php");
 			}
 		}
 	});
-
 	$(document).on('click','#uso_auto tr',function(e){
 			$('#uso').val($(this).find('td:first').html());
 			$("#uso_auto").hide();
@@ -346,18 +347,10 @@ require_once("db_operaciones.php");
 	$(document).on('change','.retorno',function(e){
 			e.preventDefault();
 			e.stopPropagation();
-
 			var xyId = $("#idproducto_selx").val();
-			var monto=$("#monto_r").val();
-			var pikito=$("#pikito").val();
-			var despacho=$("#despacho").val();
-
 
 			$.ajax({
 				data:  {
-					"monto":monto,
-					"pikito":pikito,
-					"despacho":despacho,
 					"idproducto":xyId,
 					"function":"producto_tipo"
 				},
@@ -368,17 +361,10 @@ require_once("db_operaciones.php");
 				},
 				success:  function (response) {
 					var datos = JSON.parse(response);
-					console.log(datos);
-					$("#pventa").val(datos.pventa);
-					$("#comision").val(datos.comision);
-					$("#monto_retorno").val(datos.retorno);
-					$("#monto_pikito").val(datos.monto_pikito);
-					$("#saldo").val(datos.saldo);
-					$("#monto_despacho").val(datos.monto_despacho);
-					$("#saldodesp").val(datos.saldodesp);
+					$("#comision_r").val(datos.pventa);
 				}
 			});
-
+			retornoret();
 
 
 		});

@@ -18,30 +18,21 @@ $prod=$db->producto_despacho($iddespacho);
 
 $fecha=date("d-m-Y");
 $monto=0;
-$pventa=0;
 $idproducto=0;
-$monto_retorno=0;
 $comision=0;
-$pikito=0;
-$monto_pikito=0;
-$saldo=0;
-$despacho=0;
-$monto_despacho=0;
-$saldodesp=0;
+$tcomision=0;
+$creal=0;
+$retorno=0;
+
 if($id>0){
 	$row=$db->retorno_edit($id);
 	$fecha=fecha($row['fecha']);
 	$monto=$row['monto'];
-	$pventa=$row['pventa'];
 	$idproducto=$row['idproducto'];
-	$monto_retorno=$row['monto_retorno'];
 	$comision=$row['comision'];
-	$pikito=$row['pikito'];
-	$monto_pikito=$row['monto_pikito'];
-	$saldo=$row['saldo'];
-	$despacho=$row['despacho'];
-	$monto_despacho=$row['monto_despacho'];
-	$saldodesp=$row['saldodesp'];
+	$tcomision=$row['tcomision'];
+	$creal=$row['creal'];
+	$retorno=$row['retorno'];
 }
 
 ?>
@@ -64,7 +55,7 @@ if($id>0){
 
 				<div class="col-4">
 					<label for="monto">Producto</label>
-					<select id='idproducto_selx' name='idproducto_selx' class="form-control" onchange="retornoret()">
+					<select id='idproducto_selx' name='idproducto_selx' class="form-control retorno" onchange="retornoret()">
 						<option selected disabled>Seleccione una opcion</option>
 						<?php
 						foreach($prod as $val){
@@ -83,17 +74,17 @@ if($id>0){
 				<div class='row'>
 					<div class='col-3'>
 						<label for='comision_r'>Comisión Cli./Desp.</label>
-						<input type='text' placeholder='Comisión' id='comision_r' name='comision_r' value='<?php echo $pventa; ?>' class='form-control' autocomplete=off onchange="retornoret()" >
+						<input type='text' placeholder='Comisión' id='comision_r' name='comision_r' value='<?php echo $comision; ?>' class='form-control' autocomplete=off onchange="retornoret()" >
 					</div>
 
 					<div class='col-3'>
 						<label for='creal_r'>Comisión J&G</label>
-						<input type='text' placeholder='Comisión' id='creal_r' name='creal_r' value='<?php echo $pventa; ?>' class='form-control' autocomplete=off onchange="retornoret()">
+						<input type='text' placeholder='Comisión' id='creal_r' name='creal_r' value='<?php echo $creal; ?>' class='form-control' autocomplete=off onchange="retornoret()">
 					</div>
 
 					<div class='col-3'>
 						<label for='tcomision_r'>Comisión</label>
-						<input type='text' placeholder='Comisión' id='tcomision_r' name='tcomision_r' value='<?php echo $comision; ?>' class='form-control' autocomplete=off >
+						<input type='text' placeholder='Comisión' id='tcomision_r' name='tcomision_r' value='<?php echo $tcomision; ?>' class='form-control' autocomplete=off >
 					</div>
 
 					<div class='col-3'>

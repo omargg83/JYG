@@ -481,63 +481,44 @@ class Operaciones extends Sagyc{
 			$idoperacion=$_REQUEST['idoper_fact'];
 			$arreglo+=array('idoperacion'=>$idoperacion);
 		}
-
 		if (isset($_REQUEST['fecha_fact'])){
 			$fx=explode("-",$_REQUEST['fecha_fact']);
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
-
-		if (isset($_REQUEST['idproducto_selx'])){
-			$arreglo+=array('idproducto'=>$_REQUEST['idproducto_selx']);
-		}
-
 		if (isset($_REQUEST['monto_r'])){
 			$arreglo+=array('monto'=>$_REQUEST['monto_r']);
 		}
-
-		if (isset($_REQUEST['pventa'])){
-			$arreglo+=array('pventa'=>$_REQUEST['pventa']);
+		if (isset($_REQUEST['idproducto_selx'])){
+			$arreglo+=array('idproducto'=>$_REQUEST['idproducto_selx']);
 		}
-
-		if (isset($_REQUEST['monto_retorno'])){
-			$arreglo+=array('monto_retorno'=>$_REQUEST['monto_retorno']);
+		if (isset($_REQUEST['comision_r'])){
+			$arreglo+=array('comision'=>$_REQUEST['comision_r']);
 		}
-
-		if (isset($_REQUEST['comision'])){
-			$arreglo+=array('comision'=>$_REQUEST['comision']);
+		if (isset($_REQUEST['creal_r'])){
+			$arreglo+=array('creal'=>$_REQUEST['creal_r']);
 		}
-
-		if (isset($_REQUEST['pikito'])){
-			$arreglo+=array('pikito'=>$_REQUEST['pikito']);
+		if (isset($_REQUEST['tcomision_r'])){
+			$arreglo+=array('tcomision'=>$_REQUEST['tcomision_r']);
 		}
-
-		if (isset($_REQUEST['monto_pikito'])){
-			$arreglo+=array('monto_pikito'=>$_REQUEST['monto_pikito']);
+		if (isset($_REQUEST['retorno_r'])){
+			$arreglo+=array('retorno'=>$_REQUEST['retorno_r']);
 		}
-
-		if (isset($_REQUEST['saldo'])){
-			$arreglo+=array('saldo'=>$_REQUEST['saldo']);
-		}
-
-		if (isset($_REQUEST['despacho'])){
-			$arreglo+=array('despacho'=>$_REQUEST['despacho']);
-		}
-
-		if (isset($_REQUEST['monto_despacho'])){
-			$arreglo+=array('monto_despacho'=>$_REQUEST['monto_despacho']);
-		}
-
-		if (isset($_REQUEST['saldodesp'])){
-			$arreglo+=array('saldodesp'=>$_REQUEST['saldodesp']);
-		}
-
-
 		if($id==0){
 			$x.=$this->insert('retorno', $arreglo);
 		}
 		else{
 			$x.=$this->update('retorno',array('idretorno'=>$id), $arreglo);
 		}
+
+		$sql="select sum(retorno) as sretorno, sum(tcomision) as scomision from retorno where idoperacion=$idoperacion";
+		$val=$this->general($sql);
+		$arreglo =array();
+		$arreglo+=array('retorno'=>$val[0]['sretorno']);
+		$arreglo+=array('tcomision'=>$val[0]['scomision']);
+		$this->update('operaciones',array('idoperacion'=>$idoperacion), $arreglo);
+
+
+
 		if(is_numeric($x)){
 			return $idoperacion;
 		}
@@ -547,38 +528,12 @@ class Operaciones extends Sagyc{
 	}
 	public function producto_tipo(){
 		$x="";
-
 		$idproducto=$_REQUEST['idproducto'];
-		$monto=$_REQUEST['monto'];
-		$pikito=$_REQUEST['pikito'];
-		$despacho=$_REQUEST['despacho'];
-
 		$val=$this->producto_edit($idproducto);
 		$pventa=$val['pventa'];
-		$producto=$val['producto'];
-
-
-
-		$comision=$monto/$pventa;
-		$retorno=$monto-$comision;
-
-
-		$monto_pikito=($comision*$pikito)/100;
-		$saldo=$comision-$monto_pikito;
-
-		$monto_despacho=($despacho*$saldo)/100;
-		$saldodesp=$saldo-$monto_despacho;
-
-
 
 		$arreglo=array();
 		$arreglo=array('pventa'=>$pventa);
-		$arreglo+=array('comision'=>$comision);
-		$arreglo+=array('retorno'=>$retorno);
-		$arreglo+=array('monto_pikito'=>$monto_pikito);
-		$arreglo+=array('saldo'=>$saldo);
-		$arreglo+=array('monto_despacho'=>$monto_despacho);
-		$arreglo+=array('saldodesp'=>$saldodesp);
 
 		return json_encode($arreglo);
 	}

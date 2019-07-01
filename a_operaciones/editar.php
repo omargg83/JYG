@@ -22,14 +22,11 @@ if($id>0){
 	$idrazon=$pers['idrazon'];
 	$tcomision=$pers['tcomision'];
 	$idempresa=$pers['idempresa'];
-	$disabled="";
 	$idpersonal=$pers['idpersona'];
 	$bloqueo=count($fact);
 
 }
 else{
-	$disabled=0;
-	$disabled='disabled';
 	$monto="";
 	$subtotal="";
 	$iva="";
@@ -45,13 +42,11 @@ else{
 	$tcomision=0;
 }
 $readonly="";
-
-if(strlen($idrazon)==0 or strlen($idempresa)==0){
-	$disabled='disabled';
-}
+$disabled="";
 
 if($bloqueo>0 ){
 	$readonly="readonly";
+	$disabled="disabled";
 }
 $ejecutivo=$db->personal_edit($idpersonal);
 $nombre=$ejecutivo['nombre'];
@@ -101,7 +96,39 @@ $empresa=$db->empresa($idempresa);
 								<label for="ejecutivo">Ejecutivo</label>
 								<input type="text" placeholder="Ejecutivo" id="ejecutivo" name="ejecutivo" value="<?php echo $nombre; ?>" class="form-control" autocomplete=off readonly >
 							</div>
-						</div>
+						</div>	<div class='row'>
+								<?php
+								if($id>0){
+									echo "<div class='col-6'>";
+										echo "<label for='cliente'>Cliente</label>";
+										echo "<div class='input-group mb-3'>";
+											echo "<div class='input-group-prepend'>";
+											if($bloqueo==0){
+												echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_cliente'><i class='fas fa-user-check'></i></button>";
+											}
+											echo "</div>";
+											echo "<select id='idrazon' name='idrazon' class='form-control' required $readonly >";
+												echo "<option value='".$cli['idrazon']."'>".$cli['cliente']." - ".$cli['razon']."</option>";
+											echo "</select>";
+										echo "</div>";
+									echo "</div>";
+
+									echo "<div class='col-6'>";
+										echo "<label for='cliente'>Empresa</label>";
+										echo "<div class='input-group mb-3'>";
+											echo "<div class='input-group-prepend'>";
+											if($bloqueo==0){
+												echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_empresa'><i class='far fa-building'></i></button>";
+											}
+											echo "</div>";
+											echo "<select id='idempresa' name='idempresa' class='form-control' required $readonly >";
+												echo "<option value='".$empresa['idempresa']."'>".$empresa['nombre']." - ".$empresa['razon']."</option>";
+											echo "</select>";
+										echo "</div>";
+									echo "</div>";
+								}
+								?>
+							</div>
 
 						<div class="row">
 							<div class="col-4">
@@ -120,55 +147,13 @@ $empresa=$db->empresa($idempresa);
 							</div>
 						</div>
 
-						<div class='row'>
-							<?php
-							if($id>0){
-								echo "<div class='col-6'>";
-									echo "<label for='cliente'>Cliente</label>";
-									echo "<div class='input-group mb-3'>";
-										echo "<div class='input-group-prepend'>";
-										if($bloqueo==0){
-											echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_cliente'><i class='fas fa-user-check'></i></button>";
-										}
-										echo "</div>";
-										echo "<select id='idrazon' name='idrazon' class='form-control' required $readonly >";
-											echo "<option value='".$cli['idrazon']."'>".$cli['cliente']." - ".$cli['razon']."</option>";
-										echo "</select>";
-									echo "</div>";
-								echo "</div>";
 
-								echo "<div class='col-6'>";
-									echo "<label for='cliente'>Empresa</label>";
-									echo "<div class='input-group mb-3'>";
-										echo "<div class='input-group-prepend'>";
-										if($bloqueo==0){
-											echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_empresa'><i class='far fa-building'></i></button>";
-										}
-										echo "</div>";
-										echo "<select id='idempresa' name='idempresa' class='form-control' required $readonly >";
-											echo "<option value='".$empresa['idempresa']."'>".$empresa['nombre']." - ".$empresa['razon']."</option>";
-										echo "</select>";
-									echo "</div>";
-								echo "</div>";
-							}
-							?>
-						</div>
 
 						<div class='row'>
-							<div class="col-2">
-								<label for="comision">Comisión Cli./Desp.</label>
-								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
-							</div>
-
-							<div class="col-2">
-								<label for="creal">Comisión J&G</label>
-								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
-							</div>
-
 							<div class="col-3">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
-									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' <?php echo $readonly; ?> >";
+									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled>";
 										echo "<option selected disabled>Seleccione una opción</option>";
 										echo "<option value='1' "; if ($esquema==1) { echo "selected";} echo ">1. Total</option>";
 										echo "<option value='2' "; if ($esquema==2) { echo "selected";} echo ">2. Subtotal</option>";
@@ -178,6 +163,18 @@ $empresa=$db->empresa($idempresa);
 									echo "</select>";
 								?>
 							</div>
+
+							<div class="col-3">
+								<label for="comision">Comisión Cli./Desp.</label>
+								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+							<div class="col-2">
+								<label for="creal">Comisión J&G</label>
+								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+
 							<div class="col-2">
 								<label for="tcomision">Comisión</label>
 								<input type="text" placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
@@ -188,6 +185,8 @@ $empresa=$db->empresa($idempresa);
 								<input type="text" placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
 							</div>
 						</div>
+
+
 
 						<div class="row">
 							<div class="col-12">
@@ -364,6 +363,7 @@ $empresa=$db->empresa($idempresa);
 										<th>Fecha</th>
 										<th>Tipo</th>
 										<th>Monto</th>
+										<th>Retorno</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -392,6 +392,12 @@ $empresa=$db->empresa($idempresa);
 										$retorno+=$ret[$i]["monto"];
 										echo moneda($ret[$i]["monto"]);
 										echo "</td>";
+
+										echo "<td>";
+									//	$retorno+=$ret[$i]["retorno"];
+										echo moneda($ret[$i]["retorno"]);
+										echo "</td>";
+
 
 										echo "</tr>";
 									}
