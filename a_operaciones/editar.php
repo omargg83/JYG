@@ -24,7 +24,7 @@ if($id>0){
 	$idempresa=$pers['idempresa'];
 	$idpersonal=$pers['idpersona'];
 	$bloqueo=count($fact);
-
+	$contrato=$pers['contrato'];
 }
 else{
 	$monto="";
@@ -40,6 +40,7 @@ else{
 	$creal=0;
 	$retorno=0;
 	$tcomision=0;
+	$contrato="";
 }
 $readonly="";
 $disabled="";
@@ -149,6 +150,16 @@ $empresa=$db->empresa($idempresa);
 
 						<div class='row'>
 							<div class="col-3">
+								<label for="comision">Comisión Cli./Desp.</label>
+								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+							<div class="col-2">
+								<label for="creal">Comisión J&G</label>
+								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+							<div class="col-3">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
 									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled>";
@@ -161,17 +172,6 @@ $empresa=$db->empresa($idempresa);
 									echo "</select>";
 								?>
 							</div>
-
-							<div class="col-3">
-								<label for="comision">Comisión Cli./Desp.</label>
-								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
-							</div>
-
-							<div class="col-2">
-								<label for="creal">Comisión J&G</label>
-								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
-							</div>
-
 
 							<div class="col-2">
 								<label for="tcomision">Comisión</label>
@@ -193,6 +193,35 @@ $empresa=$db->empresa($idempresa);
 									if($bloqueo==0){
 										echo "<button class='btn btn-outline-danger btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
 									}
+
+
+									if(strlen($key['xml'])<2 or !file_exists("../".$db->doc.trim($key['xml']))){
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
+										id='fileup_logo' data-ruta='".$db->doc."' data-tabla='operaciones' data-campo='contrato' data-tipo='1' data-id='$id' data-keyt='idoperacion'
+										data-destino='a_operaciones/op_facturas' data-iddest='$id' data-ext='.pdf' data-divdest='facturas'><i class='fas fa-cloud-upload-alt'></i>Contrato</button>";
+									}
+									else{
+										echo "<div class='btn-group' role='group'>";
+										echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-paperclip'></i>XML</button>";
+										echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
+										echo "<a class='dropdown-item' href='".$db->doc.trim($contrato)."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
+										echo "<a class='dropdown-item' title='Eliminar archivo'
+										id='delfile_logo'
+										data-ruta='".$db->doc.trim($contrato)."'
+										data-keyt='idoperacion'
+										data-key='id'
+										data-tabla='operaciones'
+										data-campo='contrato'
+										data-tipo='1'
+										data-iddest='$id'
+										data-divdest='facturas'
+										data-borrafile='1'
+										data-dest='a_operaciones/op_facturas.php?id='
+										><i class='far fa-trash-alt'></i>Eliminar</a>";
+										echo "</div>";
+										echo "</div>";
+									}
+
 									?>
 								</div>
 							</div>

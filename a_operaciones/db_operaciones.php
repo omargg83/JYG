@@ -503,6 +503,18 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['retorno_r'])){
 			$arreglo+=array('retorno'=>$_REQUEST['retorno_r']);
 		}
+		if (isset($_REQUEST['folio'])){
+			$arreglo+=array('folio'=>$_REQUEST['folio']);
+		}
+		if (isset($_REQUEST['persona'])){
+			$arreglo+=array('persona'=>$_REQUEST['persona']);
+		}
+		if (isset($_REQUEST['empresa'])){
+			$arreglo+=array('empresa'=>$_REQUEST['empresa']);
+		}
+		if (isset($_REQUEST['lugar'])){
+			$arreglo+=array('lugar'=>$_REQUEST['lugar']);
+		}
 		if($id==0){
 			$x.=$this->insert('retorno', $arreglo);
 		}

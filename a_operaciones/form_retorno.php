@@ -23,6 +23,10 @@ $comision=0;
 $tcomision=0;
 $creal=0;
 $retorno=0;
+$folio="";
+$persona="";
+$empresa="";
+$lugar="";
 
 if($id>0){
 	$row=$db->retorno_edit($id);
@@ -33,6 +37,10 @@ if($id>0){
 	$tcomision=$row['tcomision'];
 	$creal=$row['creal'];
 	$retorno=$row['retorno'];
+	$folio=$row['folio'];
+	$persona=$row['persona'];
+	$empresa=$row['empresa'];
+	$lugar=$row['lugar'];
 }
 
 ?>
@@ -43,16 +51,35 @@ if($id>0){
 	<div class='card'>
 		<div class="card-header">Retornos</div>
 		<div class='card-body'>
+
 			<div class='row'>
 				<div class="col-4">
 					<label for="fecha_fact">Fecha de retorno</label>
 					<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off onchange="retornoret()">
 				</div>
-				<div class="col-4">
-					<label for="monto">Monto a retornar</label>
-					<input type="text" placeholder="Retorno" id="monto_r" name="monto_r" value="<?php echo $monto; ?>" class="form-control retorno" autocomplete=off onchange="retornoret()">
+
+				<div class="col-3">
+					<label for="Folio">Folio:</label>
+					<input type="text" placeholder="Folio" id="folio" name="folio" value="<?php echo $folio; ?>" class="form-control" autocomplete=off onchange="retornoret()">
 				</div>
 
+				<div class="col-5">
+					<label for="persona">Persona:</label>
+					<input type="text" placeholder="Persona" id="persona" name="persona" value="<?php echo $persona; ?>" class="form-control" autocomplete=off onchange="retornoret()">
+				</div>
+
+				<div class="col-6">
+					<label for="empresa">Empresa:</label>
+					<input type="text" placeholder="Empresa" id="empresa" name="empresa" value="<?php echo $empresa; ?>" class="form-control" autocomplete=off onchange="retornoret()">
+				</div>
+
+				<div class="col-6">
+					<label for="lugar">Lugar:</label>
+					<input type="text" placeholder="Lugar" id="lugar" name="lugar" value="<?php echo $lugar; ?>" class="form-control" autocomplete=off onchange="retornoret()">
+				</div>
+			</div>
+
+			<div class='row'>
 				<div class="col-4">
 					<label for="monto">Producto</label>
 					<select id='idproducto_selx' name='idproducto_selx' class="form-control retorno" onchange="retornoret()">
@@ -64,6 +91,12 @@ if($id>0){
 						?>
 					</select>
 				</div>
+
+				<div class="col-4">
+					<label for="monto">Monto a retornar</label>
+					<input type="text" placeholder="Retorno" id="monto_r" name="monto_r" value="<?php echo $monto; ?>" class="form-control retorno" autocomplete=off onchange="retornoret()">
+				</div>
+
 			</div>
 
 			<div id='producto_tipo'>
