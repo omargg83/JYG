@@ -62,25 +62,8 @@ $empresa=$db->empresa($idempresa);
 			<form action="" id="form_operacion" data-lugar="a_operaciones/db_operaciones" data-funcion="guardar_operacion" data-destino='a_operaciones/editar'>
 				<div class="card-header bg-light">
 					#<?php echo $id; ?> Operación <br>
-					<hr>
-					<div class='btn-group'>
-
-						<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
-						<?php
-							if($id>0){
-								if($idrazon>0){
-									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
-								}
-								if($idempresa>0){
-									echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
-								}
-							}
-						?>
-						<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
-					</div>
-
 				</div>
-				<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+
 					<div class="card-body">
 						<div class="row">
 							<div class="col-2">
@@ -99,6 +82,7 @@ $empresa=$db->empresa($idempresa);
 							</div>
 						</div>	<div class='row'>
 								<?php
+
 								if($id>0){
 									echo "<div class='col-6'>";
 										echo "<label for='cliente'>Cliente</label>";
@@ -184,6 +168,8 @@ $empresa=$db->empresa($idempresa);
 							</div>
 						</div>
 
+						<hr>
+
 
 
 						<div class="row">
@@ -193,40 +179,47 @@ $empresa=$db->empresa($idempresa);
 									if($bloqueo==0){
 										echo "<button class='btn btn-outline-danger btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
 									}
+									if($id>0){
+										if($idrazon>0){
+											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
+										}
+										if($idempresa>0){
+											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
+										}
 
-
-									if(strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))){
-										echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
-										id='fileup_logo' data-ruta='".$db->doc."' data-tabla='operaciones' data-campo='contrato' data-tipo='1' data-id='$id' data-keyt='idoperacion'
-										data-destino='a_operaciones/op_facturas' data-iddest='$id' data-ext='.pdf' data-divdest='facturas'><i class='fas fa-cloud-upload-alt'></i>Contrato</button>";
+										if(strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))){
+											echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
+											id='fileup_contrato' data-ruta='".$db->doc."' data-tabla='operaciones' data-campo='contrato' data-tipo='1' data-id='$id' data-keyt='idoperacion'
+											data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Contrato</button>";
+										}
+										else{
+											echo "<div class='btn-group' role='group'>";
+											echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-paperclip'></i>XML</button>";
+											echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
+											echo "<a class='dropdown-item' href='".$db->doc.trim($contrato)."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
+											echo "<a class='dropdown-item' title='Eliminar archivo'
+											id='delfile_contrato'
+											data-ruta='".$db->doc.trim($contrato)."'
+											data-keyt='idoperacion'
+											data-key='$id'
+											data-tabla='operaciones'
+											data-campo='contrato'
+											data-tipo='1'
+											data-iddest='$id'
+											data-divdest='trabajo'
+											data-borrafile='1'
+											data-dest='a_operaciones/editar.php?id='
+											><i class='far fa-trash-alt'></i>Eliminar</a>";
+											echo "</div>";
+											echo "</div>";
+										}
 									}
-									else{
-										echo "<div class='btn-group' role='group'>";
-										echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-paperclip'></i>XML</button>";
-										echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
-										echo "<a class='dropdown-item' href='".$db->doc.trim($contrato)."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
-										echo "<a class='dropdown-item' title='Eliminar archivo'
-										id='delfile_logo'
-										data-ruta='".$db->doc.trim($contrato)."'
-										data-keyt='idoperacion'
-										data-key='id'
-										data-tabla='operaciones'
-										data-campo='contrato'
-										data-tipo='1'
-										data-iddest='$id'
-										data-divdest='facturas'
-										data-borrafile='1'
-										data-dest='a_operaciones/op_facturas.php?id='
-										><i class='far fa-trash-alt'></i>Eliminar</a>";
-										echo "</div>";
-										echo "</div>";
-									}
-
 									?>
+									<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_operaciones/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
 								</div>
 							</div>
 						</div>
-					</div>
+
 				</div>
 			</form>
 
@@ -281,7 +274,7 @@ $empresa=$db->empresa($idempresa);
 										if(strlen($key['trans'])<2 or !file_exists("../".$db->doc.trim($key['trans']))){
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
 											id='fileup_logo' data-ruta='".$db->doc."' data-tabla='facturas' data-campo='trans' data-tipo='1' data-id='".$key['idfactura']."' data-keyt='idfactura'
-											data-destino='a_operaciones/op_facturas' data-iddest='$id' data-ext='.pdf' data-divdest='facturas'><i class='fas fa-cloud-upload-alt'></i>Transf.</button>";
+											data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Transf.</button>";
 										}
 										else{
 											echo "<div class='btn-group' role='group'>";
@@ -297,9 +290,9 @@ $empresa=$db->empresa($idempresa);
 											data-campo='trans'
 											data-tipo='1'
 											data-iddest='$id'
-											data-divdest='facturas'
+											data-divdest='trabajo'
 											data-borrafile='1'
-											data-dest='a_operaciones/op_facturas.php?id='
+											data-dest='a_operaciones/editar.php?id='
 											><i class='far fa-trash-alt'></i>Eliminar</a>";
 											echo "</div>";
 											echo "</div>";
@@ -307,7 +300,7 @@ $empresa=$db->empresa($idempresa);
 										if(strlen($key['timbre'])<2 or !file_exists("../".$db->doc.trim($key['timbre']))){
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
 											id='fileup_logo' data-ruta='".$db->doc."' data-tabla='facturas' data-campo='timbre' data-tipo='1' data-id='".$key['idfactura']."' data-keyt='idfactura'
-											data-destino='a_operaciones/op_facturas' data-iddest='$id' data-ext='.pdf' data-divdest='facturas'><i class='fas fa-cloud-upload-alt'></i>Timbre</button>";
+											data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Timbre</button>";
 										}
 										else{
 											echo "<div class='btn-group' role='group'>";
@@ -323,9 +316,9 @@ $empresa=$db->empresa($idempresa);
 											data-campo='timbre'
 											data-tipo='1'
 											data-iddest='$id'
-											data-divdest='facturas'
+											data-divdest='trabajo'
 											data-borrafile='1'
-											data-dest='a_operaciones/op_facturas.php?id='
+											data-dest='a_operaciones/editar.php?id='
 											><i class='far fa-trash-alt'></i>Eliminar</a>";
 											echo "</div>";
 											echo "</div>";
@@ -333,7 +326,7 @@ $empresa=$db->empresa($idempresa);
 										if(strlen($key['xml'])<2 or !file_exists("../".$db->doc.trim($key['xml']))){
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
 											id='fileup_logo' data-ruta='".$db->doc."' data-tabla='facturas' data-campo='xml' data-tipo='1' data-id='".$key['idfactura']."' data-keyt='idfactura'
-											data-destino='a_operaciones/op_facturas' data-iddest='$id' data-ext='.pdf' data-divdest='facturas'><i class='fas fa-cloud-upload-alt'></i>XML</button>";
+											data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>XML</button>";
 										}
 										else{
 											echo "<div class='btn-group' role='group'>";
@@ -349,9 +342,9 @@ $empresa=$db->empresa($idempresa);
 											data-campo='xml'
 											data-tipo='1'
 											data-iddest='$id'
-											data-divdest='facturas'
+											data-divdest='trabajo'
 											data-borrafile='1'
-											data-dest='a_operaciones/op_facturas.php?id='
+											data-dest='a_operaciones/editar.php?id='
 											><i class='far fa-trash-alt'></i>Eliminar</a>";
 											echo "</div>";
 											echo "</div>";

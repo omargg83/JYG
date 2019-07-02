@@ -586,7 +586,7 @@
 			"borrafile":borrafile,
 			"function":"eliminar_file"
 		};
-
+		console.log(parametros);
 		$.confirm({
 			title: 'Eliminar',
 			content: '¿Desea eliminar el archivo?',
