@@ -195,7 +195,7 @@ $empresa=$db->empresa($idempresa);
 									}
 
 
-									if(strlen($key['xml'])<2 or !file_exists("../".$db->doc.trim($key['xml']))){
+									if(strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))){
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
 										id='fileup_logo' data-ruta='".$db->doc."' data-tabla='operaciones' data-campo='contrato' data-tipo='1' data-id='$id' data-keyt='idoperacion'
 										data-destino='a_operaciones/op_facturas' data-iddest='$id' data-ext='.pdf' data-divdest='facturas'><i class='fas fa-cloud-upload-alt'></i>Contrato</button>";
