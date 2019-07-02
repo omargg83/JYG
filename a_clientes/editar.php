@@ -8,6 +8,14 @@ if($id>0){
 	$contacto=$pers['contacto'];
 	$rfc=$pers['rfc'];
 	$domicilio=$pers['domicilio'];
+
+	$colonia=$pers['colonia'];
+	$ciudad=$pers['ciudad'];
+	$municipio=$pers['municipio'];
+	$estado=$pers['estado'];
+	$cp=$pers['cp'];
+
+
 	$correo=$pers['correo'];
 	$telefono=$pers['telefono'];
 	$idpersona=$pers['idpersona'];
@@ -20,6 +28,13 @@ else{
 	$correo="";
 	$telefono="";
 	$idpersona=$_SESSION['idpersona'];
+
+	$colonia="";
+	$ciudad="";
+	$municipio="";
+	$estado="";
+	$cp="";
+
 }
 echo "<div class='container'>";
 ?>
@@ -45,10 +60,30 @@ echo "<div class='container'>";
 					<input type="text" placeholder="Contacto" id="contacto" name="contacto" value="<?php echo $contacto; ?>" class="form-control" required>
 				</div>
 				<div class="col-6">
-					<label for="domicilio">Domicilio</label>
-					<input type="text" placeholder="Domicilio" id="domicilio" name="domicilio" value="<?php echo $domicilio; ?>" class="form-control">
+					<label for="domicilio">Domicilio (Calle y No.)</label>
+					<input type="text" placeholder="Domicilio (Calle y No.)" id="domicilio" name="domicilio" value="<?php echo $domicilio; ?>" class="form-control">
 				</div>
-				<div class="col-3">
+				<div class="col-6">
+					<label for="colonia">Colonia</label>
+					<input type="text" placeholder="Colonia" id="colonia" name="colonia" value="<?php echo $colonia; ?>" class="form-control">
+				</div>
+				<div class="col-2">
+					<label for="cp">CP</label>
+					<input type="text" placeholder="CP" id="cp" name="cp" value="<?php echo $cp; ?>" class="form-control">
+				</div>
+				<div class="col-5">
+					<label for="ciudad">Ciudad</label>
+					<input type="text" placeholder="Ciudad" id="ciudad" name="ciudad" value="<?php echo $ciudad; ?>" class="form-control">
+				</div>
+				<div class="col-5">
+					<label for="municipio">Municipio</label>
+					<input type="text" placeholder="Municipio" id="municipio" name="municipio" value="<?php echo $municipio; ?>" class="form-control">
+				</div>
+				<div class="col-4">
+					<label for="estado">Estado</label>
+					<input type="text" placeholder="Estado" id="estado" name="estado" value="<?php echo $estado; ?>" class="form-control">
+				</div>
+				<div class="col-5">
 					<label for="correo">Correo</label>
 					<input type="mail" placeholder="Correo electronico" id="correo" name="correo" value="<?php echo $correo; ?>" class="form-control" required>
 				</div>
