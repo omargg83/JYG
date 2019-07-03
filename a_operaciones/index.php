@@ -36,13 +36,13 @@
 		var subtotal=parseFloat($("#subtotal").val());
 		var iva=parseFloat($("#iva").val());
 		var esquema=$("#esquema").val();
-		var com=parseInt($("#comision").val());
+		var com=parseFloat($("#comision").val());
 		var gtotal=0;
 		var retorno=0;
 		var gtotal_r=0;
 		var retorno_r=0;
 
-		var creal=parseInt($("#creal").val());
+		var creal=parseFloat($("#creal").val());
 		if(esquema==1){
 			gtotal=(monto*com)/100;
 			gtotal_r=(monto*creal)/100;
@@ -67,6 +67,7 @@
 		}
 		retorno=monto-gtotal;
 		retorno_r=monto-gtotal_r;
+		
 		$("#tcomision").val(gtotal);
 		$("#retorno").val(retorno);
 
