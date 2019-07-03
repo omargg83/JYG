@@ -1,20 +1,15 @@
 <?php
-require_once("db_operaciones.php");
+	require_once("db_operaciones.php");
 
 	echo "<nav class='navbar navbar-expand-lg navbar-light bg-light '>
-
 	<a class='navbar-brand' ><i class='fas fa-hand-holding-usd'></i> Operaciones</a>
-
 	  <button class='navbar-toggler navbar-toggler-right' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='principal' aria-expanded='false' aria-label='Toggle navigation'>
 		<span class='navbar-toggler-icon'></span>
 	  </button>
 		  <div class='collapse navbar-collapse' id='navbarSupportedContent'>
 			<ul class='navbar-nav mr-auto'>";
 			echo"<li class='nav-item active'><a class='nav-link barranav' title='Mostrar todo' id='lista_comision' data-lugar='a_operaciones/lista'><i class='fas fa-list-ul'></i><span>Lista</span></a></li>";
-
-
 			echo"<li class='nav-item active'><a class='nav-link barranav izq' title='Nuevo' id='new_personal' data-lugar='a_operaciones/editar'><i class='fas fa-plus'></i><span>Nuevo</span></a></li>";
-
 			echo "</ul>";
 		echo "
 	  </div>
@@ -43,48 +38,44 @@ require_once("db_operaciones.php");
 		var esquema=$("#esquema").val();
 		var com=parseInt($("#comision").val());
 		var gtotal=0;
+		var retorno=0;
+		var gtotal_r=0;
+		var retorno_r=0;
 
 		var creal=parseInt($("#creal").val());
-		if(creal>0){
-			com=creal;
-		}
-
 		if(esquema==1){
 			gtotal=(monto*com)/100;
-			$("#tcomision").val(gtotal);
-			retorno=monto-gtotal;
-			$("#retorno").val(retorno);
+			gtotal_r=(monto*creal)/100;
 		}
 		if(esquema==2){
 			gtotal=(subtotal*com)/100;
-			$("#tcomision").val(gtotal);
-
-			retorno=monto-gtotal;
-			$("#retorno").val(retorno);
+			gtotal_r=(subtotal*creal)/100;
 		}
 		if(esquema==3){
 			gtotal=iva+((monto*com)/100);
-			$("#tcomision").val(gtotal);
-			retorno=monto-gtotal;
-			$("#retorno").val(retorno);
+			gtotal_r=iva+((monto*creal)/100);
 		}
 		if(esquema==4){
 			gtotal=iva+((subtotal*com)/100);
-			$("#tcomision").val(gtotal);
-
-			retorno=monto-gtotal;
-			$("#retorno").val(retorno);
+			gtotal_r=iva+((subtotal*creal)/100);
 		}
 		if(esquema==5){
-			$("#tcomision").val(0);
-			$("#retorno").val(0);
+			gtotal=0;
+			retorno=0;
 			$("#comision").val(0);
 			$("#creal").val(0);
 		}
+		retorno=monto-gtotal;
+		retorno_r=monto-gtotal_r;
+		$("#tcomision").val(gtotal);
+		$("#retorno").val(retorno);
+
+
+		$("#tcomision_r").val(gtotal_r);
+		$("#retorno_r").val(retorno_r);
 	}
 
 	function retornoret(){
-
 		var monto=parseFloat($("#monto_r").val());
 		var com=parseInt($("#comision_r").val());
 		var gtotal=0;

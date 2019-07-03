@@ -133,17 +133,17 @@ $empresa=$db->empresa($idempresa);
 						</div>
 
 						<div class='row'>
-							<div class="col-3">
+							<div class="col-4">
 								<label for="comision">Comisión Cli./Desp.</label>
-								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>onchange='retornooper()' >
 							</div>
 
-							<div class="col-2">
+							<div class="col-4">
 								<label for="creal">Comisión J&G</label>
-								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()'>
 							</div>
 
-							<div class="col-3">
+							<div class="col-4">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
 									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled>";
@@ -156,6 +156,8 @@ $empresa=$db->empresa($idempresa);
 									echo "</select>";
 								?>
 							</div>
+						</div>
+						<div class='row'>
 
 							<div class="col-2">
 								<label for="tcomision">Comisión</label>
@@ -166,6 +168,18 @@ $empresa=$db->empresa($idempresa);
 								<label for="retorno">Retorno</label>
 								<input type="text" placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
 							</div>
+
+							<div class="col-2">
+								<label for="tcomision">Comisión 2</label>
+								<input type="text" placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+							<div class="col-2">
+								<label for="retorno">Retorno 2</label>
+								<input type="text" placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+
 						</div>
 
 						<hr>
