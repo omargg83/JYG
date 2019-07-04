@@ -39,6 +39,7 @@
 		var esquema2=$("#esquema2").val();
 		var com=parseFloat($("#comision").val());
 		var creal=parseFloat($("#creal").val());
+		var comdespa=$("#comdespa").val();
 		var gtotal=0;
 		var retorno=0;
 		var gtotal_r=0;
@@ -87,6 +88,16 @@
 
 		$("#tcomision_r").val(gtotal_r.toFixed(2));
 		$("#retorno_r").val(retorno_r.toFixed(2));
+
+		var comdesp=(gtotal*comdespa)/100;
+		$("#comdespa_t").val(comdesp.toFixed(2));
+
+		var tmp=(gtotal-comdesp)+pikito;
+		$("#comisionistas").val(tmp.toFixed(2));
+
+
+
+
 	}
 
 	function retornoret(){

@@ -27,6 +27,11 @@ if($id>0){
 	$bloqueo=count($fact);
 	$contrato=$pers['contrato'];
 	$pikito=$pers['pikito'];
+	$tcomision_r=$pers['tcomision_r'];
+	$retorno_r=$pers['retorno_r'];
+	$comdespa=$pers['comdespa'];
+	$comdespa_t=$pers['comdespa_t'];
+	$comisionistas=$pers['comisionistas'];
 }
 else{
 	$monto="";
@@ -45,6 +50,11 @@ else{
 	$tcomision=0;
 	$contrato="";
 	$pikito="";
+	$tcomision_r="";
+	$retorno_r="";
+	$comdespa="";
+	$comdespa_t="";
+	$comisionistas="";
 }
 $readonly="";
 $disabled="";
@@ -58,6 +68,9 @@ $nombre=$ejecutivo['nombre'];
 
 $cli=$db->razon($idrazon);
 $empresa=$db->empresa($idempresa);
+$comdespa_t=$empresa['comision'];
+
+
 
 ?>
 <div id="accordion">
@@ -138,12 +151,12 @@ $empresa=$db->empresa($idempresa);
 						<hr>
 
 						<div class='row'>
-							<div class="col-2">
-								<label for="comision">Comisión Cli./Desp.</label>
-								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>onchange='retornooper()' >
+							<div class="col-3">
+								<label for="comision">% Comisión Cli/Desp</label>
+								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>onchange='retornooper()' dir='rtl'>
 							</div>
 
-							<div class="col-2">
+							<div class="col-3">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
 									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled>";
@@ -158,12 +171,12 @@ $empresa=$db->empresa($idempresa);
 							</div>
 
 
-							<div class="col-2">
-								<label for="creal">Comisión J&G</label>
+							<div class="col-3">
+								<label for="creal">% Comisión J&G</label>
 								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()'>
 							</div>
 
-							<div class="col-2">
+							<div class="col-3">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
 									echo "<select id='esquema2' name='esquema2' class='form-control' required onchange='retornooper()' $disabled>";
@@ -181,31 +194,52 @@ $empresa=$db->empresa($idempresa);
 
 							<div class="col-2">
 								<label for="tcomision">Comisión</label>
-								<input type="text" placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+								<input type="text" placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 							</div>
 
 							<div class="col-2">
 								<label for="retorno">Retorno</label>
-								<input type="text" placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+								<input type="text" placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 							</div>
 
 							<div class="col-2">
-								<label for="tcomision">Comisión 2</label>
-								<input type="text" placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+
 							</div>
 
 							<div class="col-2">
-								<label for="retorno">Retorno 2</label>
-								<input type="text" placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+								<label for="tcomision">Comisión J&G</label>
+								<input type="text" placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							</div>
+
+							<div class="col-2">
+								<label for="retorno">Retorno J&G</label>
+								<input type="text" placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 							</div>
 
 							<div class="col-2">
 								<label for="pikito">Pikito</label>
-								<input type="text" placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+								<input type="text" placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							</div>
+						</div>
+						<hr>
+
+						<div class='row'>
+							<div class="col-3">
+								<label for="comdespa">% Com. Despacho</label>
+								<input type="text" placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 							</div>
 
+							<div class="col-3">
+								<label for="comdespa_t">Comisión Despacho</label>
+								<input type="text" placeholder="Com. Despacho" id="comdespa_t" name="comdespa_t" value="<?php echo $comdespa_t; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							</div>
 
+							<div class="col-3">
+								<label for="comisionistas">Comisionistas</label>
+								<input type="text" placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							</div>
 						</div>
+
 
 						<hr>
 

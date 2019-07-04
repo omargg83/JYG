@@ -402,14 +402,29 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['retorno'])){
 			$arreglo+=array('retorno'=>$_REQUEST['retorno']);
 		}
+		if (isset($_REQUEST['retorno_r'])){
+			$arreglo+=array('retorno_r'=>$_REQUEST['retorno_r']);
+		}
 		if (isset($_REQUEST['creal'])){
 			$arreglo+=array('creal'=>$_REQUEST['creal']);
 		}
 		if (isset($_REQUEST['tcomision'])){
 			$arreglo+=array('tcomision'=>$_REQUEST['tcomision']);
 		}
+		if (isset($_REQUEST['tcomision_r'])){
+			$arreglo+=array('tcomision_r'=>$_REQUEST['tcomision_r']);
+		}
 		if (isset($_REQUEST['pikito'])){
 			$arreglo+=array('pikito'=>$_REQUEST['pikito']);
+		}
+		if (isset($_REQUEST['comdespa'])){
+			$arreglo+=array('comdespa'=>$_REQUEST['comdespa']);
+		}
+		if (isset($_REQUEST['comdespa_t'])){
+			$arreglo+=array('comdespa_t'=>$_REQUEST['comdespa_t']);
+		}
+		if (isset($_REQUEST['comisionistas'])){
+			$arreglo+=array('comisionistas'=>$_REQUEST['comisionistas']);
 		}
 		if($id==0){
 			$arreglo+=array('idpersona'=>$_SESSION['idpersona']);
