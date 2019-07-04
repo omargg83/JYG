@@ -79,11 +79,14 @@
 
 		retorno=monto-gtotal;
 		retorno_r=monto-gtotal_r;
+		var pikito=gtotal_r-gtotal;
+		$("#pikito").val(pikito.toFixed(2));
 
-		$("#tcomision").val(gtotal);
-		$("#retorno").val(retorno);
-		$("#tcomision_r").val(gtotal_r);
-		$("#retorno_r").val(retorno_r);
+		$("#tcomision").val(gtotal.toFixed(2));
+		$("#retorno").val(retorno.toFixed(2));
+
+		$("#tcomision_r").val(gtotal_r.toFixed(2));
+		$("#retorno_r").val(retorno_r.toFixed(2));
 	}
 
 	function retornoret(){

@@ -26,6 +26,7 @@ if($id>0){
 	$idpersonal=$pers['idpersona'];
 	$bloqueo=count($fact);
 	$contrato=$pers['contrato'];
+	$pikito=$pers['pikito'];
 }
 else{
 	$monto="";
@@ -43,6 +44,7 @@ else{
 	$retorno=0;
 	$tcomision=0;
 	$contrato="";
+	$pikito="";
 }
 $readonly="";
 $disabled="";
@@ -136,12 +138,12 @@ $empresa=$db->empresa($idempresa);
 						<hr>
 
 						<div class='row'>
-							<div class="col-3">
+							<div class="col-2">
 								<label for="comision">Comisión Cli./Desp.</label>
 								<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>onchange='retornooper()' >
 							</div>
 
-							<div class="col-3">
+							<div class="col-2">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
 									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled>";
@@ -156,12 +158,12 @@ $empresa=$db->empresa($idempresa);
 							</div>
 
 
-							<div class="col-3">
+							<div class="col-2">
 								<label for="creal">Comisión J&G</label>
 								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()'>
 							</div>
 
-							<div class="col-3">
+							<div class="col-2">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
 									echo "<select id='esquema2' name='esquema2' class='form-control' required onchange='retornooper()' $disabled>";
@@ -177,24 +179,29 @@ $empresa=$db->empresa($idempresa);
 
 						<div class='row'>
 
-							<div class="col-3">
+							<div class="col-2">
 								<label for="tcomision">Comisión</label>
 								<input type="text" placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
 							</div>
 
-							<div class="col-3">
+							<div class="col-2">
 								<label for="retorno">Retorno</label>
 								<input type="text" placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
 							</div>
 
-							<div class="col-3">
+							<div class="col-2">
 								<label for="tcomision">Comisión 2</label>
 								<input type="text" placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
 							</div>
 
-							<div class="col-3">
+							<div class="col-2">
 								<label for="retorno">Retorno 2</label>
 								<input type="text" placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
+							</div>
+
+							<div class="col-2">
+								<label for="pikito">Pikito</label>
+								<input type="text" placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> >
 							</div>
 
 

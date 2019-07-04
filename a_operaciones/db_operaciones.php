@@ -408,6 +408,9 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['tcomision'])){
 			$arreglo+=array('tcomision'=>$_REQUEST['tcomision']);
 		}
+		if (isset($_REQUEST['pikito'])){
+			$arreglo+=array('pikito'=>$_REQUEST['pikito']);
+		}
 		if($id==0){
 			$arreglo+=array('idpersona'=>$_SESSION['idpersona']);
 			$x.=$this->insert('operaciones', $arreglo);
