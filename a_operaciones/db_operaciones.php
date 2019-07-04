@@ -78,6 +78,20 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function empresa($idempresa){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where idempresa=:idempresa";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idempresa",$idempresa);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
 	public function comisionista($idcliente){
 		try{
 			parent::set_names();
@@ -121,33 +135,24 @@ class Operaciones extends Sagyc{
 	public function guarda_razon(){
 		$x="";
 		parent::set_names();
-		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
-		$arreglo =array();
+		$idrazon=$_REQUEST['idrazon'];
+		$cli=$this->razon($idrazon);
 
-		if (isset($_REQUEST['idrazon']) and strlen($_REQUEST['idrazon'])>0){
-			$arreglo+=array('idrazon'=>$_REQUEST['idrazon']);
-		}
-
-		if (isset($_REQUEST['idempresa'])  and strlen($_REQUEST['idempresa'])>0){
-			$arreglo+=array('idempresa'=>$_REQUEST['idempresa']);
-		}
-
-		$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
-		return $x;
+		$arreglo=array();
+		$arreglo+=array('id'=>$idrazon);
+		$arreglo+=array('valor'=>$cli['cliente']." - ".$cli['razon']);
+		return json_encode($arreglo);
 	}
-	public function empresa($idempresa){
-		try{
-			parent::set_names();
-			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where idempresa=:idempresa";
-			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":idempresa",$idempresa);
-			$sth->execute();
-			$res=$sth->fetch();
-			return $res;
-		}
-		catch(PDOException $e){
-			return "Database access FAILED! ".$e->getMessage();
-		}
+	public function guarda_empresa(){
+		$x="";
+		parent::set_names();
+		$idempresa=$_REQUEST['idempresa'];
+		$empresa=$this->empresa($idempresa);
+		$arreglo=array();
+		$arreglo+=array('id'=>$idempresa);
+		$arreglo+=array('valor'=>$empresa['nombre']." - ".$empresa['razon']);
+		$arreglo+=array('comision'=>$empresa['comision']);
+		return json_encode($arreglo);
 	}
 	public function buscar_empresa($texto){
 		try{

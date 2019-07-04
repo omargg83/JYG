@@ -7,7 +7,7 @@
 	<div class="card-header">Buscar empresa</div>
 	<div class="card-body">
 		<div clas='row'>
-			<input type="text" name="cliente_bus" id='cliente_bus' placeholder='buscar empresa' class='form-control'>
+			<input type="text" name="cliente_bus" id='cliente_bus' placeholder='buscar empresa' class='form-control' autocomplete="off">
 		</div>
 	</div>
 	<div class="card-footer">

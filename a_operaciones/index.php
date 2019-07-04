@@ -19,7 +19,8 @@
 	echo "</div>";
 ?>
 <script type="text/javascript">
-	function opersuma(){
+
+	function retornooper(){
 		var monto=parseFloat($("#monto").val());
 		if (isNaN(monto)){
 			monto=0;
@@ -29,12 +30,7 @@
 		$("#subtotal").val(subtotal);
 		var iva=Math.round((subtotal*.16)*100)/100;
 		$("#iva").val(iva);
-	}
 
-	function retornooper(){
-		var monto=parseFloat($("#monto").val());
-		var subtotal=parseFloat($("#subtotal").val());
-		var iva=parseFloat($("#iva").val());
 		var esquema=$("#esquema").val();
 		var esquema2=$("#esquema2").val();
 		var com=parseFloat($("#comision").val());
@@ -94,26 +90,8 @@
 
 		var tmp=(gtotal-comdesp)+pikito;
 		$("#comisionistas").val(tmp.toFixed(2));
-
-
-
-
 	}
 
-	function retornoret(){
-		var monto=parseFloat($("#monto_r").val());
-		var com=parseInt($("#comision_r").val());
-		var gtotal=0;
-
-		var creal=parseInt($("#creal_r").val());
-		if(creal>0){
-			com=creal;
-		}
-		gtotal=(monto*com)/100;
-		$("#tcomision_r").val(gtotal);
-		retorno=monto-gtotal;
-		$("#retorno_r").val(retorno);
-	}
 
 	function desgloce(){
 		var monto=parseFloat($("#monto_fact").val());
@@ -127,29 +105,30 @@
 		$("#iva_fact").val(iva);
 	}
 	function seleccomision(xyId){
- 		var idoperacion = $("#id").val();
 		var parametros={
-			"id":idoperacion,
 			"idrazon":xyId,
 			"function":"guarda_razon"
 		};
 		$.confirm({
-			title: 'Guardar',
+			title: 'Cliente',
 			content: '¿Desea seleccionar el cliente?',
 			buttons: {
 				Aceptar: function () {
+
 					$.ajax({
 						data:  parametros,
 							url:   "a_operaciones/db_operaciones.php",
 						type: "post",
 						beforeSend: function () {
-							$("#trabajo").html("cargando..");
+
 						},
 						success:  function (response) {
-							$("#trabajo").load("a_operaciones/editar.php?id="+idoperacion);
+							var datos = JSON.parse(response);
+							$('#idrazon').html("<option value='"+datos.id+"'>"+datos.valor+"</option>");
 							$('#myModal').modal('hide');
 						}
 					});
+
 				},
 				Cancelar: function () {
 					$.alert('Canceled!');
@@ -158,32 +137,31 @@
 		});
 	}
 	function seleccliente(xyId){
- 		var idoperacion = $("#id").val();
 		var parametros={
-			"id":idoperacion,
 			"idempresa":xyId,
-			"function":"guarda_razon"
+			"function":"guarda_empresa"
 		};
 		$.confirm({
-			title: 'Guardar',
-			content: '¿Desea seleccionar el cliente?',
+			title: 'Despacho',
+			content: '¿Desea seleccionar el despacho?',
 			buttons: {
 				Aceptar: function () {
 					$.ajax({
 						data:  parametros,
-							url:   "a_operaciones/db_operaciones.php",
+						url:   "a_operaciones/db_operaciones.php",
 						type: "post",
 						beforeSend: function () {
-							$("#trabajo").html("cargando..");
+
 						},
 						success:  function (response) {
-							$("#trabajo").load("a_operaciones/editar.php?id="+idoperacion);
+							var datos = JSON.parse(response);
+							$('#idempresa').html("<option value='"+datos.id+"'>"+datos.valor+"</option>");
+							$('#comdespa').val(datos.comision);
 							$('#myModal').modal('hide');
 						}
 					});
 				},
 				Cancelar: function () {
-					$.alert('Canceled!');
 				}
 			}
 		});
@@ -214,36 +192,12 @@
 		if(tecla == 27 || tecla==9){
 			$("#uso_auto").hide();
 		}
-		if ( $("#usotb").length ) {
-			var tab = document.getElementById('usotb');
-			var filas = tab.getElementsByTagName('tr');
-			if(filas.length>1){
-				if(tecla==13){
-					if(fila==0){
-						$('#uso').val(filas[1].getElementsByTagName("td")[0].innerHTML);
-					}
-					else{
-						$('#uso').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
-					}
-					$("#uso_auto").hide();
-					$("#anexos").focus();
-				}
-			}
-			if (e.keyCode==38 && fila>0) num=-1;
-			else if(e.keyCode==40 && fila<filas.length-1) num=1;
-			else return;
-			filas[fila].style.background = 'white';
-			fila+=num;
-			filas[fila].style.background = 'silver';
-			if(fila==0){
-				filas[fila].style.background = 'white';
-			}
-		}
 	});
 	$(document).on('click','#uso_auto tr',function(e){
 			$('#uso').val($(this).find('td:first').html());
 			$("#uso_auto").hide();
 		});
+
 	$(document).on('keyup','#forma',function(e){
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;
@@ -271,37 +225,12 @@
 		if(tecla == 27 || tecla==9){
 			$("#forma_auto").hide();
 		}
-		if ( $("#formatb").length ) {
-			var tab = document.getElementById('formatb');
-			var filas = tab.getElementsByTagName('tr');
-			if(filas.length>1){
-				if(tecla==13){
-					if(fila==0){
-						$('#forma').val(filas[1].getElementsByTagName("td")[0].innerHTML);
-					}
-					else{
-						$('#forma').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
-					}
-					$("#forma_auto").hide();
-					$("#anexos").focus();
-				}
-			}
-			if (e.keyCode==38 && fila>0) num=-1;
-			else if(e.keyCode==40 && fila<filas.length-1) num=1;
-			else return;
-			filas[fila].style.background = 'white';
-			fila+=num;
-			filas[fila].style.background = 'silver';
-
-			if(fila==0){
-				filas[fila].style.background = 'white';
-			}
-		}
 	});
 	$(document).on('click','#forma_auto tr',function(e){
 		$('#forma').val($(this).find('td:first').html());
 		$("#forma_auto").hide();
 	});
+
 	$(document).on('keyup','#producto',function(e){
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;
@@ -330,31 +259,6 @@
 		if(tecla == 27 || tecla==9){
 			$("#producto_auto").hide();
 		}
-		if ( $("#productotb").length ) {
-			var tab = document.getElementById('productotb');
-			var filas = tab.getElementsByTagName('tr');
-			if(filas.length>1){
-				if(tecla==13){
-					if(fila==0){
-						$('#producto').val(filas[1].getElementsByTagName("td")[0].innerHTML);
-					}
-					else{
-						$('#producto').val(filas[fila].getElementsByTagName("td")[0].innerHTML);
-					}
-					$("#producto_auto").hide();
-				}
-			}
-			if (e.keyCode==38 && fila>0) num=-1;
-			else if(e.keyCode==40 && fila<filas.length-1) num=1;
-			else return;
-			filas[fila].style.background = 'white';
-			fila+=num;
-			filas[fila].style.background = 'silver';
-
-			if(fila==0){
-				filas[fila].style.background = 'white';
-			}
-		}
 	});
 	$(document).on('click','#producto_auto tr',function(e){
 		$('#producto').val($(this).find('td:first').html());
@@ -364,7 +268,6 @@
 			e.preventDefault();
 			e.stopPropagation();
 			var xyId = $("#idproducto_selx").val();
-
 			$.ajax({
 				data:  {
 					"idproducto":xyId,
@@ -381,7 +284,19 @@
 				}
 			});
 			retornoret();
-
-
 		});
+	function retornoret(){
+			var monto=parseFloat($("#monto_r").val());
+			var com=parseInt($("#comision_r").val());
+			var gtotal=0;
+
+			var creal=parseInt($("#creal_r").val());
+			if(creal>0){
+				com=creal;
+			}
+			gtotal=(monto*com)/100;
+			$("#tcomision_r").val(gtotal);
+			retorno=monto-gtotal;
+			$("#retorno_r").val(retorno);
+		}
 </script>
