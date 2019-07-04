@@ -17,7 +17,7 @@ foreach($pd as $key){
 	echo "</div>";
 	echo "</td>";
 
-	echo "<td>".$key["comisionista"]."</td>";
+	echo "<td>".$key["nombre"]."</td>";
 	echo "<td>".$key["comision"]."</td>";
 
 	echo "</tr>";

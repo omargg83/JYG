@@ -43,8 +43,8 @@ else{
 			</div>
 
 			<div class="col-9">
-				<label>Descripción</label>
-				<input type="text" placeholder="Descripción" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" class="form-control" autocomplete=off>
+				<label>Concepto</label>
+				<input type="text" placeholder="Concepto" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" class="form-control" autocomplete=off>
 			</div>
 
 			<div class="col-12">

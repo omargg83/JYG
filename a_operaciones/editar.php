@@ -85,13 +85,13 @@ $nombre=$ejecutivo['nombre'];
 				<div class="card-body">
 					<div class="row">
 						<div class="col-2">
-							<label for="fecha">Número</label>
-							<input type="text" placeholder="Número" id="id" name="id" value="<?php echo $id; ?>" class="form-control" readonly>
+							<label for="fecha">ID</label>
+							<input type="text" placeholder="ID" id="id" name="id" value="<?php echo $id; ?>" class="form-control" readonly>
 						</div>
 
 						<div class="col-2">
 							<label for="fecha">Fecha</label>
-							<input type="text" placeholder="Fecha" id="fecha" name="fecha" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off <?php echo $readonly; ?> >
+							<input type="text" placeholder="Fecha" id="fecha" name="fecha" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off readonly >
 						</div>
 						<?php
 						echo "<div class='col-4' >";

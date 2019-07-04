@@ -118,7 +118,9 @@ class Clientes extends Sagyc{
 	public function comi($id){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM clientes_comi where idcliente=:idcliente";
+
+			$sql="SELECT * FROM clientes_comi c LEFT OUTER JOIN comisionistas com ON c.idcomi = com.idcom where idcliente=:idcliente";
+
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":idcliente",$id);
 			$sth->execute();
