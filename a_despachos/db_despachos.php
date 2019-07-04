@@ -106,7 +106,13 @@ class Despachos extends Sagyc{
 		}
 		if (isset($_REQUEST['telefono'])){
 			$arreglo+=array('telefono'=>$_REQUEST['telefono']);
-		}		if (isset($_REQUEST['email'])){		$arreglo+=array('email'=>$_REQUEST['email']);	}
+		}
+		if (isset($_REQUEST['email'])){
+			$arreglo+=array('email'=>$_REQUEST['email']);
+		}
+		if (isset($_REQUEST['comision'])){
+			$arreglo+=array('comision'=>$_REQUEST['comision']);
+		}
 		if($id==0){
 			$x.=$this->insert('despachos', $arreglo);
 		}

@@ -10,12 +10,14 @@
 		$socio=$pers['socio'];
 		$telefono=$pers['telefono'];
 		$email=$pers['email'];
+		$comision=$pers['comision'];
 	}
 	else{
 		$nombre="";
 		$socio="";
 		$telefono="";
 		$email="";
+		$comision="";
 	}
 ?>
 <div class="container">
@@ -37,8 +39,21 @@
 						<label for="telefono">Teléfono</label>
 						<input type="text" placeholder="Teléfono" id="telefono" name="telefono" value="<?php echo $telefono; ?>" class="form-control" required>
 					</div>
-				</div>								<div class="row">					<div class="col-4">						<label for="email">Email</label>						<input type="text" placeholder="Email" id="email" name="email" value="<?php echo $email; ?>" class="form-control" required>					</div>					</div>
+
+					<div class="col-4">
+						<label for="email">Email</label>
+						<input type="text" placeholder="Email" id="email" name="email" value="<?php echo $email; ?>" class="form-control" required>
+						</div>
+
+					<div class="col-2">
+						<label for="comision">Comisión %</label>
+						<input type="text" placeholder="%" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" required>
+					</div>
+
+				</div>
+
 			</div>
+
 			<div class="card-footer">
 				<div class="row">
 					<div class="col-12">
@@ -57,7 +72,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<?php if($id>0){ ?>
 				<div class="card-body" id='social'>
 					<center><img src='img/carga.gif' width='300px'></center>
