@@ -19,6 +19,7 @@ if($id>0){
 	$creal=$pers['creal'];
 	$retorno=$pers['retorno'];
 	$esquema=$pers['esquema'];
+	$esquema2=$pers['esquema2'];
 	$idrazon=$pers['idrazon'];
 	$tcomision=$pers['tcomision'];
 	$idempresa=$pers['idempresa'];
@@ -37,6 +38,7 @@ else{
 	$idpersonal=$_SESSION['idpersona'];
 	$comision=0;
 	$esquema=0;
+	$esquema2=0;
 	$creal=0;
 	$retorno=0;
 	$tcomision=0;
@@ -116,7 +118,7 @@ $empresa=$db->empresa($idempresa);
 							</div>
 
 						<div class="row">
-							<div class="col-3">
+							<div class="col-3 offset-3">
 								<label for="monto">Monto</label>
 								<input type="number" step='any' placeholder="Monto" id="monto" name="monto" onchange='opersuma()' value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
 							</div>
@@ -131,6 +133,7 @@ $empresa=$db->empresa($idempresa);
 								<input type="number" step='any' placeholder="Iva" id="iva" name="iva" onchange='opersuma()' value="<?php echo $iva; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
 							</div>
 						</div>
+						<hr>
 
 						<div class='row'>
 							<div class="col-3">
@@ -161,16 +164,17 @@ $empresa=$db->empresa($idempresa);
 							<div class="col-3">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
-									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled>";
+									echo "<select id='esquema2' name='esquema2' class='form-control' required onchange='retornooper()' $disabled>";
 										echo "<option selected disabled>Seleccione una opción</option>";
-										echo "<option value='1' "; if ($esquema==1) { echo "selected";} echo ">1. Total</option>";
-										echo "<option value='2' "; if ($esquema==2) { echo "selected";} echo ">2. Subtotal</option>";
-										echo "<option value='3' "; if ($esquema==3) { echo "selected";} echo ">3. Total + Iva</option>";
-										echo "<option value='4' "; if ($esquema==4) { echo "selected";} echo ">4. Subtotal + Iva</option>";
+										echo "<option value='1' "; if ($esquema2==1) { echo "selected";} echo ">1. Total</option>";
+										echo "<option value='2' "; if ($esquema2==2) { echo "selected";} echo ">2. Subtotal</option>";
+										echo "<option value='3' "; if ($esquema2==3) { echo "selected";} echo ">3. Total + Iva</option>";
+										echo "<option value='4' "; if ($esquema2==4) { echo "selected";} echo ">4. Subtotal + Iva</option>";
 									echo "</select>";
 								?>
 							</div>
 						</div>
+
 						<div class='row'>
 
 							<div class="col-3">

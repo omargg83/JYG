@@ -36,28 +36,26 @@
 		var subtotal=parseFloat($("#subtotal").val());
 		var iva=parseFloat($("#iva").val());
 		var esquema=$("#esquema").val();
+		var esquema2=$("#esquema2").val();
 		var com=parseFloat($("#comision").val());
+		var creal=parseFloat($("#creal").val());
 		var gtotal=0;
 		var retorno=0;
 		var gtotal_r=0;
 		var retorno_r=0;
 
-		var creal=parseFloat($("#creal").val());
+
 		if(esquema==1){
 			gtotal=(monto*com)/100;
-			gtotal_r=(monto*creal)/100;
 		}
 		if(esquema==2){
 			gtotal=(subtotal*com)/100;
-			gtotal_r=(subtotal*creal)/100;
 		}
 		if(esquema==3){
 			gtotal=iva+((monto*com)/100);
-			gtotal_r=iva+((monto*creal)/100);
 		}
 		if(esquema==4){
 			gtotal=iva+((subtotal*com)/100);
-			gtotal_r=iva+((subtotal*creal)/100);
 		}
 		if(esquema==5){
 			gtotal=0;
@@ -65,12 +63,25 @@
 			$("#comision").val(0);
 			$("#creal").val(0);
 		}
+
+		if(esquema2==1){
+			gtotal_r=(monto*creal)/100;
+		}
+		if(esquema2==2){
+			gtotal_r=(subtotal*creal)/100;
+		}
+		if(esquema2==3){
+			gtotal_r=iva+((monto*creal)/100);
+		}
+		if(esquema2==4){
+			gtotal_r=iva+((subtotal*creal)/100);
+		}
+
 		retorno=monto-gtotal;
 		retorno_r=monto-gtotal_r;
 
 		$("#tcomision").val(gtotal);
 		$("#retorno").val(retorno);
-
 		$("#tcomision_r").val(gtotal_r);
 		$("#retorno_r").val(retorno_r);
 	}

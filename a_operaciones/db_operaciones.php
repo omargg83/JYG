@@ -396,6 +396,9 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['esquema'])){
 			$arreglo+=array('esquema'=>$_REQUEST['esquema']);
 		}
+		if (isset($_REQUEST['esquema2'])){
+			$arreglo+=array('esquema2'=>$_REQUEST['esquema2']);
+		}
 		if (isset($_REQUEST['retorno'])){
 			$arreglo+=array('retorno'=>$_REQUEST['retorno']);
 		}
