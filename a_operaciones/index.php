@@ -91,8 +91,6 @@
 		var tmp=(gtotal-comdesp)+pikito;
 		$("#comisionistas").val(tmp.toFixed(2));
 	}
-
-
 	function desgloce(){
 		var monto=parseFloat($("#monto_fact").val());
 		if (isNaN(monto)){
@@ -299,4 +297,7 @@
 			retorno=monto-gtotal;
 			$("#retorno_r").val(retorno);
 		}
+
+	
+
 </script>

@@ -92,20 +92,6 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-	public function comisionista($idcliente){
-		try{
-			parent::set_names();
-			$sql="SELECT * FROM clientes_comi where idcliente=:idcliente";
-			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":idcliente",$idcliente);
-			$sth->execute();
-			$res=$sth->fetchAll();
-			return $res;
-		}
-		catch(PDOException $e){
-			return "Database access FAILED! ".$e->getMessage();
-		}
-	}
 	public function buscar_cliente($texto){
 		try{
 			parent::set_names();
@@ -383,17 +369,13 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['iva'])){
 			$arreglo+=array('iva'=>$_REQUEST['iva']);
 		}
-		if (isset($_REQUEST['idrazon']) and strlen($_REQUEST['idrazon'])>0){
-			$arreglo+=array('idrazon'=>$_REQUEST['idrazon']);
+		if (isset($_REQUEST['idrazon'])){
+			$idrazon=$_REQUEST['idrazon'];
+			$arreglo+=array('idrazon'=>$idrazon);
 		}
-		else{
-			$arreglo+=array('idrazon'=>null);
-		}
-		if (isset($_REQUEST['idempresa'])  and strlen($_REQUEST['idempresa'])>0){
+
+		if (isset($_REQUEST['idempresa'])){
 			$arreglo+=array('idempresa'=>$_REQUEST['idempresa']);
-		}
-		else{
-			$arreglo+=array('idempresa'=>null);
 		}
 		if (isset($_REQUEST['comision'])){
 			$arreglo+=array('comision'=>$_REQUEST['comision']);
@@ -429,16 +411,38 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('comdespa_t'=>$_REQUEST['comdespa_t']);
 		}
 		if (isset($_REQUEST['comisionistas'])){
-			$arreglo+=array('comisionistas'=>$_REQUEST['comisionistas']);
+			$comisionistas=$_REQUEST['comisionistas'];
+			$arreglo+=array('comisionistas'=>$comisionistas);
 		}
 		if($id==0){
 			$arreglo+=array('idpersona'=>$_SESSION['idpersona']);
-			$x.=$this->insert('operaciones', $arreglo);
+			$id=$this->insert('operaciones', $arreglo);
 		}
 		else{
-			$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
+			$id=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
 		}
-		return $x;
+
+		//////////////////////////comisionistas
+			$cliente=$this->razon($idrazon);
+			$comis=$this->comisionista($cliente['idcliente']);
+			foreach ($comis as $key) {
+				$sql="select * from operaciones_comi where idoperacion='$id' and idcom='".$key['idcomi']."'";
+				$seek=$this->general($sql);
+				$total=($key['comision']*$comisionistas)/100;
+				$arreglo =array();
+				$arreglo+=array('porcentaje'=>$key['comision']);
+				$arreglo+=array('monto'=>$total);
+				if(count($seek)==0){
+					$arreglo+=array('idcom'=>$key['idcomi']);
+					$arreglo+=array('idoperacion'=>$id);
+					$x.=$this->insert('operaciones_comi', $arreglo);
+				}
+				else{
+					$x.=$this->update('operaciones_comi',array('idoperacion'=>$id,'idcom'=>$key['idcomi']), $arreglo);
+				}
+			}
+		//////////////////////////fin de comisionistas
+		return $id;
 	}
 	public function guardar_factura(){
 		$x="";
@@ -556,7 +560,6 @@ class Operaciones extends Sagyc{
 		$this->update('operaciones',array('idoperacion'=>$idoperacion), $arreglo);
 
 
-
 		if(is_numeric($x)){
 			return $idoperacion;
 		}
@@ -593,10 +596,37 @@ class Operaciones extends Sagyc{
 		return $this->borrar('facturas',"idfactura",$id);
 	}
 	public function borrar_retorno(){
-		if (isset($_POST['id'])){$id=$_POST['id'];}
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
 		return $this->borrar('retorno',"idretorno",$id);
 	}
-
+	public function comisionista($idcliente){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM clientes_comi where idcliente=:idcliente";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idcliente",$idcliente);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function opercomisionista($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM operaciones_comi left outer join comisionistas on comisionistas.idcom=operaciones_comi.idcom where idoperacion=:id";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":id",$id);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
 }
 
 $db = new Operaciones();

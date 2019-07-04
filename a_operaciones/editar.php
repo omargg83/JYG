@@ -72,10 +72,6 @@ if($bloqueo>0 ){
 $ejecutivo=$db->personal_edit($idpersonal);
 $nombre=$ejecutivo['nombre'];
 
-
-
-
-
 ?>
 <div id="accordion">
 	<div class='container'>
@@ -85,7 +81,7 @@ $nombre=$ejecutivo['nombre'];
 					#<?php echo $id; ?> Operación <br>
 				</div>
 
-					<div class="card-body">
+				<div class="card-body">
 						<div class="row">
 							<div class="col-2">
 								<label for="fecha">Número</label>
@@ -165,8 +161,8 @@ $nombre=$ejecutivo['nombre'];
 							<div class="col-3">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
-									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled>";
-										echo "<option selected disabled>Seleccione una opción</option>";
+									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled required>";
+										echo "<option value='' selected disabled>Seleccione una opción</option>";
 										echo "<option value='1' "; if ($esquema==1) { echo "selected";} echo ">1. Total</option>";
 										echo "<option value='2' "; if ($esquema==2) { echo "selected";} echo ">2. Subtotal</option>";
 										echo "<option value='3' "; if ($esquema==3) { echo "selected";} echo ">3. Total + Iva</option>";
@@ -176,7 +172,6 @@ $nombre=$ejecutivo['nombre'];
 								?>
 							</div>
 
-
 							<div class="col-3">
 								<label for="creal">% Comisión J&G</label>
 								<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()'>
@@ -185,8 +180,8 @@ $nombre=$ejecutivo['nombre'];
 							<div class="col-3">
 								<label for="Esquema">Tipo de Comisión</label>
 								<?php
-									echo "<select id='esquema2' name='esquema2' class='form-control' required onchange='retornooper()' $disabled>";
-										echo "<option selected disabled>Seleccione una opción</option>";
+									echo "<select id='esquema2' name='esquema2' class='form-control' required onchange='retornooper()' $disabled required>";
+										echo "<option value='' selected disabled>Seleccione una opción</option>";
 										echo "<option value='1' "; if ($esquema2==1) { echo "selected";} echo ">1. Total</option>";
 										echo "<option value='2' "; if ($esquema2==2) { echo "selected";} echo ">2. Subtotal</option>";
 										echo "<option value='3' "; if ($esquema2==3) { echo "selected";} echo ">3. Total + Iva</option>";
@@ -244,8 +239,6 @@ $nombre=$ejecutivo['nombre'];
 							</div>
 						</div>
 
-
-
 						<hr>
 						<div class="row">
 							<div class="col-12">
@@ -255,10 +248,8 @@ $nombre=$ejecutivo['nombre'];
 										echo "<button class='btn btn-outline-danger btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
 									}
 									if($id>0){
-										if($idrazon>0){
+										if($idrazon>0 and $idempresa>0){
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
-										}
-										if($idempresa>0){
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
 										}
 
@@ -294,11 +285,45 @@ $nombre=$ejecutivo['nombre'];
 								</div>
 							</div>
 						</div>
-
-
-
 				</div>
 			</form>
+
+			<!--............................................COMISIONISTAS...................................... -->
+
+			<div class="card-header">
+				<div class='btn-group pull-right'>
+					<button type='button' class="btn btn-outline-secondary btn-sm " data-toggle="collapse" data-target="#collapseuno" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
+				</div>
+				Comisionistas
+			</div>
+			<div id="collapseuno" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+				<?php
+					if($id>0){
+						$row=$db->opercomisionista($id);
+						echo "<table class='table table-sm'>";
+						echo "<tr><th>Comisionista</th><th>Porcentaje</th><th>Monto</th></tr>";
+							foreach($row as $key){
+								echo "<tr>";
+
+									echo "<td>";
+										echo $key['nombre'];
+									echo "</td>";
+
+									echo "<td>";
+										echo $key['porcentaje'];
+									echo "</td>";
+
+									echo "<td>";
+										echo $key['monto'];
+									echo "</td>";
+
+								echo "</tr>";
+							}
+						echo "</table>";
+					}
+				?>
+			</div>
+
 
 			<!--............................................inicio facturas...................................... -->
 			<div class="card-header">
