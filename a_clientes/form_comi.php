@@ -1,16 +1,18 @@
 <?php
 	require_once("db_.php");
-	$comi= $db->comisionistas();
+	$comisionista= $db->comisionistas();
 	$id=$_REQUEST['id'];
 	$idcliente=$_REQUEST['id3'];
 	if($id>0){
 		$comi = $db->comi_edit($id);
-		$comisionista=$comi['comisionista'];
+
 		$comision=$comi['comision'];
+		$idcom=$comi['idcom'];
 	}
 	else{
-		$comisionista="";
+
 		$comision="";
+		$idcom="";
 	}
 ?>
 	<form action="" id="form_comi" data-lugar="a_clientes/db_" data-funcion="guardar_comi" data-destino="a_clientes/editar">
@@ -22,11 +24,11 @@
 				<div class="row">
 
 					<div class="col-6">
-						<label for="comisionista">Comisionista</label>
-						<select class='form-control' id='comisionista' name='comisionista'>
+						<label for="idcom">Comisionista</label>
+						<select class='form-control' id='idcom' name='idcom'>
 						<?php
-							foreach ($comi as $key => $value) {
-								echo "<option"; if($comisionista==$value['nombre']){ echo "selected"; } echo " value='".$value['nombre']."'>".$value['nombre']."</option>";
+							foreach ($comisionista as $key => $value) {
+								echo "<option"; if($idcom==$value['idcom']){ echo " selected"; } echo " value='".$value['idcom']."'>".$value['nombre']."</option>";
 							}
 						?>
 						</select>

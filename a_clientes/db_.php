@@ -119,7 +119,7 @@ class Clientes extends Sagyc{
 		try{
 			parent::set_names();
 
-			$sql="SELECT * FROM clientes_comi c LEFT OUTER JOIN comisionistas com ON c.idcomi = com.idcom where idcliente=:idcliente";
+			$sql="SELECT * FROM clientes_comi c LEFT OUTER JOIN comisionistas com ON c.idcom = com.idcom where idcliente=:idcliente";
 
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":idcliente",$id);
@@ -134,9 +134,9 @@ class Clientes extends Sagyc{
 	public function comi_edit($id){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM clientes_comi where idcomi=:idcomi";
+			$sql="SELECT * FROM clientes_comi where idcom=:idcom";
 			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":idcomi",$id);
+			$sth->bindValue(":idcom",$id);
 			$sth->execute();
 			$res=$sth->fetch();
 			return $res;
@@ -226,12 +226,15 @@ class Clientes extends Sagyc{
 		parent::set_names();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
 		$arreglo =array();
-		if (isset($_REQUEST['comisionista'])){
-			$arreglo+=array('comisionista'=>$_REQUEST['comisionista']);
-		}
+
 		if (isset($_REQUEST['comision'])){
 			$arreglo+=array('comision'=>$_REQUEST['comision']);
 		}
+		if (isset($_REQUEST['idcom'])){
+			$idcom=$_REQUEST['idcom'];
+			$arreglo+=array('idcom'=>$idcom);
+		}
+
 		if (isset($_REQUEST['idcliente'])){
 			$idcliente=$_REQUEST['idcliente'];
 			$arreglo+=array('idcliente'=>$idcliente);
@@ -241,7 +244,7 @@ class Clientes extends Sagyc{
 			$x.=$this->insert('clientes_comi', $arreglo);
 		}
 		else{
-			$x.=$this->update('clientes_comi',array('idcomi'=>$id), $arreglo);
+			$x.=$this->update('clientes_comi',array('id'=>$id), $arreglo);
 		}
 		if(is_numeric($x)){
 			return $idcliente;

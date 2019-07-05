@@ -8,10 +8,10 @@ echo "<table class='table table-sm' id='x_lista2'>";
 echo "<thead><tr><th>#</th><th>Comisionista</th><th>Comisión %</th></tr></thead>";
 echo "<tbody>";
 foreach($pd as $key){
-	echo "<tr id=".$key['idcomi']." class='edit-t'>";
+	echo "<tr id=".$key['idcom']." class='edit-t'>";
 	echo "<td>";
 	echo "<div class='btn-group'>";
-	echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idcomi']."' data-id2='$id' data-lugar='a_clientes/form_comi' title='Cambiar cargo'><i class='fas fa-pencil-alt'></i></button>";
+	echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idcom']."' data-id2='$id' data-lugar='a_clientes/form_comi' title='Cambiar cargo'><i class='fas fa-pencil-alt'></i></button>";
 
 
 	echo "</div>";

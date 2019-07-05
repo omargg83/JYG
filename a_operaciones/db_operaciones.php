@@ -426,19 +426,19 @@ class Operaciones extends Sagyc{
 			$cliente=$this->razon($idrazon);
 			$comis=$this->comisionista($cliente['idcliente']);
 			foreach ($comis as $key) {
-				$sql="select * from operaciones_comi where idoperacion='$id' and idcom='".$key['idcomi']."'";
+				$sql="select * from operaciones_comi where idoperacion='$id' and idcom='".$key['idcom']."'";
 				$seek=$this->general($sql);
 				$total=($key['comision']*$comisionistas)/100;
 				$arreglo =array();
 				$arreglo+=array('porcentaje'=>$key['comision']);
 				$arreglo+=array('monto'=>$total);
 				if(count($seek)==0){
-					$arreglo+=array('idcom'=>$key['idcomi']);
+					$arreglo+=array('idcom'=>$key['idcom']);
 					$arreglo+=array('idoperacion'=>$id);
 					$x.=$this->insert('operaciones_comi', $arreglo);
 				}
 				else{
-					$x.=$this->update('operaciones_comi',array('idoperacion'=>$id,'idcom'=>$key['idcomi']), $arreglo);
+					$x.=$this->update('operaciones_comi',array('idoperacion'=>$id,'idcom'=>$key['idcom']), $arreglo);
 				}
 			}
 		//////////////////////////fin de comisionistas
