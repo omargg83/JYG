@@ -202,6 +202,9 @@ class Clientes extends Sagyc{
 		if (isset($_REQUEST['razon'])){
 			$arreglo+=array('razon'=>$_REQUEST['razon']);
 		}
+		if (isset($_REQUEST['rfcrazon'])){
+			$arreglo+=array('rfcrazon'=>$_REQUEST['rfcrazon']);
+		}
 		if (isset($_REQUEST['idcliente'])){
 			$idcliente=$_REQUEST['idcliente'];
 			$arreglo+=array('idcliente'=>$idcliente);

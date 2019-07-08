@@ -4,11 +4,14 @@
 	$id=$_REQUEST['id'];
 	$idcliente=$_REQUEST['id2'];
 	if($id>0){
-		$razon = $db->razon_edit($id);
-		$razon=$razon['razon'];
+		$razonx = $db->razon_edit($id);
+		$razon=$razonx['razon'];
+		$rfcrazon=$razonx['rfcrazon'];
+
 	}
 	else{
 		$razon="";
+		$rfcrazon="";
 	}
 ?>
 	<form action="" id="form_razon" data-lugar="a_clientes/db_" data-funcion="guardar_razon" data-destino="a_clientes/editar">
@@ -21,6 +24,10 @@
 					<div class="col-6">
 						<label for="razon">Razón</label>
 						<input type="text" placeholder="Razon" id="razon" name="razon" value="<?php echo $razon; ?>" class="form-control">
+					</div>
+					<div class="col-3">
+						<label for="rfcrazon">Rfc</label>
+						<input type="text" placeholder="RFC Razon" id="rfcrazon" name="rfcrazon" value="<?php echo $rfcrazon; ?>" class="form-control">
 					</div>
 				</div>
 			</div>
