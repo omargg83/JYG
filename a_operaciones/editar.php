@@ -243,6 +243,7 @@ $nombre=$ejecutivo['nombre'];
 									if($idrazon>0 and $idempresa>0){
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
+										echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_operador'><i class='fas fa-id-badge'></i>Operador</button>";
 									}
 
 									if(strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))){
@@ -281,7 +282,6 @@ $nombre=$ejecutivo['nombre'];
 
 
 				<!--............................................COMISIONISTAS...................................... -->
-
 				<div class="card-header">
 					<div class='btn-group pull-right'>
 						<button type='button' class="btn btn-outline-secondary btn-sm " data-toggle="collapse" data-target="#collapseuno" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
@@ -307,6 +307,37 @@ $nombre=$ejecutivo['nombre'];
 
 							echo "<td>";
 							echo $key['monto'];
+							echo "</td>";
+
+							echo "</tr>";
+						}
+						echo "</table>";
+					}
+					?>
+				</div>
+
+				<!--............................................OPERADORES...................................... -->
+				<div class="card-header">
+					<div class='btn-group pull-right'>
+						<button type='button' class="btn btn-outline-secondary btn-sm " data-toggle="collapse" data-target="#collapseoper" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
+					</div>
+					Operadores
+				</div>
+				<div id="collapseoper" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+					<?php
+					if($id>0){
+						$row=$db->operadores_oper($id);
+						echo "<table class='table table-sm'>";
+						echo "<tr><th>Operador</th><th>Correo</th></tr>";
+						foreach($row as $key){
+							echo "<tr>";
+
+							echo "<td>";
+							echo $key['operador'];
+							echo "</td>";
+
+							echo "<td>";
+							echo $key['correo'];
 							echo "</td>";
 
 							echo "</tr>";

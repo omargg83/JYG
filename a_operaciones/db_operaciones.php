@@ -627,6 +627,51 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function operadores($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM despachos_oper where iddespacho=:iddespacho";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":iddespacho",$id);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+
+	}
+	public function guardar_operador(){
+		$x="";
+		parent::set_names();
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		$arreglo =array();
+		$arreglo+=array('idoper'=>$_REQUEST['idoper']);
+		if($id==0){
+			$arreglo+=array('idoperacion'=>$_REQUEST['idoperacion']);
+			$x.=$this->insert('operaciones_oper', $arreglo);
+		}
+		else{
+			$x.=$this->update('operaciones_oper',array('id'=>$id), $arreglo);
+		}
+		return $_REQUEST['idoperacion'];
+	}
+	public function operadores_oper($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM operaciones_oper left outer join despachos_oper on despachos_oper.idoper=operaciones_oper.idoper where idoperacion=:idoperacion";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idoperacion",$id);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+
 }
 
 $db = new Operaciones();

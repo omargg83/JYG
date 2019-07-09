@@ -31,8 +31,8 @@ else{
 }
 ?>
 <form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='guardar_factura' data-destino='a_operaciones/editar'>
-<input type="hidden" id="id" name="id" value="<?php echo $id; ?>" class="form-control fechaclass" autocomplete=off>
-<input type="hidden" id="idoper_fact" name="idoper_fact" value="<?php echo $id2; ?>" class="form-control fechaclass" autocomplete=off>
+<input type="hidden" id="id" name="id" value="<?php echo $id; ?>" class="form-control" autocomplete=off>
+<input type="hidden" id="idoper_fact" name="idoper_fact" value="<?php echo $id2; ?>" class="form-control" autocomplete=off>
 <div class='card'>
 	<div class="card-header">Factura</div>
 	<div class='card-body'>
