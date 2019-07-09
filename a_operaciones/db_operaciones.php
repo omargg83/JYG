@@ -671,7 +671,24 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
+	public function borrar_operador(){
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		return $this->borrar('operaciones_oper',"id",$id);
+	}
+	public function operador_edit($id){
+		try{
+			self::set_names();
+			$sql="SELECT * FROM despachos_oper where idoper=:id";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":id",$id);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
 }
 
 $db = new Operaciones();

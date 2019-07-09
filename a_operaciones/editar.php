@@ -333,6 +333,16 @@ $nombre=$ejecutivo['nombre'];
 							echo "<tr>";
 
 							echo "<td>";
+							echo "<div class='btn-group'>";
+
+							echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='".$key['idoper']."' data-id2='$id' data-lugar='a_operaciones/form_mail'><i class='far fa-envelope'></i></button>";
+
+							echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_operador' data-lugar='a_operaciones/db_operaciones'
+							data-destino='a_operaciones/editar' data-id='".$key['id']."' data-funcion='borrar_operador' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
+							echo "</div>";
+							echo "</td>";
+
+							echo "<td>";
 							echo $key['operador'];
 							echo "</td>";
 
