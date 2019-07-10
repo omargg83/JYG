@@ -127,7 +127,7 @@ $nombre=$ejecutivo['nombre'];
 
 					<hr>
 					<div class="row">
-						<div class="col-3 offset-3">
+						<div class="col-3">
 							<label for="monto">Monto</label>
 							<input type="number" step='any' placeholder="Monto" id="monto" name="monto" onchange='retornooper()' value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
 						</div>
