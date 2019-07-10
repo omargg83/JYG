@@ -47,7 +47,6 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 					<a class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catálogos</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown06">
 						<?php
-
 						echo "<a class='dropdown-item' href='#a_prospectos/index'><i class='fas fa-street-view'></i>Prospectos</a>";
 						echo "<a class='dropdown-item' href='#a_clientes/index'><i class='fas fa-user-check'></i>Clientes</a>";
 
@@ -59,7 +58,6 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 
 						echo "<a class='dropdown-item' href='#a_comisionistas/index'><i class='fas fa-hand-holding-usd'></i>Comisionistas</a>";
 						?>
-
 					</div>
 				</li>
 
@@ -74,6 +72,8 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 					<a class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Operaciones</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown06">
 						<a class="dropdown-item" href="#a_operaciones/index"><i class="fas fa-hand-holding-usd"></i>Operaciones</a>
+						<hr>
+						<a class="dropdown-item" href="#a_reportes/index"><i class="fas fa-hand-holding-usd"></i>Reportes</a>
 					</div>
 				</li>
 
@@ -85,7 +85,6 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 				}
 				?>
 			</ul>
-
 
 			<ul class="nav navbar-nav navbar-right" id="chatx"></ul>
 			<ul class="nav navbar-nav navbar-right" id="fondo"></ul>
