@@ -297,7 +297,25 @@
 			retorno=monto-gtotal;
 			$("#retorno_r").val(retorno);
 		}
+	function solicitud(){
+		var id=$("#idfactura").val();
+		$.ajax({
+			data:  {
+				"id":id,
+				"tipo":"1",
+				"file":"1"
+			},
+			url:   "a_operaciones/imprimir.php",
+			type:  'post',
+			beforeSend: function () {
+				$("#archivo").html("Generando solicitud");
+			},
+			success:  function (response) {
+				$("#archivo").html("<a href='"+response+"' target='_blank'><i class='far fa-file-pdf'></i>Archivo</a>");
+				$("#file").val(response);
+			}
+		});
+	}
 
-	
 
 </script>

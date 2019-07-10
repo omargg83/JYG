@@ -689,6 +689,53 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function notificar(){
+		$cal = new Sagyc();
+		$x="";
+		require '../librerias15/PHPMailer-5.2-stable/PHPMailerAutoload.php';
+
+		$telefono="";
+		if (isset($_REQUEST['correo'])){$correo=$_REQUEST['correo'];}
+		if (isset($_REQUEST['texto'])){$texto=$_REQUEST['texto'];}
+		if (isset($_REQUEST['file'])){$file=$_REQUEST['file'];}
+
+		$x.=$correo;
+		$mail = new PHPMailer;
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = "mail.sagyc2.com.mx";						  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = "sistema_jyg@sagyc2.com.mx";       // SMTP username
+		$mail->Password = "sagyc123$";                       // SMTP password
+		$mail->SMTPSecure = "ssl";                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 465;                                    // TCP port to connect to
+		$mail->CharSet = 'UTF-8';
+
+		$mail->From = "sistema_jyg@sagyc2.com.mx";
+		$mail->FromName = "Sistema JYG";
+		$mail->Subject = "Notificacion";
+		$mail->AltBody = "Notificacion2";
+		$mail->addAddress($correo);     // Add a recipient
+		//$mail->addCC('omargg83@gmail.com');
+
+		// $mail->addAddress('ellen@example.com');               // Name is optional
+		// $mail->addReplyTo('info@example.com', 'Information');
+		// $mail->addCC('cc@example.com');
+		// $mail->addBCC('bcc@example.com');
+
+		$mail->addAttachment("../".$file,"Solicitud.pdf");         // Add attachments
+		$mail->isHTML(true);
+
+		$mail->Body    = $texto;
+		$mail->AltBody = "Solicitud";
+
+		if(!$mail->send()) {
+				$x.= 'Message could not be sent.';
+				$x.= 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+				$x= 'Se envío correo correctamente';
+		}
+		return $x;
+	}
 }
 
 $db = new Operaciones();
