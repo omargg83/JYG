@@ -14,6 +14,6 @@
 	</nav>";
 
 	echo "<div id='trabajo'>";
-	//	include 'lista.php';
+
 	echo "</div>";
 ?>

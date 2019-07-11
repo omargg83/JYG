@@ -316,6 +316,34 @@
 			}
 		});
 	}
+	function finalizar(){
+		var id=$("#id").val();
+		$.confirm({
+			title: 'Finalizar',
+			content: '¿Desea marcar como finalizada la operación?',
+			buttons: {
+				Aceptar: function () {
+					$.ajax({
+						data:  {
+							"id":id,
+							"function":"finalizar"
+						},
+						url:   "a_operaciones/db_operaciones.php",
+						type:  'post',
+						beforeSend: function () {
 
+						},
+						success:  function (response) {
+							alert(response);
+						}
+					});
+
+				},
+				Cancelar: function () {
+
+				}
+			}
+		});
+	}
 
 </script>

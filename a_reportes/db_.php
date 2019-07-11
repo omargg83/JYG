@@ -2,7 +2,7 @@
 require_once("../control_db.php");
 if (isset($_REQUEST['function'])){$function=$_REQUEST['function'];}	else{ $function="";}
 
-class Clientes extends Sagyc{
+class Reportes extends Sagyc{
 
 	public $nivel_personal;
 	public $nivel_captura;
@@ -19,15 +19,16 @@ class Clientes extends Sagyc{
 			die();
 		}
 	}
-	public function clientes(){
+	public function reporte_1(){
 		try{
 			parent::set_names();
-			if($_SESSION['tipousuario']=="administrativo"){
-				$sql="SELECT clientes.*,personal.nombre as ejecutivo FROM clientes left outer join personal on personal.idpersona=clientes.idpersona where prospecto=0";
-			}
-			else{
-				$sql="SELECT clientes.*,personal.nombre as ejecutivo FROM clientes left outer join personal on personal.idpersona=clientes.idpersona where prospecto=0 and clientes.idpersona='".$_SESSION['idpersona']."'";
-			}
+			$desde=$_REQUEST['desde'];
+		  $hasta=$_REQUEST['hasta'];
+			$desde = date("Y-m-d", strtotime($desde));
+			$hasta = date("Y-m-d", strtotime($hasta));
+			$sql="select fecha,subtotal,iva,monto,nombre from operaciones
+			left outer join personal on personal.idpersona=operaciones.idpersona
+			where fecha between '$desde' and '$hasta'";
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();
@@ -37,14 +38,9 @@ class Clientes extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-
-
-
 }
 
-}
-
-$db = new Clientes();
+$db = new Reportes();
 if(strlen($function)>0){
 	echo $db->$function();
 }

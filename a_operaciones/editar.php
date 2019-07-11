@@ -32,7 +32,7 @@ if($id>0){
 	$comdespa=$pers['comdespa'];
 	$comdespa_t=$pers['comdespa_t'];
 	$comisionistas=$pers['comisionistas'];
-
+	$req_contrato=$pers['req_contrato'];
 	$cli=$db->razon($idrazon);
 	$empresa=$db->empresa($idempresa);
 
@@ -61,6 +61,7 @@ else{
 	$comisionistas="";
 	$cli=array();
 	$empresa=array();
+	$req_contrato=0;
 }
 $readonly="";
 $disabled="";
@@ -229,6 +230,15 @@ $nombre=$ejecutivo['nombre'];
 							<label for="comisionistas">Comisionistas</label>
 							<input type="text" placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
+
+						<div class='col-sm-3'>
+							<label>Contrato requerido: </label>
+							<input type='checkbox' name='req_contrato' id='req_contrato' value=1
+							<?php
+							if($req_contrato==1){ echo " checked";}
+							?>
+							>
+						</div>
 					</div>
 
 					<hr>
@@ -238,12 +248,13 @@ $nombre=$ejecutivo['nombre'];
 								<?php
 								if($bloqueo==0){
 									echo "<button class='btn btn-outline-danger btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
+									echo "<button class='btn btn-outline-danger btn-sm' type='button' onclick='finalizar()'><i class='far fa-check-circle'></i>Finalizar</button>";
 								}
 								if($id>0){
 									if($idrazon>0 and $idempresa>0){
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
-										echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_operador'><i class='fas fa-id-badge'></i>Operador</button>";
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_operador'><i class='fas fa-id-badge'></i>Operador</button>";
 									}
 
 									if(strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))){
@@ -279,7 +290,6 @@ $nombre=$ejecutivo['nombre'];
 						</div>
 					</div>
 				</div>
-
 
 				<!--............................................COMISIONISTAS...................................... -->
 				<div class="card-header">

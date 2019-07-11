@@ -410,6 +410,12 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['comdespa_t'])){
 			$arreglo+=array('comdespa_t'=>$_REQUEST['comdespa_t']);
 		}
+		if (isset($_REQUEST['req_contrato'])){
+			$arreglo+=array('req_contrato'=>$_REQUEST['req_contrato']);
+		}
+		else{
+			$arreglo+=array('req_contrato'=>0);
+		}
 		if (isset($_REQUEST['comisionistas'])){
 			$comisionistas=$_REQUEST['comisionistas'];
 			$arreglo+=array('comisionistas'=>$comisionistas);
@@ -735,6 +741,16 @@ class Operaciones extends Sagyc{
 				$x= 'Se envío correo correctamente';
 		}
 		return $x;
+	}
+	public function finalizar(){
+		$x="";
+		parent::set_names();
+		$arreglo =array();
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		$arreglo+=array('finalizar'=>1);
+		$arreglo+=array('idper_fin'=>$_SESSION['idpersona']);
+		$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
+		return "$x homa lundo $id ".$_SESSION['idpersona'];
 	}
 }
 
