@@ -176,7 +176,6 @@ $nombre=$ejecutivo['nombre'];
 							<label for="Esquema">Tipo de Comisión</label>
 							<?php
 							echo "<select id='esquema2' name='esquema2' class='form-control' required onchange='retornooper()' $disabled required>";
-							echo "<option value='' selected disabled>Seleccione una opción</option>";
 							echo "<option value='1' "; if ($esquema2==1) { echo "selected";} echo ">1. Total</option>";
 							echo "<option value='2' "; if ($esquema2==2) { echo "selected";} echo ">2. Subtotal</option>";
 							echo "<option value='3' "; if ($esquema2==3) { echo "selected";} echo ">3. Total + Iva</option>";
