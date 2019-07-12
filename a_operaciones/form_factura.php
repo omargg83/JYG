@@ -17,6 +17,8 @@ if($id>0){
 	$descripcion=$row['descripcion'];
 	$iva=$row['iva'];
 	$subtotal=$row['subtotal'];
+	$pers = $db->operacion_edit($id2);
+	$finalizar=$pers['finalizar'];
 }
 else{
 	$fecha=date("d-m-Y");
@@ -27,6 +29,7 @@ else{
 	$descripcion="";
 	$iva="";
 	$subtotal="";
+	$finalizar=0;
 }
 ?>
 <form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='guardar_factura' data-destino='a_operaciones/editar'>
@@ -88,7 +91,13 @@ else{
 		<div class='row'>
 			<div class="col-12">
 				<div class='btn-group'>
+					<?php
+						if($finalizar==0){
+					?>
 					<button class="btn btn-outline-secondary btn-sm" type="submit"><i class='far fa-save'></i>Guardar</button>
+					<?php
+						}
+					?>
 					<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal"><i class="fas fa-sign-out-alt"></i>Cerrar</button>
 				</div>
 			</div>

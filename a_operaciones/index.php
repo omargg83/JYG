@@ -11,6 +11,14 @@
 			echo"<li class='nav-item active'><a class='nav-link barranav' title='Mostrar todo' id='lista_comision' data-lugar='a_operaciones/lista'><i class='fas fa-list-ul'></i><span>Lista</span></a></li>";
 			echo"<li class='nav-item active'><a class='nav-link barranav izq' title='Nuevo' id='new_personal' data-lugar='a_operaciones/editar'><i class='fas fa-plus'></i><span>Nuevo</span></a></li>";
 			echo "</ul>";
+
+			echo "<form class='form-inline my-2 my-lg-0' id='form_correspxx' action='' >
+				<input class='form-control mr-sm-2' type='search' placeholder='Busqueda global' aria-label='Search' name='buscar' id='buscar'>
+					<div class='btn-group'>
+				 <button class='btn btn-outline-secondary btn-sm' type='submit' id='lista_buscar' data-lugar='a_operaciones/lista' data-valor='buscar' data-funcion='buscar'><i class='fas fa-search'></i></button>
+				 </div>
+			</form>";
+
 		echo "
 	  </div>
 	</nav>";
@@ -363,7 +371,7 @@
 							if (!isNaN(response)){
 								Swal.fire({
 								  type: 'success',
-								  title: response,
+								  title: 'Operación finalizada',
 								  showConfirmButton: false,
 								  timer: 1000
 								});

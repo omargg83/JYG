@@ -29,13 +29,15 @@ class Operaciones extends Sagyc{
 				clientes_razon.razon as razoncli,
 				clientes.cliente,
 				empresas.razon as razonemp,
-				despachos.nombre
+				despachos.nombre,
+				oper.finalizar
 				FROM
 				operaciones AS oper
 				left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
 				left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
 				left outer JOIN empresas ON oper.idempresa = empresas.idempresa
 				left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+				where oper.finalizar=0;
 				order by oper.fecha asc";
 			}
 			else{
@@ -46,14 +48,15 @@ class Operaciones extends Sagyc{
 				clientes_razon.razon as razoncli,
 				clientes.cliente,
 				empresas.razon as razonemp,
-				despachos.nombre
+				despachos.nombre,
+				oper.finalizar
 				FROM
 				operaciones AS oper
 				left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
 				left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
 				left outer JOIN empresas ON oper.idempresa = empresas.idempresa
 				left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
-				where oper.idpersona='".$_SESSION['idpersona']."' order by oper.fecha asc";
+				where oper.idpersona='".$_SESSION['idpersona']."' and oper.finalizar=0 order by oper.fecha asc";
 			}
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
@@ -480,18 +483,18 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
 
 		$arreglo =array();
-		if (isset($_REQUEST['idoper_fact'])){
-			$idoperacion=$_REQUEST['idoper_fact'];
-			$arreglo+=array('idoperacion'=>$idoperacion);
-		}
+		$idoperacion=$_REQUEST['idoper_fact'];
+		$arreglo+=array('idoperacion'=>$idoperacion);
+
 
 		if (isset($_REQUEST['fecha_fact'])){
 			$fx=explode("-",$_REQUEST['fecha_fact']);
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
-
+		$monto=0;
 		if (isset($_REQUEST['monto_fact'])){
-			$arreglo+=array('monto'=>$_REQUEST['monto_fact']);
+			$monto=$_REQUEST['monto_fact'];
+			$arreglo+=array('monto'=>$monto);
 		}
 
 		if (isset($_REQUEST['subtotal_fact'])){
@@ -518,14 +521,38 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('descripcion'=>$_REQUEST['descripcion']);
 		}
 
-		if($id==0){
-			$x.=$this->insert('facturas', $arreglo);
+		$pers = $this->operacion_edit($idoperacion);
+		$esquema=$pers['esquema'];
+		$creal=$pers['creal'];
+		$retorno=$pers['retorno'];
+
+		$llave=1;
+		if($esquema<5){
+			if($creal>0){
+				$retorno=$pers['retorno_r'];
+			}
+			$sql="select sum(monto) as monto from facturas where idoperacion=$idoperacion";
+			$fact=$this->general($sql);
+			$total=$fact[0]['monto']+$monto;
+			if($retorno<$total){
+				$x.="Revisar monto de facturas<br>";
+				$llave=0;
+			}
 		}
-		else{
-			$x.=$this->update('facturas',array('idfactura'=>$id), $arreglo);
-		}
-		if(is_numeric($x)){
-			return $idoperacion;
+
+		if($llave==1){
+			if($id==0){
+				$x.=$this->insert('facturas', $arreglo);
+			}
+			else{
+				$x.=$this->update('facturas',array('idfactura'=>$id), $arreglo);
+			}
+			if(is_numeric($x)){
+				return $idoperacion;
+			}
+			else{
+				return $x;
+			}
 		}
 		else{
 			return $x;
@@ -564,9 +591,10 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['lugar'])){
 			$arreglo+=array('lugar'=>$_REQUEST['lugar']);
 		}
-
+		$monto=0;
 		if (isset($_REQUEST['monto_ret'])){
-			$arreglo+=array('monto'=>$_REQUEST['monto_ret']);
+			$monto=$_REQUEST['monto_ret'];
+			$arreglo+=array('monto'=>$monto);
 		}
 
 		if (isset($_REQUEST['comision_ret'])){
@@ -591,65 +619,87 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('retornojg'=>$_REQUEST['retorno_retjg']);
 		}
 
-		if($id==0){
-			$x.=$this->insert('retorno', $arreglo);
+
+		$creal=$pers['creal'];
+		$retorno=$pers['retorno'];
+		$llave=1;
+		if($esquema<5){
+			if($creal>0){
+				$retorno=$pers['retorno_r'];
+			}
+			$sql="select sum(monto) as monto from retorno where idoperacion=$idoperacion";
+			$ret=$this->general($sql);
+			$total=$ret[0]['monto']+$monto;
+			if($retorno<$total){
+				$x.="Revisar monto de retornos<br>";
+				$llave=0;
+			}
 		}
-		else{
-			$x.=$this->update('retorno',array('idretorno'=>$id), $arreglo);
-		}
-		if($esquema==5){
-			$sql="select sum(tcomisionjg) as stcomisionjg, sum(retornojg) as sretornojg,
-			sum(tcomision) as scomision, sum(retorno) as sretorno  from retorno where idoperacion=$idoperacion";
-			$val=$this->general($sql);
-			$arreglo=array();
 
-			$arreglo+=array('tcomision'=>$val[0]['scomision']);
-			$arreglo+=array('retorno'=>$val[0]['sretorno']);
+		if($llave==1){
+			if($id==0){
+				$x.=$this->insert('retorno', $arreglo);
+			}
+			else{
+				$x.=$this->update('retorno',array('idretorno'=>$id), $arreglo);
+			}
+			if($esquema==5){
+				$sql="select sum(tcomisionjg) as stcomisionjg, sum(retornojg) as sretornojg,
+				sum(tcomision) as scomision, sum(retorno) as sretorno  from retorno where idoperacion=$idoperacion";
+				$val=$this->general($sql);
+				$arreglo=array();
 
-			$arreglo+=array('tcomision_r'=>$val[0]['stcomisionjg']);
-			$arreglo+=array('retorno_r'=>$val[0]['sretornojg']);
+				$arreglo+=array('tcomision'=>$val[0]['scomision']);
+				$arreglo+=array('retorno'=>$val[0]['sretorno']);
 
-			$pikito=$val[0]['sretorno']-$val[0]['sretornojg'];
-			$arreglo+=array('pikito'=>$pikito);
+				$arreglo+=array('tcomision_r'=>$val[0]['stcomisionjg']);
+				$arreglo+=array('retorno_r'=>$val[0]['sretornojg']);
 
-			$comdesp=($val[0]['scomision']*$comdespa)/100;
-			$arreglo+=array('comdespa_t'=>$comdesp);
+				$pikito=$val[0]['sretorno']-$val[0]['sretornojg'];
+				$arreglo+=array('pikito'=>$pikito);
 
-			$comisionistas=($val[0]['stcomisionjg']-$comdesp);
-			$arreglo+=array('comisionistas'=>$comisionistas);
+				$comdesp=($val[0]['scomision']*$comdespa)/100;
+				$arreglo+=array('comdespa_t'=>$comdesp);
 
-			$sql="select SUM(if(creal=0,tcomision,tcomisionjg)) com_total, SUM(if(creal=0,retorno,retornojg)) ret_total from retorno where idoperacion=$idoperacion";
-			$total=$this->general($sql);
+				$comisionistas=($val[0]['stcomisionjg']-$comdesp);
+				$arreglo+=array('comisionistas'=>$comisionistas);
 
-			$arreglo+=array('comision_f'=>$total[0]['com_total']);
-			$arreglo+=array('retorno_f'=>$total[0]['ret_total']);
-			$this->update('operaciones',array('idoperacion'=>$idoperacion), $arreglo);
+				$sql="select SUM(if(creal=0,tcomision,tcomisionjg)) com_total, SUM(if(creal=0,retorno,retornojg)) ret_total from retorno where idoperacion=$idoperacion";
+				$total=$this->general($sql);
+
+				$arreglo+=array('comision_f'=>$total[0]['com_total']);
+				$arreglo+=array('retorno_f'=>$total[0]['ret_total']);
+				$this->update('operaciones',array('idoperacion'=>$idoperacion), $arreglo);
 
 
-			//////////////////////////comisionistas
-				$cliente=$this->razon($idrazon);
-				$comis=$this->comisionista($cliente['idcliente']);
-				foreach ($comis as $key) {
-					$sql="select * from operaciones_comi where idoperacion='$idoperacion' and idcom='".$key['idcom']."'";
-					$seek=$this->general($sql);
-					$total=($key['comision']*$comisionistas)/100;
-					$arreglo =array();
-					$arreglo+=array('porcentaje'=>$key['comision']);
-					$arreglo+=array('monto'=>$total);
-					if(count($seek)==0){
-						$arreglo+=array('idcom'=>$key['idcom']);
-						$arreglo+=array('idoperacion'=>$idoperacion);
-						$x.=$this->insert('operaciones_comi', $arreglo);
+				//////////////////////////comisionistas
+					$cliente=$this->razon($idrazon);
+					$comis=$this->comisionista($cliente['idcliente']);
+					foreach ($comis as $key) {
+						$sql="select * from operaciones_comi where idoperacion='$idoperacion' and idcom='".$key['idcom']."'";
+						$seek=$this->general($sql);
+						$total=($key['comision']*$comisionistas)/100;
+						$arreglo =array();
+						$arreglo+=array('porcentaje'=>$key['comision']);
+						$arreglo+=array('monto'=>$total);
+						if(count($seek)==0){
+							$arreglo+=array('idcom'=>$key['idcom']);
+							$arreglo+=array('idoperacion'=>$idoperacion);
+							$x.=$this->insert('operaciones_comi', $arreglo);
+						}
+						else{
+							$x.=$this->update('operaciones_comi',array('idoperacion'=>$idoperacion,'idcom'=>$key['idcom']), $arreglo);
+						}
 					}
-					else{
-						$x.=$this->update('operaciones_comi',array('idoperacion'=>$idoperacion,'idcom'=>$key['idcom']), $arreglo);
-					}
-				}
-			//////////////////////////fin de comisionistas
-		}
+				//////////////////////////fin de comisionistas
+			}
 
-		if(is_numeric($x)){
-			return $idoperacion;
+			if(is_numeric($x)){
+				return $idoperacion;
+			}
+			else{
+				return $x;
+			}
 		}
 		else{
 			return $x;
@@ -836,7 +886,13 @@ class Operaciones extends Sagyc{
 		$creal=$pers['creal'];
 		$esquema=$pers['esquema'];
 		$retorno=$pers['retorno'];
+		$req_contrato=$pers['req_contrato'];
+		$contrato=$pers['contrato'];
 		$actualiza=0;
+
+		$sql="select sum(monto) as monto from facturas where idoperacion=$id";
+		$fact=$this->general($sql);
+
 		if($esquema<5){
 			if($creal>0){
 				$retorno=$pers['retorno_r'];
@@ -851,13 +907,37 @@ class Operaciones extends Sagyc{
 				$actualiza=1;
 			}
 			else{
-				$x.="no cuadra";
+				if($retorno!=$fact[0]['monto']){
+					$x.="Revisar monto de facturas<br>";
+				}
+				if($retorno!=$ret[0]['monto']){
+					$x.="Revisar monto de retornos<br>";
+				}
 			}
 		}
 		if($esquema==5){
+			$com=$pers['comision_f'];
+			$ret=$pers['retorno_f'];
 			//////////////////////falta esto
+			$acumulado=$com+$ret;
+			if($acumulado==$monto and $fact[0]['monto']==$ret){
+				$actualiza=1;
+			}
+			else{
+				if($acumulado!=$monto){
+					$x.="Verificar montos de retorno<br>";
+				}
+				if($fact[0]['monto']!=$ret){
+					$x.="Verificar montos de facturas<br>";
+				}
+			}
 		}
-		$actualiza=0;
+		if($req_contrato==1){
+			if(strlen($contrato)<2 or !file_exists("../".$this->doc.trim($contrato))){
+				$actualiza=0;
+				$x.="Falta contrato";
+			}
+		}
 
 		if($actualiza==1){
 			$arreglo+=array('finalizar'=>1);
@@ -865,6 +945,58 @@ class Operaciones extends Sagyc{
 			$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
 		}
 		return $x;
+	}
+	public function buscar($texto){
+		try{
+			parent::set_names();
+			if ($_SESSION['tipousuario']=='administrativo'){
+				$sql="SELECT
+				oper.idoperacion,
+				oper.fecha,
+				oper.monto,
+				clientes_razon.razon as razoncli,
+				clientes.cliente,
+				empresas.razon as razonemp,
+				despachos.nombre,
+				oper.finalizar
+				FROM
+				operaciones AS oper
+				left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+				left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+				left outer JOIN empresas ON oper.idempresa = empresas.idempresa
+				left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+				where
+				oper.idoperacion like '%$texto%' OR clientes.cliente like '%$texto%' OR clientes_razon.razon like '%$texto%' OR empresas.razon like '%$texto%' OR despachos.nombre like '%$texto%'
+				order by oper.fecha asc limit 100";
+			}
+			else{
+				$sql="SELECT
+				oper.idoperacion,
+				oper.fecha,
+				oper.monto,
+				clientes_razon.razon as razoncli,
+				clientes.cliente,
+				empresas.razon as razonemp,
+				despachos.nombre,
+				oper.finalizar
+				FROM
+				operaciones AS oper
+				left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+				left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+				left outer JOIN empresas ON oper.idempresa = empresas.idempresa
+				left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+				where oper.idpersona='".$_SESSION['idpersona']."' and
+				(oper.idoperacion like '%$texto%' OR clientes.cliente like '%$texto%' OR clientes_razon.razon like '%$texto%' OR empresas.razon like '%$texto%' OR despachos.nombre like '%$texto%')
+				order by oper.fecha asc limit 100";
+			}
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
 	}
 }
 

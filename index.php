@@ -129,7 +129,9 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 
 
 	<div class="modal animated fadeIn delay-2s" tabindex="-1" role="dialog" id="myModal">
-		<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-dialog modal-lg" role="document">if (isset($_REQUEST['funcion'])){
+	$nombre=$_REQUEST['funcion'];
+}
 			<div class="modal-content" id='modal_form' style='max-height:580px;overflow: auto;'>
 
 			</div>

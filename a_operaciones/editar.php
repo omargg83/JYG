@@ -36,6 +36,8 @@ if($id>0){
 	$finalizar=$pers['finalizar'];
 	$cli=$db->razon($idrazon);
 	$empresa=$db->empresa($idempresa);
+	$com_t=$pers['comision_f'];
+	$ret_t=$pers['retorno_f'];
 }
 else{
 	$monto="";
@@ -265,27 +267,29 @@ $nombre=$ejecutivo['nombre'];
 										data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Contrato</button>";
 									}
 									else{
-										echo "<div class='btn-group' role='group'>";
-										echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-paperclip'></i>XML</button>";
-										echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
-										echo "<a class='dropdown-item' href='".$db->doc.trim($contrato)."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
-										if($finalizar==0){
-											echo "<a class='dropdown-item' title='Eliminar archivo'
-											id='delfile_contrato'
-											data-ruta='".$db->doc.trim($contrato)."'
-											data-keyt='idoperacion'
-											data-key='$id'
-											data-tabla='operaciones'
-											data-campo='contrato'
-											data-tipo='1'
-											data-iddest='$id'
-											data-divdest='trabajo'
-											data-borrafile='1'
-											data-dest='a_operaciones/editar.php?id='
-											><i class='far fa-trash-alt'></i>Eliminar</a>";
+										if(strlen($contrato)>2){
+											echo "<div class='btn-group' role='group'>";
+											echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-paperclip'></i>XML</button>";
+											echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
+											echo "<a class='dropdown-item' href='".$db->doc.trim($contrato)."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
+											if($finalizar==0){
+												echo "<a class='dropdown-item' title='Eliminar archivo'
+												id='delfile_contrato'
+												data-ruta='".$db->doc.trim($contrato)."'
+												data-keyt='idoperacion'
+												data-key='$id'
+												data-tabla='operaciones'
+												data-campo='contrato'
+												data-tipo='1'
+												data-iddest='$id'
+												data-divdest='trabajo'
+												data-borrafile='1'
+												data-dest='a_operaciones/editar.php?id='
+												><i class='far fa-trash-alt'></i>Eliminar</a>";
+											}
+											echo "</div>";
+											echo "</div>";
 										}
-										echo "</div>";
-										echo "</div>";
 									}
 								}
 								?>
@@ -342,7 +346,7 @@ $nombre=$ejecutivo['nombre'];
 					if($id>0){
 						$row=$db->operadores_oper($id);
 						echo "<table class='table table-sm'>";
-						echo "<tr><th>Operador</th><th>Correo</th></tr>";
+						echo "<tr><th>-</th><th>Operador</th><th>Correo</th></tr>";
 						foreach($row as $key){
 							echo "<tr>";
 
@@ -541,7 +545,7 @@ $nombre=$ejecutivo['nombre'];
 									</thead>
 									<tbody>
 										<?php
-										$retorno=0;
+										$retorno_x=0;
 										for($i=0;$i<count($ret);$i++){
 											echo "<tr id=".$ret[$i]['idretorno']." class='edit-t'>";
 
@@ -566,9 +570,8 @@ $nombre=$ejecutivo['nombre'];
 											echo moneda($ret[$i]["retorno"]);
 											echo "</td>";
 
-
 											echo "<td>";
-											$retorno+=$ret[$i]["monto"];
+											$retorno_x+=$ret[$i]["monto"];
 											echo moneda($ret[$i]["monto"]);
 											echo "</td>";
 
@@ -589,29 +592,74 @@ $nombre=$ejecutivo['nombre'];
 				<div class="card-body">
 					<div class='row'>
 
-						<div class="col-4">
-							<label for="ejecutivo">Ejecutivo</label>
-							<input type="text" placeholder="Ejecutivo" id="ejecutivo" name="ejecutivo" value="<?php echo $nombre; ?>" class="form-control" autocomplete=off readonly >
-						</div>
-
 						<?php
 
 						echo "<div class='col-2'>";
-						echo "Monto de la operación:";
+						echo "<label>Monto:</label><br>";
 						echo moneda($monto);
-
 						echo "</div>";
+
 						echo "<div class='col-2'>";
-						echo "Monto de facturas:";
+						echo "<label>Retorno:</label><br>";
+						$r_final=0;
+						if($esquema<5){
+							if($creal==0){
+								$r_final=$retorno;
+								echo moneda($retorno);
+							}
+							else{
+								$r_final=$retorno_r;
+								echo moneda($retorno_r);
+							}
+						}
+						else{
+							echo moneda($ret_t);
+						}
+						echo "</div>";
+
+						echo "<div class='col-2'>";
+						echo "<label>Monto de facturas:</label><br>";
 						echo moneda($suma);
 						echo "</div>";
 
 						echo "<div class='col-2'>";
-						echo "Monto de retorno:";
-						echo moneda($retorno);
+						echo "<label>Saldo de facturas:</label><br>";
+						if($esquema<5){
+							echo moneda($r_final-$suma);
+						}
+						else{
+							echo "N/A";
+						}
 						echo "</div>";
 
-						?>
+						echo "<div class='col-2'>";
+						echo "<label>Monto de retorno:</label></br>";
+						if($esquema<5){
+							echo moneda($retorno_x);
+						}
+						else{
+							echo moneda($retorno_x);
+						}
+						echo "</div>";
+
+						echo "<div class='col-2'>";
+						echo "<label>Saldo de retorno:</label><br>";
+						if($esquema<5){
+							echo moneda($r_final-$retorno_x);
+						}
+						else{
+							echo moneda($monto-$retorno_x);
+						}
+						echo "</div>";
+
+					?>
+					</div>
+					<hr>
+					<div class='row'>
+						<div class="col-4">
+							<label for="ejecutivo">Ejecutivo</label>
+							<input type="text" placeholder="Ejecutivo" id="ejecutivo" name="ejecutivo" value="<?php echo $nombre; ?>" class="form-control" autocomplete=off readonly >
+						</div>
 					</div>
 				</div>
 			</div>

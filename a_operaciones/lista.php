@@ -1,7 +1,18 @@
 <?php
 	require_once("db_operaciones.php");
-	$pd = $db->operaciones();
 
+
+	$nombre="";
+	if (isset($_REQUEST['funcion'])){
+		$nombre=$_REQUEST['funcion'];
+	}
+	if($nombre==""){
+		$pd = $db->operaciones();
+	}
+	if($nombre=="buscar"){
+		$valor=$_REQUEST['valor'];
+		$pd = $db->buscar($valor);
+	}
 	echo "<div class='container-fluid' style='background-color:".$_SESSION['cfondo']."; '>";
 	echo "<br><h5>Operaciones</h5><hr>";
 ?>
@@ -16,6 +27,7 @@
 			<th>Despacho</th>
 			<th>Empresa</th>
 			<th>Monto</th>
+			<th>Estado</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -53,6 +65,15 @@
 
 					echo "<td align='right'>";
 					echo moneda($pd[$i]["monto"]);
+					echo "</td>";
+
+					echo "<td>";
+					if($pd[$i]["finalizar"]==1){
+							echo "Finalizada";
+					}
+					else{
+						echo "En proceso";
+					}
 					echo "</td>";
 					echo "</tr>";
 				}
