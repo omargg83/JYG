@@ -1,7 +1,7 @@
 <?php
 	require_once("db_.php");
 	echo "<nav class='navbar navbar-expand-lg navbar-light bg-light '>
-	<a class='navbar-brand' ><i class='fas fa-street-view'></i> Consultas</a>
+	<a class='navbar-brand' ><i class='far fa-sticky-note'></i> Consultas</a>
 	  <button class='navbar-toggler navbar-toggler-right' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='principal' aria-expanded='false' aria-label='Toggle navigation'>
 		<span class='navbar-toggler-icon'></span>
 	  </button>

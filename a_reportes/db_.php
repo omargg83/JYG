@@ -26,7 +26,8 @@ class Reportes extends Sagyc{
 		  $hasta=$_REQUEST['hasta'];
 			$desde = date("Y-m-d", strtotime($desde));
 			$hasta = date("Y-m-d", strtotime($hasta));
-			$sql="select operaciones.idoperacion, fecha, subtotal, iva, monto, nombre, finalizar, operaciones.comision, operaciones.tcomision, operaciones.retorno from operaciones
+			$sql="select operaciones.idoperacion, fecha, subtotal, iva, monto, nombre, finalizar, operaciones.comision, operaciones.tcomision, operaciones.retorno,
+			operaciones.creal, operaciones.tcomision_r, operaciones.retorno_r, operaciones.comision_f, operaciones.retorno_f, operaciones.pikito, operaciones.esquema from operaciones
 			left outer join personal on personal.idpersona=operaciones.idpersona
 			where fecha between '$desde' and '$hasta'";
 			$sth = $this->dbh->prepare($sql);
