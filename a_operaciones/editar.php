@@ -8,7 +8,7 @@ if($id>0){
 	$pers = $db->operacion_edit($id);
 	$fact = $db->facturas($id);
 	$ret = $db->retorno($id);
-
+	$bloqueo=count($fact)+count($ret);
 	$idempresa=$pers['idempresa'];
 	$fecha=fecha($pers['fecha']);
 
@@ -24,7 +24,7 @@ if($id>0){
 	$tcomision=$pers['tcomision'];
 	$idempresa=$pers['idempresa'];
 	$idpersonal=$pers['idpersona'];
-	$bloqueo=count($fact);
+
 	$contrato=$pers['contrato'];
 	$pikito=$pers['pikito'];
 	$tcomision_r=$pers['tcomision_r'];
@@ -33,9 +33,9 @@ if($id>0){
 	$comdespa_t=$pers['comdespa_t'];
 	$comisionistas=$pers['comisionistas'];
 	$req_contrato=$pers['req_contrato'];
+	$finalizar=$pers['finalizar'];
 	$cli=$db->razon($idrazon);
 	$empresa=$db->empresa($idempresa);
-
 }
 else{
 	$monto="";
@@ -62,6 +62,7 @@ else{
 	$cli=array();
 	$empresa=array();
 	$req_contrato=0;
+	$finalizar=0;
 }
 $readonly="";
 $disabled="";
@@ -123,7 +124,6 @@ $nombre=$ejecutivo['nombre'];
 						echo "</div>";
 						echo "</div>";
 						?>
-
 					</div>
 
 					<hr>
@@ -148,7 +148,7 @@ $nombre=$ejecutivo['nombre'];
 					<div class='row'>
 						<div class="col-3">
 							<label for="comision">% Comisión Cli/Desp</label>
-							<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>onchange='retornooper()' dir='rtl'>
+							<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()' dir='rtl'>
 						</div>
 
 						<div class="col-3">
@@ -246,18 +246,20 @@ $nombre=$ejecutivo['nombre'];
 						<div class="col-12">
 							<div class="btn-group">
 								<?php
-								if($bloqueo==0){
+								if($bloqueo==0 and $finalizar==0){
 									echo "<button class='btn btn-outline-danger btn-sm' type='submit'><i class='far fa-save'></i>Guardar</button>";
+								}
+								if($finalizar==0){
 									echo "<button class='btn btn-outline-danger btn-sm' type='button' onclick='finalizar()'><i class='far fa-check-circle'></i>Finalizar</button>";
 								}
 								if($id>0){
-									if($idrazon>0 and $idempresa>0){
+									if($idrazon>0 and $idempresa>0 and $finalizar==0){
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_operador'><i class='fas fa-id-badge'></i>Operador</button>";
 									}
 
-									if(strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))){
+									if((strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))) and $finalizar==0){
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
 										id='fileup_contrato' data-ruta='".$db->doc."' data-tabla='operaciones' data-campo='contrato' data-tipo='1' data-id='$id' data-keyt='idoperacion'
 										data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Contrato</button>";
@@ -267,19 +269,21 @@ $nombre=$ejecutivo['nombre'];
 										echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-paperclip'></i>XML</button>";
 										echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
 										echo "<a class='dropdown-item' href='".$db->doc.trim($contrato)."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
-										echo "<a class='dropdown-item' title='Eliminar archivo'
-										id='delfile_contrato'
-										data-ruta='".$db->doc.trim($contrato)."'
-										data-keyt='idoperacion'
-										data-key='$id'
-										data-tabla='operaciones'
-										data-campo='contrato'
-										data-tipo='1'
-										data-iddest='$id'
-										data-divdest='trabajo'
-										data-borrafile='1'
-										data-dest='a_operaciones/editar.php?id='
-										><i class='far fa-trash-alt'></i>Eliminar</a>";
+										if($finalizar==0){
+											echo "<a class='dropdown-item' title='Eliminar archivo'
+											id='delfile_contrato'
+											data-ruta='".$db->doc.trim($contrato)."'
+											data-keyt='idoperacion'
+											data-key='$id'
+											data-tabla='operaciones'
+											data-campo='contrato'
+											data-tipo='1'
+											data-iddest='$id'
+											data-divdest='trabajo'
+											data-borrafile='1'
+											data-dest='a_operaciones/editar.php?id='
+											><i class='far fa-trash-alt'></i>Eliminar</a>";
+										}
 										echo "</div>";
 										echo "</div>";
 									}
@@ -346,9 +350,11 @@ $nombre=$ejecutivo['nombre'];
 							echo "<div class='btn-group'>";
 
 							echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='".$key['idoper']."' data-id2='$id' data-lugar='a_operaciones/form_mail'><i class='far fa-envelope'></i></button>";
+							if($finalizar==0){
+								echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_operador' data-lugar='a_operaciones/db_operaciones'
+								data-destino='a_operaciones/editar' data-id='".$key['id']."' data-funcion='borrar_operador' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
+							}
 
-							echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_operador' data-lugar='a_operaciones/db_operaciones'
-							data-destino='a_operaciones/editar' data-id='".$key['id']."' data-funcion='borrar_operador' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
 							echo "</div>";
 							echo "</td>";
 
@@ -398,8 +404,10 @@ $nombre=$ejecutivo['nombre'];
 											echo "<div class='btn-group'>";
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idfactura']."' data-id2='$id' data-lugar='a_operaciones/form_factura'><i class='fas fa-pencil-alt'></i></button>";
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='imprimir_formato' title='Imprimir' data-lugar='a_operaciones/imprimir' data-tipo='1'><i class='far fa-file-pdf'></i></button>";
-											echo "<button class='btn btn-outline-danger btn-sm' id='eliminar_factura' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$key['idfactura']."' data-funcion='borrar_factura' data-iddest='$id'>
-											<i class='far fa-trash-alt' style='color:red'></i></button>";
+											if($finalizar==0){
+												echo "<button class='btn btn-outline-danger btn-sm' id='eliminar_factura' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$key['idfactura']."' data-funcion='borrar_factura' data-iddest='$id'>
+												<i class='far fa-trash-alt' style='color:red'></i></button>";
+											}
 
 											echo "</div>";
 											echo "</td>";
@@ -540,8 +548,9 @@ $nombre=$ejecutivo['nombre'];
 											echo "<td>";
 											echo "<div class='btn-group'>";
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$ret[$i]['idretorno']."' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-pencil-alt'></i></button>";
-											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$ret[$i]['idretorno']."' data-id2='$id' data-lugar='a_operaciones/form_comisionista'><i class='fas fa-user-friends'></i></button>";
-											echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_retorno' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$ret[$i]['idretorno']."' data-funcion='borrar_retorno' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
+											if($finalizar==0){
+												echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_retorno' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$ret[$i]['idretorno']."' data-funcion='borrar_retorno' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
+											}
 											echo "</div>";
 											echo "</td>";
 
@@ -562,9 +571,6 @@ $nombre=$ejecutivo['nombre'];
 											$retorno+=$ret[$i]["monto"];
 											echo moneda($ret[$i]["monto"]);
 											echo "</td>";
-
-
-
 
 											echo "</tr>";
 										}

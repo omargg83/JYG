@@ -40,6 +40,7 @@
 		var retorno=0;
 		var gtotal_r=0;
 		var retorno_r=0;
+		var pikito=0;
 
 
 		if(esquema==1){
@@ -73,23 +74,42 @@
 		if(esquema2==4){
 			gtotal_r=iva+((subtotal*creal)/100);
 		}
+		if(esquema<5){
+			retorno=monto-gtotal;
+			retorno_r=monto-gtotal_r;
+			pikito=gtotal_r-gtotal;
 
-		retorno=monto-gtotal;
-		retorno_r=monto-gtotal_r;
-		var pikito=gtotal_r-gtotal;
-		$("#pikito").val(pikito.toFixed(2));
 
-		$("#tcomision").val(gtotal.toFixed(2));
-		$("#retorno").val(retorno.toFixed(2));
+			$("#tcomision").val(gtotal.toFixed(2));
+			$("#retorno").val(retorno.toFixed(2));
+			if(creal>0){
+				$("#pikito").val(pikito.toFixed(2));
+				$("#tcomision_r").val(gtotal_r.toFixed(2));
+				$("#retorno_r").val(retorno_r.toFixed(2));
+			}
+			else{
+				$("#tcomision_r").val(0);
+				$("#retorno_r").val(0);
+				$("#pikito").val(0);
+				pikito=0;
+			}
 
-		$("#tcomision_r").val(gtotal_r.toFixed(2));
-		$("#retorno_r").val(retorno_r.toFixed(2));
 
-		var comdesp=(gtotal*comdespa)/100;
-		$("#comdespa_t").val(comdesp.toFixed(2));
+			var comdesp=(gtotal*comdespa)/100;
+			$("#comdespa_t").val(comdesp.toFixed(2));
 
-		var tmp=(gtotal-comdesp)+pikito;
-		$("#comisionistas").val(tmp.toFixed(2));
+			var tmp=(gtotal-comdesp)+pikito;
+			$("#comisionistas").val(tmp.toFixed(2));
+		}
+		else{
+			$("#pikito").val(0);
+			$("#tcomision").val(0);
+			$("#retorno").val(0);
+			$("#tcomision_r").val(0);
+			$("#retorno_r").val(0);
+			$("#comdespa_t").val(0);
+			$("#comisionistas").val(0);
+		}
 	}
 	function desgloce(){
 		var monto=parseFloat($("#monto_fact").val());
@@ -195,7 +215,6 @@
 			$('#uso').val($(this).find('td:first').html());
 			$("#uso_auto").hide();
 		});
-
 	$(document).on('keyup','#forma',function(e){
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;
@@ -228,7 +247,6 @@
 		$('#forma').val($(this).find('td:first').html());
 		$("#forma_auto").hide();
 	});
-
 	$(document).on('keyup','#producto',function(e){
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;
@@ -284,19 +302,27 @@
 			retornoret();
 		});
 	function retornoret(){
-			var monto=parseFloat($("#monto_r").val());
-			var com=parseInt($("#comision_r").val());
-			var gtotal=0;
+		var gtotal=0;
+		var monto=parseFloat($("#monto_ret").val());
+		var com=parseInt($("#comision_ret").val());
 
-			var creal=parseInt($("#creal_r").val());
-			if(creal>0){
-				com=creal;
-			}
-			gtotal=(monto*com)/100;
-			$("#tcomision_r").val(gtotal);
+		gtotal=(monto*com)/100;
+		$("#tcomision_retcli").val(gtotal);
+		retorno=monto-gtotal;
+		$("#retorno_retcli").val(retorno);
+
+		var creal=parseInt($("#creal_ret").val());
+		if(creal>0){
+			gtotal=(monto*creal)/100;
+			$("#tcomision_retjg").val(gtotal);
 			retorno=monto-gtotal;
-			$("#retorno_r").val(retorno);
+			$("#retorno_retjg").val(retorno);
 		}
+		else{
+			$("#tcomision_retjg").val(0);
+			$("#retorno_retjg").val(0);
+		}
+	}
 	function solicitud(){
 		var id=$("#idfactura").val();
 		$.ajax({
@@ -320,7 +346,7 @@
 		var id=$("#id").val();
 		$.confirm({
 			title: 'Finalizar',
-			content: '¿Desea marcar como finalizada la operación?',
+			content: '¿Desea marcar como finalizada la operación?<br>Ya no se podrá modificar nada de la operación',
 			buttons: {
 				Aceptar: function () {
 					$.ajax({
@@ -334,10 +360,25 @@
 
 						},
 						success:  function (response) {
-							alert(response);
+							if (!isNaN(response)){
+								Swal.fire({
+								  type: 'success',
+								  title: response,
+								  showConfirmButton: false,
+								  timer: 1000
+								});
+								$("#trabajo").load("a_operaciones/editar.php?id="+id);
+							}
+							else{
+								Swal.fire({
+								  type: 'error',
+								  title: response,
+								  showConfirmButton: false,
+								  timer: 1000
+								});
+							}
 						}
 					});
-
 				},
 				Cancelar: function () {
 

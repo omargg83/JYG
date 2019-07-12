@@ -8,6 +8,7 @@ if (isset($_REQUEST['id2'])){
 }
 
 $pers = $db->operacion_edit($id2);
+$finalizar=$pers['finalizar'];
 $idempresa=$pers['idempresa'];
 $idrazon=$pers['idrazon'];
 $esquema=$pers['esquema'];
@@ -27,6 +28,8 @@ $folio="";
 $persona="";
 $empresa="";
 $lugar="";
+$tcomisionjg="";
+$retornojg="";
 
 if($id>0){
 	$row=$db->retorno_edit($id);
@@ -41,6 +44,8 @@ if($id>0){
 	$persona=$row['persona'];
 	$empresa=$row['empresa'];
 	$lugar=$row['lugar'];
+	$tcomisionjg=$row['tcomisionjg'];
+	$retornojg=$row['retornojg'];
 }
 
 ?>
@@ -66,14 +71,13 @@ if($id>0){
 				</div>
 
 				<div class="col-4">
-					<label for="monto">Monto a retornar</label>
-					<input type="text" placeholder="Retorno" id="monto_r" name="monto_r" value="<?php echo $monto; ?>" class="form-control retorno" autocomplete=off onchange="retornoret()">
+					<label for="monto_ret">Monto a retornar</label>
+					<input type="text" placeholder="Retorno" id="monto_ret" name="monto_ret" value="<?php echo $monto; ?>" class="form-control retorno" autocomplete=off onchange="retornoret()">
 				</div>
-
 			</div>
 
 			<div class='row'>
-				<div class="col-4">
+				<div class="col-3">
 					<label for="fecha_fact">Fecha de retorno</label>
 					<input type="text" placeholder="Fecha" id="fecha_fact" name="fecha_fact" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off onchange="retornoret()">
 				</div>
@@ -105,24 +109,34 @@ if($id>0){
 				?>
 
 				<div class='row'>
-					<div class='col-3'>
-						<label for='comision_r'>Comisión Cli./Desp.</label>
-						<input type='text' placeholder='Comisión' id='comision_r' name='comision_r' value='<?php echo $comision; ?>' class='form-control' autocomplete=off onchange="retornoret()" >
+					<div class='col-4'>
+						<label for='comision_ret'>% Comisión Cli./Desp.</label>
+						<input type='text' placeholder='Comisión' id='comision_ret' name='comision_ret' value='<?php echo $comision; ?>' class='form-control' autocomplete=off onchange="retornoret()" >
 					</div>
 
-					<div class='col-3'>
-						<label for='creal_r'>Comisión J&G</label>
-						<input type='text' placeholder='Comisión' id='creal_r' name='creal_r' value='<?php echo $creal; ?>' class='form-control' autocomplete=off onchange="retornoret()">
+					<div class='col-4'>
+						<label for='tcomision_ret'>Comisión Cli./Desp.</label>
+						<input type='text' placeholder='Comisión' id='tcomision_retcli' name='tcomision_retcli' value='<?php echo $tcomision; ?>' class='form-control' autocomplete=off >
 					</div>
 
-					<div class='col-3'>
-						<label for='tcomision_r'>Comisión</label>
-						<input type='text' placeholder='Comisión' id='tcomision_r' name='tcomision_r' value='<?php echo $tcomision; ?>' class='form-control' autocomplete=off >
+					<div class='col-4'>
+						<label for='retorno_ret'>Retorno Cli./Desp.</label>
+						<input type='text' placeholder='Retorno' id='retorno_retcli' name='retorno_retcli' value='<?php echo $retorno; ?>' class='form-control' autocomplete=off >
 					</div>
 
-					<div class='col-3'>
-						<label for='retorno_r'>Retorno</label>
-						<input type='text' placeholder='Retorno' id='retorno_r' name='retorno_r' value='<?php echo $retorno; ?>' class='form-control' autocomplete=off >
+					<div class='col-4'>
+						<label for='creal_r'>% Comisión J&G</label>
+						<input type='text' placeholder='Comisión' id='creal_ret' name='creal_ret' value='<?php echo $creal; ?>' class='form-control' autocomplete=off onchange="retornoret()">
+					</div>
+
+					<div class='col-4'>
+						<label for='tcomision_ret'>Comisión J&G</label>
+						<input type='text' placeholder='Comisión' id='tcomision_retjg' name='tcomision_retjg' value='<?php echo $tcomisionjg; ?>' class='form-control' autocomplete=off >
+					</div>
+
+					<div class='col-4'>
+						<label for='retorno_ret'>Retorno J&G</label>
+						<input type='text' placeholder='Retorno' id='retorno_retjg' name='retorno_retjg' value='<?php echo $retornojg; ?>' class='form-control' autocomplete=off >
 					</div>
 
 				</div>
@@ -136,7 +150,13 @@ if($id>0){
 			<div class='row'>
 				<div class="col-12">
 					<div class='btn-group'>
+						<?php
+							if($finalizar==0){
+						?>
 						<button class="btn btn-outline-secondary btn-sm" type="submit"><i class='far fa-save'></i>Guardar</button>
+						<?php
+							}
+						?>
 						<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal"><i class="fas fa-sign-out-alt"></i>Cerrar</button>
 					</div>
 				</div>

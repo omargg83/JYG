@@ -81,7 +81,6 @@
 			}
 		});
 	}
-
 	function lista(id) {
 		$('#'+id).DataTable({
 			"pageLength": 100,
@@ -237,7 +236,6 @@
 		}
 
 	});
-
 	$(document).on('click','.sidebar a', function() {
        $(".sidebar a").removeClass("activeside");
        $(this).addClass("activeside");
@@ -377,7 +375,6 @@
 		var tipo = $("#"+id).data('tipo');
 		VentanaCentrada(lugar+'?id='+xyId+'&tipo='+tipo+'&valor='+valor,'Impresion','','1024','768','true');
 	});
-
 	$(document).on('submit',"[id^='form_']",function(e){
 		e.preventDefault();
 
@@ -442,9 +439,6 @@
 			}
 		});
 	});
-
-
-
 	$(document).on('submit',"[id^='consulta_']",function(e){
 		e.preventDefault();
 		var dataString = $(this).serialize();
@@ -651,8 +645,6 @@
 			}
 		});
 	});
-
-
 	$(document).on('submit','#acceso',function(e){
 		e.preventDefault();
 		var tipo=1;

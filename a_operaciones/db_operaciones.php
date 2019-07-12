@@ -386,21 +386,41 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['esquema2'])){
 			$arreglo+=array('esquema2'=>$_REQUEST['esquema2']);
 		}
+
+		$creal=0;
+		if (isset($_REQUEST['creal'])){
+			$creal=$_REQUEST['creal'];
+			$arreglo+=array('creal'=>$creal);
+		}
+
+		$tcomision=0;
+		$retorno=0;
+		if (isset($_REQUEST['tcomision'])){
+			$com=$_REQUEST['tcomision'];
+			$tcomision_f=$com;
+			$arreglo+=array('tcomision'=>$com);
+		}
 		if (isset($_REQUEST['retorno'])){
-			$arreglo+=array('retorno'=>$_REQUEST['retorno']);
+			$ret=$_REQUEST['retorno'];
+			$retorno_f=$ret;
+			$arreglo+=array('retorno'=>$ret);
+		}
+
+		if (isset($_REQUEST['tcomision_r'])){
+			$com=$_REQUEST['tcomision_r'];
+			if($creal>0){
+				$tcomision_f=$com;
+			}
+			$arreglo+=array('tcomision_r'=>$com);
 		}
 		if (isset($_REQUEST['retorno_r'])){
-			$arreglo+=array('retorno_r'=>$_REQUEST['retorno_r']);
+			$ret=$_REQUEST['retorno_r'];
+			if($creal>0){
+				$retorno_f=$ret;
+			}
+			$arreglo+=array('retorno_r'=>$ret);
 		}
-		if (isset($_REQUEST['creal'])){
-			$arreglo+=array('creal'=>$_REQUEST['creal']);
-		}
-		if (isset($_REQUEST['tcomision'])){
-			$arreglo+=array('tcomision'=>$_REQUEST['tcomision']);
-		}
-		if (isset($_REQUEST['tcomision_r'])){
-			$arreglo+=array('tcomision_r'=>$_REQUEST['tcomision_r']);
-		}
+
 		if (isset($_REQUEST['pikito'])){
 			$arreglo+=array('pikito'=>$_REQUEST['pikito']);
 		}
@@ -416,6 +436,10 @@ class Operaciones extends Sagyc{
 		else{
 			$arreglo+=array('req_contrato'=>0);
 		}
+
+		$arreglo+=array('comision_f'=>$tcomision_f);
+		$arreglo+=array('retorno_f'=>$retorno_f);
+
 		if (isset($_REQUEST['comisionistas'])){
 			$comisionistas=$_REQUEST['comisionistas'];
 			$arreglo+=array('comisionistas'=>$comisionistas);
@@ -511,34 +535,23 @@ class Operaciones extends Sagyc{
 		$x="";
 		parent::set_names();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		$idoperacion=$_REQUEST['idoper_fact'];
+		$pers = $this->operacion_edit($idoperacion);
+		$esquema=$pers['esquema'];
+		$comdespa=$pers['comdespa'];
+		$idrazon=$pers['idrazon'];
 
 		$arreglo =array();
-		if (isset($_REQUEST['idoper_fact'])){
-			$idoperacion=$_REQUEST['idoper_fact'];
-			$arreglo+=array('idoperacion'=>$idoperacion);
+		$arreglo+=array('idoperacion'=>$idoperacion);
+
+		if (isset($_REQUEST['idproducto_selx'])){
+			$arreglo+=array('idproducto'=>$_REQUEST['idproducto_selx']);
 		}
 		if (isset($_REQUEST['fecha_fact'])){
 			$fx=explode("-",$_REQUEST['fecha_fact']);
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
-		if (isset($_REQUEST['monto_r'])){
-			$arreglo+=array('monto'=>$_REQUEST['monto_r']);
-		}
-		if (isset($_REQUEST['idproducto_selx'])){
-			$arreglo+=array('idproducto'=>$_REQUEST['idproducto_selx']);
-		}
-		if (isset($_REQUEST['comision_r'])){
-			$arreglo+=array('comision'=>$_REQUEST['comision_r']);
-		}
-		if (isset($_REQUEST['creal_r'])){
-			$arreglo+=array('creal'=>$_REQUEST['creal_r']);
-		}
-		if (isset($_REQUEST['tcomision_r'])){
-			$arreglo+=array('tcomision'=>$_REQUEST['tcomision_r']);
-		}
-		if (isset($_REQUEST['retorno_r'])){
-			$arreglo+=array('retorno'=>$_REQUEST['retorno_r']);
-		}
+
 		if (isset($_REQUEST['folio'])){
 			$arreglo+=array('folio'=>$_REQUEST['folio']);
 		}
@@ -551,20 +564,89 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['lugar'])){
 			$arreglo+=array('lugar'=>$_REQUEST['lugar']);
 		}
+
+		if (isset($_REQUEST['monto_ret'])){
+			$arreglo+=array('monto'=>$_REQUEST['monto_ret']);
+		}
+
+		if (isset($_REQUEST['comision_ret'])){
+			$arreglo+=array('comision'=>$_REQUEST['comision_ret']);
+		}
+		if (isset($_REQUEST['tcomision_retcli'])){
+			$arreglo+=array('tcomision'=>$_REQUEST['tcomision_retcli']);
+		}
+		if (isset($_REQUEST['retorno_retcli'])){
+			$arreglo+=array('retorno'=>$_REQUEST['retorno_retcli']);
+		}
+
+		$creal_ret=0;
+		if (isset($_REQUEST['creal_ret'])){
+			$creal_ret=$_REQUEST['creal_ret'];
+			$arreglo+=array('creal'=>$creal_ret);
+		}
+		if (isset($_REQUEST['tcomision_retjg'])){
+			$arreglo+=array('tcomisionjg'=>$_REQUEST['tcomision_retjg']);
+		}
+		if (isset($_REQUEST['retorno_retjg'])){
+			$arreglo+=array('retornojg'=>$_REQUEST['retorno_retjg']);
+		}
+
 		if($id==0){
 			$x.=$this->insert('retorno', $arreglo);
 		}
 		else{
 			$x.=$this->update('retorno',array('idretorno'=>$id), $arreglo);
 		}
+		if($esquema==5){
+			$sql="select sum(tcomisionjg) as stcomisionjg, sum(retornojg) as sretornojg,
+			sum(tcomision) as scomision, sum(retorno) as sretorno  from retorno where idoperacion=$idoperacion";
+			$val=$this->general($sql);
+			$arreglo=array();
 
-		$sql="select sum(retorno) as sretorno, sum(tcomision) as scomision from retorno where idoperacion=$idoperacion";
-		$val=$this->general($sql);
-		$arreglo =array();
-		$arreglo+=array('retorno'=>$val[0]['sretorno']);
-		$arreglo+=array('tcomision'=>$val[0]['scomision']);
-		$this->update('operaciones',array('idoperacion'=>$idoperacion), $arreglo);
+			$arreglo+=array('tcomision'=>$val[0]['scomision']);
+			$arreglo+=array('retorno'=>$val[0]['sretorno']);
 
+			$arreglo+=array('tcomision_r'=>$val[0]['stcomisionjg']);
+			$arreglo+=array('retorno_r'=>$val[0]['sretornojg']);
+
+			$pikito=$val[0]['sretorno']-$val[0]['sretornojg'];
+			$arreglo+=array('pikito'=>$pikito);
+
+			$comdesp=($val[0]['scomision']*$comdespa)/100;
+			$arreglo+=array('comdespa_t'=>$comdesp);
+
+			$comisionistas=($val[0]['stcomisionjg']-$comdesp);
+			$arreglo+=array('comisionistas'=>$comisionistas);
+
+			$sql="select SUM(if(creal=0,tcomision,tcomisionjg)) com_total, SUM(if(creal=0,retorno,retornojg)) ret_total from retorno where idoperacion=$idoperacion";
+			$total=$this->general($sql);
+
+			$arreglo+=array('comision_f'=>$total[0]['com_total']);
+			$arreglo+=array('retorno_f'=>$total[0]['ret_total']);
+			$this->update('operaciones',array('idoperacion'=>$idoperacion), $arreglo);
+
+
+			//////////////////////////comisionistas
+				$cliente=$this->razon($idrazon);
+				$comis=$this->comisionista($cliente['idcliente']);
+				foreach ($comis as $key) {
+					$sql="select * from operaciones_comi where idoperacion='$idoperacion' and idcom='".$key['idcom']."'";
+					$seek=$this->general($sql);
+					$total=($key['comision']*$comisionistas)/100;
+					$arreglo =array();
+					$arreglo+=array('porcentaje'=>$key['comision']);
+					$arreglo+=array('monto'=>$total);
+					if(count($seek)==0){
+						$arreglo+=array('idcom'=>$key['idcom']);
+						$arreglo+=array('idoperacion'=>$idoperacion);
+						$x.=$this->insert('operaciones_comi', $arreglo);
+					}
+					else{
+						$x.=$this->update('operaciones_comi',array('idoperacion'=>$idoperacion,'idcom'=>$key['idcom']), $arreglo);
+					}
+				}
+			//////////////////////////fin de comisionistas
+		}
 
 		if(is_numeric($x)){
 			return $idoperacion;
@@ -746,11 +828,43 @@ class Operaciones extends Sagyc{
 		$x="";
 		parent::set_names();
 		$arreglo =array();
+
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
-		$arreglo+=array('finalizar'=>1);
-		$arreglo+=array('idper_fin'=>$_SESSION['idpersona']);
-		$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
-		return "$x homa lundo $id ".$_SESSION['idpersona'];
+		$pers = $this->operacion_edit($id);
+		$monto=$pers['monto'];
+		$comision=$pers['comision'];
+		$creal=$pers['creal'];
+		$esquema=$pers['esquema'];
+		$retorno=$pers['retorno'];
+		$actualiza=0;
+		if($esquema<5){
+			if($creal>0){
+				$retorno=$pers['retorno_r'];
+			}
+			$sql="select sum(monto) as monto from facturas where idoperacion=$id";
+			$fact=$this->general($sql);
+
+			$sql="select sum(monto) as monto from retorno where idoperacion=$id";
+			$ret=$this->general($sql);
+
+			if($retorno==$fact[0]['monto'] and $retorno==$ret[0]['monto']){
+				$actualiza=1;
+			}
+			else{
+				$x.="no cuadra";
+			}
+		}
+		if($esquema==5){
+			//////////////////////falta esto
+		}
+		$actualiza=0;
+
+		if($actualiza==1){
+			$arreglo+=array('finalizar'=>1);
+			$arreglo+=array('idper_fin'=>$_SESSION['idpersona']);
+			$x.=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
+		}
+		return $x;
 	}
 }
 
