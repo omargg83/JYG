@@ -644,8 +644,14 @@ class Operaciones extends Sagyc{
 				$x.=$this->update('retorno',array('idretorno'=>$id), $arreglo);
 			}
 			if($esquema==5){
-				$sql="select sum(tcomisionjg) as stcomisionjg, sum(retornojg) as sretornojg,
+			/*	$sql="select sum(tcomisionjg) as stcomisionjg, sum(retornojg) as sretornojg,
 				sum(tcomision) as scomision, sum(retorno) as sretorno  from retorno where idoperacion=$idoperacion";
+*/
+				$sql="select sum(tcomision) as scomision, sum(retorno) as sretorno,
+				sum(if(creal=0,tcomision,tcomisionjg)) stcomisionjg,
+				sum(if(creal=0,retorno,retornojg)) sretornojg
+				from retorno where idoperacion=$idoperacion";
+
 				$val=$this->general($sql);
 				$arreglo=array();
 
