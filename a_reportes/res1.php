@@ -5,7 +5,7 @@
 ?>
 <div class="content table-responsive table-full-width">
 <table class='table' id='x_lista' style='font-size:10px'>
-<thead><tr><th>#</th><th>Fecha</th><th>Esquema</th><th>Monto</th>
+<thead><tr><th>#</th><th>Fecha</th><th>Cliente</th><th>Despacho</th><th>Esquema</th><th>Monto</th>
 <th>% Comisión<br> Cli/Desp</th><th>Comisión<br> Cli/Desp</th><th>Retorno<br> Cli/Desp</th>
 <th>% Comisión<br> J&G</th><th>Comisión<br> J&G</th><th>Retorno<br> J&G</th>
 
@@ -29,6 +29,11 @@
     echo "</td>";
 
     echo "<td>".fecha($key['fecha'])."</td>";
+
+    echo "<td>".$key['cliente']."<br>".$key['razoncli']."</td>";
+    echo "<td>".$key['razonemp']."<br>".$key['desp']."</td>";
+
+
     echo "<td>".$key['esquema']."</td>";
     echo "<td align='right'>".moneda($key['monto'])."</td>";
     $monto_t+=$key['monto'];
@@ -66,6 +71,8 @@
   echo "<td>Total</td>";
   echo "<td>-</td>";
   echo "<td>-</td>";
+  echo "<td>-</td>";
+  echo "<td>-</td>";
   echo "<td align='right'><b>".moneda($monto_t)."</b></td>";
   echo "<td>-</td>";
   echo "<td>-</td>";
@@ -78,6 +85,7 @@
   echo "<td align='right'><b>".moneda($pik)."</b></td>";
   echo "<td>-</td>";
   echo "<td>-</td>";
+
   echo "</tr>";
 
 

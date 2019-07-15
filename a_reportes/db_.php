@@ -29,13 +29,40 @@ class Reportes extends Sagyc{
 
 			$desde = date("Y-m-d", strtotime($desde));
 			$hasta = date("Y-m-d", strtotime($hasta));
-			$sql="select operaciones.idoperacion, fecha, subtotal, iva, monto, nombre, finalizar, operaciones.comision, operaciones.tcomision, operaciones.retorno,
-			operaciones.creal, operaciones.tcomision_r, operaciones.retorno_r, operaciones.comision_f, operaciones.retorno_f, operaciones.pikito, operaciones.esquema,
-			operaciones.idempresa, operaciones.idrazon from operaciones
-			left outer join personal on personal.idpersona=operaciones.idpersona
-			where fecha between '$desde' and '$hasta'";
+			$sql="SELECT
+	    oper.idoperacion,
+	    oper.fecha,
+	    oper.subtotal,
+	    oper.iva,
+	    oper.monto,
+	    oper.finalizar,
+	    oper.comision,
+	    oper.tcomision,
+	    oper.retorno,
+	    oper.creal,
+	    oper.tcomision_r,
+	    oper.retorno_r,
+	    oper.comision_f,
+	    oper.retorno_f,
+	    oper.pikito,
+	    oper.esquema,
+	    oper.idempresa,
+	    oper.idrazon,
+			personal.nombre,
+			clientes_razon.razon as razoncli,
+			clientes.cliente,
+			empresas.razon as razonemp,
+			despachos.nombre as desp
+			from operaciones oper
+			left outer join personal on personal.idpersona=oper.idpersona
+			left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+			left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+			left outer JOIN empresas ON oper.idempresa = empresas.idempresa
+			left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+			where oper.fecha between '$desde' and '$hasta'";
+
 			if(strlen($estado)>0){
-				$sql.=" and operaciones.finalizar='$estado'";
+				$sql.=" and oper.finalizar='$estado'";
 			}
 
 
