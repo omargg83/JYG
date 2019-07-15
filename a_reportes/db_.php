@@ -24,12 +24,21 @@ class Reportes extends Sagyc{
 			parent::set_names();
 			$desde=$_REQUEST['desde'];
 		  $hasta=$_REQUEST['hasta'];
+			$estado=$_REQUEST['estado'];
+			echo $estado;
+
 			$desde = date("Y-m-d", strtotime($desde));
 			$hasta = date("Y-m-d", strtotime($hasta));
 			$sql="select operaciones.idoperacion, fecha, subtotal, iva, monto, nombre, finalizar, operaciones.comision, operaciones.tcomision, operaciones.retorno,
-			operaciones.creal, operaciones.tcomision_r, operaciones.retorno_r, operaciones.comision_f, operaciones.retorno_f, operaciones.pikito, operaciones.esquema from operaciones
+			operaciones.creal, operaciones.tcomision_r, operaciones.retorno_r, operaciones.comision_f, operaciones.retorno_f, operaciones.pikito, operaciones.esquema,
+			operaciones.idempresa, operaciones.idrazon from operaciones
 			left outer join personal on personal.idpersona=operaciones.idpersona
 			where fecha between '$desde' and '$hasta'";
+			if(strlen($estado)>0){
+				$sql.=" and operaciones.finalizar='$estado'";
+			}
+
+
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();

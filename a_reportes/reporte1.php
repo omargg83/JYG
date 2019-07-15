@@ -9,25 +9,26 @@ $fecha1 = date ( "d-m-Y" , $nuevafecha );
     <div class='jumbotron'>
 
       <div class='row'>
-        <div class='col-sm-6'>
-          <div class="form-group input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"> <i class="fa fa fa-calendar"></i> </span>
-            </div>
+        <div class='col-sm-3'>
+            <label>Del</label>
             <input class="form-control fechaclass" placeholder="Desde...." type="text" id='desde' name='desde' value='<?php echo $fecha1; ?>' autocomplete="off">
-          </div>
         </div>
 
-        <div class='col-sm-6'>
-          <div class="form-group input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"> <i class="fa fa fa-calendar"></i> </span>
-            </div>
-            <input class="form-control fechaclass" placeholder="Hasta...." type="text" id='hasta' name='hasta' value='<?php echo $fecha; ?>' autocomplete="off">
-          </div>
+        <div class='col-sm-3'>
+          <label>Al</label>
+          <input class="form-control fechaclass" placeholder="Hasta...." type="text" id='hasta' name='hasta' value='<?php echo $fecha; ?>' autocomplete="off">
+        </div>
+
+        <div class='col-sm-3'>
+          <label>Estado</label>
+          <select id='estado' name='estado' class='form-control'>
+          <option value=''></option>
+          <option value='0'>En proceso</option>
+          <option value='1'>Finalizada</option>
+          </select>
         </div>
       </div>
-      
+
       <div class='row'>
         <div class='col-sm-4'>
           <div class='btn-group'>

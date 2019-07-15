@@ -17,7 +17,13 @@
   $ret=0;
   $pik=0;
   foreach($row as $key){
-    echo "<tr id=".$key['idoperacion']." class='edit-t'>";
+    echo "<tr id=".$key['idoperacion']." class='edit-t";
+
+    if($key["finalizar"]==0){
+      echo " table-danger ";
+    }
+    echo "'>";
+
     echo "<td>";
     	echo "<button class='btn btn-outline-secondary btn-sm' id='edit_persona' title='Editar' data-lugar='a_operaciones/editar'><i class='fas fa-pencil-alt'></i>".$key['idoperacion']."</button>";
     echo "</td>";
@@ -36,13 +42,13 @@
     echo "<td align='right'>".$key['tcomision_r']."</td>";
     echo "<td align='right'>".$key['retorno_r']."</td>";
 
-    echo "<td bgcolor='silver' align='right'>".$key['comision_f']."</td>";
+    echo "<td bgcolor='silver' align='right'><b>".$key['comision_f']."</b></td>";
     $com+=$key['comision_f'];
 
-    echo "<td bgcolor='silver' align='right'>".$key['retorno_f']."</td>";
+    echo "<td bgcolor='silver' align='right'><b>".$key['retorno_f']."</b></td>";
     $ret+=$key['retorno_f'];
 
-    echo "<td bgcolor='silver' align='right'>".$key['pikito']."</td>";
+    echo "<td bgcolor='silver' align='right'><b>".$key['pikito']."</b></td>";
     $pik+=$key['pikito'];
 
     echo "<td>".$key['nombre']."</td>";
