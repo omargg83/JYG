@@ -25,7 +25,6 @@ class Reportes extends Sagyc{
 			$desde=$_REQUEST['desde'];
 		  $hasta=$_REQUEST['hasta'];
 			$estado=$_REQUEST['estado'];
-			echo $estado;
 
 			$desde = date("Y-m-d", strtotime($desde));
 			$hasta = date("Y-m-d", strtotime($hasta));
@@ -66,6 +65,136 @@ class Reportes extends Sagyc{
 			}
 
 
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function reporte_2(){
+		try{
+			parent::set_names();
+			$desde=$_REQUEST['desde'];
+		  $hasta=$_REQUEST['hasta'];
+
+
+			$desde = date("Y-m-d", strtotime($desde));
+			$hasta = date("Y-m-d", strtotime($hasta));
+			$sql="SELECT oper.idoperacion,
+	    fact.fecha,
+	    fact.monto,
+			fact.uso,
+			fact.forma,
+			fact.producto,
+			fact.descripcion,
+	    oper.finalizar,
+	    oper.comision,
+	    oper.tcomision,
+	    oper.retorno,
+	    oper.creal,
+	    oper.tcomision_r,
+	    oper.retorno_r,
+	    oper.comision_f,
+	    oper.retorno_f,
+	    oper.pikito,
+	    oper.esquema,
+	    oper.idempresa,
+	    oper.idrazon,
+			clientes_razon.razon as razoncli,
+			clientes.cliente,
+			empresas.razon as razonemp,
+			despachos.nombre as desp from facturas fact
+			left outer join operaciones oper on oper.idoperacion=fact.idoperacion
+			left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+			left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+			left outer JOIN empresas ON oper.idempresa = empresas.idempresa
+			left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+			where fact.fecha between '$desde' and '$hasta'";
+
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function reporte_3(){
+		try{
+			parent::set_names();
+			$desde=$_REQUEST['desde'];
+			$hasta=$_REQUEST['hasta'];
+
+			$desde = date("Y-m-d", strtotime($desde));
+			$hasta = date("Y-m-d", strtotime($hasta));
+			$sql="SELECT oper.idoperacion,
+			ret.fecha,
+			ret.monto,
+			ret.persona,
+			ret.empresa,
+			ret.lugar,
+			productos.producto,
+			oper.finalizar,
+			oper.comision,
+			oper.tcomision,
+			oper.retorno,
+			oper.creal,
+			oper.tcomision_r,
+			oper.retorno_r,
+			oper.comision_f,
+			oper.retorno_f,
+			oper.pikito,
+			oper.esquema,
+			oper.idempresa,
+			oper.idrazon,
+			clientes_razon.razon as razoncli,
+			clientes.cliente,
+			empresas.razon as razonemp,
+			despachos.nombre as desp from retorno ret
+			left outer join operaciones oper on oper.idoperacion=ret.idoperacion
+			left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+			left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+			left outer JOIN empresas ON oper.idempresa = empresas.idempresa
+			left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+			left outer JOIN productos ON ret.idproducto = productos.idproducto
+			where ret.fecha between '$desde' and '$hasta'";
+
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function reporte_4(){
+		try{
+			parent::set_names();
+			$desde=$_REQUEST['desde'];
+			$hasta=$_REQUEST['hasta'];
+
+			$desde = date("Y-m-d", strtotime($desde));
+			$hasta = date("Y-m-d", strtotime($hasta));
+
+			$sql="SELECT oper.idoperacion, oper.fecha, comisionistas.nombre, operaciones_comi.porcentaje, operaciones_comi.monto,
+			clientes_razon.razon as razoncli,
+			clientes.cliente,
+			empresas.razon as razonemp,
+			despachos.nombre as desp
+
+			 from operaciones_comi
+			left outer join operaciones oper on oper.idoperacion=operaciones_comi.idoperacion
+			left outer join comisionistas on comisionistas.idcom=operaciones_comi.idcom
+			left outer JOIN clientes_razon ON oper.idrazon = clientes_razon.idrazon
+			left outer JOIN clientes ON clientes_razon.idcliente = clientes.idcliente
+			left outer JOIN empresas ON oper.idempresa = empresas.idempresa
+			left outer JOIN despachos ON empresas.iddespacho = despachos.iddespacho
+			where oper.fecha between '$desde' and '$hasta'";
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();

@@ -35,7 +35,7 @@
 
 
     echo "<td>".$key['esquema']."</td>";
-    echo "<td align='right'>".moneda($key['monto'])."</td>";
+    echo "<td align='right'>".$key['monto']."</td>";
     $monto_t+=$key['monto'];
 
     echo "<td align='right'>".$key['comision']."</td>";

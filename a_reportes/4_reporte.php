@@ -4,10 +4,10 @@ $fecha=date("d-m-Y");
 $nuevafecha = strtotime ( '-1 month' , strtotime ( $fecha ) ) ;
 $fecha1 = date ( "d-m-Y" , $nuevafecha );
 ?>
-<form id='consulta_avanzada' action='' data-destino='a_reportes/res1' data-div='resultado' data-funcion='avanzada' autocomplete='off'>
+<form id='consulta_avanzada' action='' data-destino='a_reportes/4_res' data-div='resultado' data-funcion='reporte_4' autocomplete='off'>
   <div class='container' >
     <div class='jumbotron'>
-
+      <h5><center>Comisionistas</center></h5>
       <div class='row'>
         <div class='col-sm-3'>
             <label>Del</label>
@@ -19,14 +19,6 @@ $fecha1 = date ( "d-m-Y" , $nuevafecha );
           <input class="form-control fechaclass" placeholder="Hasta...." type="text" id='hasta' name='hasta' value='<?php echo $fecha; ?>' autocomplete="off">
         </div>
 
-        <div class='col-sm-3'>
-          <label>Estado</label>
-          <select id='estado' name='estado' class='form-control'>
-          <option value=''></option>
-          <option value='0'>En proceso</option>
-          <option value='1'>Finalizada</option>
-          </select>
-        </div>
       </div>
 
       <div class='row'>
