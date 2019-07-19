@@ -87,7 +87,6 @@
 			retorno_r=monto-gtotal_r;
 			pikito=gtotal_r-gtotal;
 
-
 			$("#tcomision").val(gtotal.toFixed(2));
 			$("#retorno").val(retorno.toFixed(2));
 			if(creal>0){
@@ -101,7 +100,6 @@
 				$("#pikito").val(0);
 				pikito=0;
 			}
-
 
 			var comdesp=(gtotal*comdespa)/100;
 			$("#comdespa_t").val(comdesp.toFixed(2));
