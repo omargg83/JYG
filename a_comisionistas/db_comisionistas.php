@@ -66,9 +66,6 @@ class Comisionistas extends Sagyc{
 		if (isset($_REQUEST['cuentabanco'])){
 			$arreglo+=array('cuentabanco'=>$_REQUEST['cuentabanco']);
 		}
-		if (isset($_REQUEST['comision'])){
-			$arreglo+=array('comision'=>$_REQUEST['comision']);
-		}
 
 		if($id==0){
 			$x.=$this->insert('comisionistas', $arreglo);

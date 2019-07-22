@@ -50,10 +50,6 @@
 						<label for="cuentabanco">Cuenta bancaria</label>
 						<input type="text" placeholder="Cuenta bancaria" id="cuentabanco" name="cuentabanco" value="<?php echo $cuentabanco; ?>" class="form-control" required>
 					</div>
-					<div class="col-3">
-						<label for="comision">% Comision</label>
-						<input type="text" placeholder="%" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" required>
-					</div>
 				</div>
 			</div>
 			<div class="card-footer">
