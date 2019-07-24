@@ -1,24 +1,12 @@
 <?php
 	require_once("../control_db.php");
 
-	echo "<div class='container-fluid'><br>";
-
-
-	echo "</div>";
-
 ?>
 	<div class='container-fluid'>
 
-		<div class='col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4' style='opacity:.9'>
+		<div class='col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12' style='opacity:.5'>
 			<div class="alert alert-light" style='width:100%;height:300px; overflow:auto;'>
-				<b><center>Comités
-				<?php
-					if(array_key_exists('COMITES', $bdd->derecho) and $bdd->derecho['COMITES']['acceso']==1)
-					echo "<a class='btn btn-outline-info btn-sm float-right' href='#a_comite/inicio' title='ir'><i class='fas fa-glasses'></i></a>";
-					echo "</center></b>";
-				?>
-				<canvas id="comite" height='200' width='200'>
-
+				<canvas id="reporte1" height="100%" width="100%">
 				</canvas>
 			</div>
 		</div>
@@ -28,15 +16,15 @@
 	<script type="text/javascript">
 
 		$(document).ready(function(){
-			setTimeout(person_grap, 2000);
-			setTimeout(corres_grap, 4000);
+			setTimeout(corres_grap, 2000);
+		/*	setTimeout(corres_grap, 4000);
 			setTimeout(comite_grap, 6000);
-			setTimeout(comisi_grap, 8000);
+			setTimeout(comisi_grap, 8000);*/
 		});
 
 		function corres_grap(){
 			var parametros={
-				"function":"correspondencia"
+				"function":"reporte1"
 			};
 			$.ajax({
 				url: "escritorio/datos_orga.php",
@@ -47,14 +35,14 @@
 					var score = [];
 					var datos = JSON.parse(data);
 					for (var x = 0; x < datos.length; x++) {
-						player.push(datos[x].nombre + " "+ datos[x].total );
+						player.push(datos[x].nombre);
 						score.push(datos[x].total);
 					}
 				  var chartdata = {
 					labels: player,
 					datasets : [
 					  {
-						label: 'Oficios pendientes por contestar',
+						label: 'Operaciones por dia',
 						backgroundColor: 'rgba(255, 99, 132, 0.6)',
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
@@ -63,9 +51,9 @@
 					  }
 					]
 				  };
-				var ctx = $("#speedChart");
+				var ctx = $("#reporte1");
 					  var barGraph = new Chart(ctx, {
-						type: 'horizontalBar',
+						type: 'bar',
 						data: chartdata,
 						options: {
 							legend: {
