@@ -2,7 +2,7 @@
 	require_once("db_.php");
 	$comisionista= $db->comisionistas();
 	$id=$_REQUEST['id'];
-	$idcliente=$_REQUEST['id3'];
+	$idcliente=$_REQUEST['id2'];
 	if($id>0){
 		$comi = $db->comi_edit($id);
 
