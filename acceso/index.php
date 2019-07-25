@@ -19,21 +19,21 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<script src="../librerias15/jquery-3.3.1.min.js" type="text/javascript"></script>
+
+	<script src="librerias15/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script src="../librerias15/jquery/jquery-ui.js"></script>
-	
+
 	<script src="../librerias15/swal/dist/sweetalert2.min.js"></script>
 	<link rel="stylesheet" href="../librerias15/swal/dist/sweetalert2.min.css">
 
 	<link rel="stylesheet" href="../librerias15/css/bootstrap.min.css">
 	<script src="../librerias15/js/bootstrap.min.js"></script>
-	
+
 	<link rel="stylesheet" type="text/css" href="../librerias15/modulos.css"/>
-	
-	<link rel="stylesheet" href="../librerias15/fontawesome-free-5.8.1-web/css/all.css">	
+
+	<link rel="stylesheet" href="../librerias15/fontawesome-free-5.8.1-web/css/all.css">
 	<script src="../librerias15/jQuery-MD5-master/jquery.md5.js"></script>
-	
+
 </head>
 
 
@@ -62,7 +62,7 @@
 							</div>
 							<input class="form-control" placeholder="Contraseña" type="password"  id="pass1" name="pass1" required autocomplete="new-password">
 						</div>
-						
+
 						<p class='input_title'>Repetir contraseña:</p>
 						<div class="form-group input-group">
 							<div class="input-group-prepend">
@@ -93,9 +93,9 @@
 			"pass1":pass1,
 			"pass2":pass2,
 			"function":"password_cambia"
-		}; 
-		
-		
+		};
+
+
 		$.ajax({
 			url: "../acceso_db.php",
 			type: "POST",

@@ -154,7 +154,7 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 
 </body>
 <!--   Core JS Files   -->
-<script src="librerias15/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="librerias15/jquery-3.4.1.min.js" type="text/javascript"></script>
 
 <!--   Boostrap   -->
 <link rel="stylesheet" href="librerias15/css/bootstrap.min.css">
