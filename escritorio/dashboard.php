@@ -4,7 +4,7 @@
 ?>
 	<div class='container-fluid'>
 
-		<div style='background-color: white;opacity:.8;'>
+		<div style='background-color: white;opacity:.8;' class='col-12'>
 			<canvas id="reporte1" height='80' width='600px' >
 			</canvas>
 		</div>
