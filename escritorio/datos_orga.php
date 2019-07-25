@@ -9,11 +9,11 @@
 
 	function reporte1(){
 		$sagyc = new Sagyc();
-		$sql="SELECT day(fecha) as dia, sum(monto) as total FROM sagyce18_bbco.operaciones group by day(fecha);";
+		$sql="SELECT month(fecha) as mes, sum(monto) as total FROM sagyce18_bbco.operaciones where year(fecha)=year(now()) group by month(fecha);";
 		$response=$sagyc->general($sql);
 		$arreglo=array();
 		for($i=0;$i<count($response);$i++){
-			$arreglo[$i]=array('nombre'=>$response[$i]['dia'], 'total'=>$response[$i]['total']);
+			$arreglo[$i]=array('mes'=>$response[$i]['mes'], 'total'=>$response[$i]['total']);
 		}
 		echo json_encode($arreglo);
 	}

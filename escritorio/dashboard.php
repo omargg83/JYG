@@ -20,6 +20,7 @@
 		});
 
 		function corres_grap(){
+			var MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 			var parametros={
 				"function":"reporte1"
 			};
@@ -32,14 +33,14 @@
 					var score = [];
 					var datos = JSON.parse(data);
 					for (var x = 0; x < datos.length; x++) {
-						player.push(datos[x].nombre);
+						player.push(MONTHS[datos[x].mes]);
 						score.push(datos[x].total);
 					}
 				  var chartdata = {
 					labels: player,
 					datasets : [
 					  {
-						label: 'Operaciones por dia',
+						label: 'Operaciones por mes',
 						backgroundColor: 'rgba(255, 99, 132, 0.6)',
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
