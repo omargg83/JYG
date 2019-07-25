@@ -285,6 +285,25 @@
 			}
 		});
 	}
+	function solicitud_ret(){
+		var id=$("#idretorno").val();
+		$.ajax({
+			data:  {
+				"id":id,
+				"tipo":"2",
+				"file":"1"
+			},
+			url:   "a_operaciones/imprimir.php",
+			type:  'post',
+			beforeSend: function () {
+				$("#archivo_ret").html("Generando solicitud");
+			},
+			success:  function (response) {
+				$("#archivo_ret").html("<a href='"+response+"' target='_blank'><i class='far fa-file-pdf'></i>Archivo</a>");
+				$("#file_ret").val(response);
+			}
+		});
+	}
 	function finalizar(){
 		var id=$("#id").val();
 		$.confirm({

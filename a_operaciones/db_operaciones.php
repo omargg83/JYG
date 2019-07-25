@@ -817,6 +817,8 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['correo'])){$correo=$_REQUEST['correo'];}
 		if (isset($_REQUEST['texto'])){$texto=$_REQUEST['texto'];}
 		if (isset($_REQUEST['file'])){$file=$_REQUEST['file'];}
+		if (isset($_REQUEST['file_ret'])){$file_ret=$_REQUEST['file_ret'];}
+
 
 		$x.=$correo;
 		$mail = new PHPMailer;
@@ -840,8 +842,12 @@ class Operaciones extends Sagyc{
 		// $mail->addReplyTo('info@example.com', 'Information');
 		// $mail->addCC('cc@example.com');
 		// $mail->addBCC('bcc@example.com');
-
-		$mail->addAttachment("../".$file,"Solicitud.pdf");         // Add attachments
+		if(strlen($file)>0){
+			$mail->addAttachment("../".$file,"Solicitud.pdf");         // Add attachments
+		}
+		if(strlen($file_ret)>0){
+			$mail->addAttachment("../".$file_ret,"Retorno.pdf");         // Add attachments
+		}
 		$mail->isHTML(true);
 
 		$mail->Body    = $texto;

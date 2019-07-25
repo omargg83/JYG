@@ -8,6 +8,7 @@
   }
   $oper=$db->operador_edit($id);
   $fact = $db->facturas($id2);
+  $ret = $db->retorno($id2);
 
   $nombre=$oper['operador'];
   $correo=$oper['correo'];
@@ -49,6 +50,23 @@
           <input type="hidden" name="file" id='file' placeholder='file' value='' class='form-control' autocomplete="off" required>
       </div>
       <div class='col-2' id='archivo'>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-10'>
+          <label>Retorno:</label>
+          <?php
+            echo "<select id='idretorno' name='idretorno' class='form-control' onchange='solicitud_ret()' >";
+            echo "<option value='' disabled selected>Seleccione un retorno</option>";
+            foreach($ret as $key){
+              echo "<option value='".$key['idretorno']."'>".$key['fecha']." - ".$key['monto']."</option>";
+            }
+            echo "</select>";
+          ?>
+          <input type="hidden" name="file_ret" id='file_ret' placeholder='file_ret' value='' class='form-control' autocomplete="off" required>
+      </div>
+      <div class='col-2' id='archivo_ret'>
       </div>
     </div>
 

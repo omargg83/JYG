@@ -9,7 +9,7 @@
 		$pers = $db->operacion_edit($id);
 		$idrazon=$pers['idrazon'];
 		$cli=$db->razon($idrazon);
-		
+
     set_include_path('../librerias15/pdf2/src/'.PATH_SEPARATOR.get_include_path());
     include 'Cezpdf.php';
     $pdf = new Cezpdf('letter','portrait','color',array(255,255,255));
@@ -32,6 +32,7 @@
 		$pdf->addText(390,373,12,"FORMA",200,'rigth');
 		$pdf->addText(170,$x-=20,12,"FECHA2",200,'left');
 
+		////////////////////////////////esto genera el archivo o para adjuntarlo en mail
 		if($file==1){
 			$documento_pdf = $pdf->ezOutput();
 			$file='historial/'.$id.'_solfact.pdf';
@@ -46,7 +47,26 @@
 
 	}
 	if($tipo==2){			/////////////////formato retorno
+		//////////////////////////////aqui poner lo de retorno men
+		set_include_path('../librerias15/pdf2/src/'.PATH_SEPARATOR.get_include_path());
+    include 'Cezpdf.php';
+    $pdf = new Cezpdf('letter','portrait','color',array(255,255,255));
+    $pdf->selectFont('../librerias15/fonts/Courier');
+		//////////////////////tu magia va aqui
 
+		///////hasta aca
+		////////////////////////////////esto genera el archivo o para adjuntarlo en mail
+		if($file==1){
+			$documento_pdf = $pdf->ezOutput();
+			$file='historial/'.$id.'_solfact.pdf';
+			$fichero = fopen("../".$file,'wb');
+			fwrite ($fichero, $documento_pdf);
+			fclose ($fichero);
+			echo $file;
+		}
+		else{
+			$pdf->ezStream();
+		}
 
 
 	}
