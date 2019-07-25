@@ -134,7 +134,7 @@ class Clientes extends Sagyc{
 	public function comi_edit($id){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM clientes_comi where idcom=:idcom";
+			$sql="SELECT * FROM clientes_comi where id=:idcom";
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":idcom",$id);
 			$sth->execute();
@@ -227,7 +227,9 @@ class Clientes extends Sagyc{
 	public function guardar_comi(){
 		$x="";
 		parent::set_names();
-		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		$id=$_REQUEST['id'];
+		$idcliente=$_REQUEST['idcliente'];
+
 		$arreglo =array();
 
 		if (isset($_REQUEST['comision'])){
@@ -237,12 +239,7 @@ class Clientes extends Sagyc{
 			$idcom=$_REQUEST['idcom'];
 			$arreglo+=array('idcom'=>$idcom);
 		}
-
-		if (isset($_REQUEST['idcliente'])){
-			$idcliente=$_REQUEST['idcliente'];
-			$arreglo+=array('idcliente'=>$idcliente);
-		}
-
+		$arreglo+=array('idcliente'=>$idcliente);
 		if($id==0){
 			$x.=$this->insert('clientes_comi', $arreglo);
 		}
@@ -257,6 +254,11 @@ class Clientes extends Sagyc{
 		}
 
 	}
+	public function borrar_comi(){
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		return $this->borrar('clientes_comi',"id",$id);
+	}
+
 
 }
 

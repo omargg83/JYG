@@ -190,69 +190,6 @@
 			}
 		});
 	}
-	$(document).on('keyup','#uso',function(e){
-		var e = window.event;
-		var tecla = (document.all) ? e.keyCode : e.which;
-		var valor=$(this).val();
-
-		if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
-				$.ajax({
-					data:  {
-						"valor":valor,
-						"function":"uso_buscar"
-					},
-					url:   "a_operaciones/db_operaciones.php",
-					type:  'post',
-					beforeSend: function () {
-
-					},
-					success:  function (response) {
-						fila = 0;
-						$("#uso_auto").html(response);
-					}
-				});
-				$("#uso_auto").show();
-		}
-		if(tecla == 27 || tecla==9){
-			$("#uso_auto").hide();
-		}
-	});
-	$(document).on('click','#uso_auto tr',function(e){
-			$('#uso').val($(this).find('td:first').html());
-			$("#uso_auto").hide();
-		});
-	$(document).on('keyup','#forma',function(e){
-		var e = window.event;
-		var tecla = (document.all) ? e.keyCode : e.which;
-		var valor=$(this).val();
-		if(tecla!=37 && tecla!=38 && tecla!=39 && tecla!=40){
-			if(valor.length>2){
-				$.ajax({
-					data:  {
-						"valor":valor,
-						"function":"forma_buscar"
-					},
-					url:   "a_operaciones/db_operaciones.php",
-					type:  'post',
-					beforeSend: function () {
-
-					},
-					success:  function (response) {
-						fila = 0;
-						$("#forma_auto").html(response);
-					}
-				});
-				$("#forma_auto").show();
-			}
-		}
-		if(tecla == 27 || tecla==9){
-			$("#forma_auto").hide();
-		}
-	});
-	$(document).on('click','#forma_auto tr',function(e){
-		$('#forma').val($(this).find('td:first').html());
-		$("#forma_auto").hide();
-	});
 	$(document).on('keyup','#producto',function(e){
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;

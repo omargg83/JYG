@@ -31,6 +31,9 @@ else{
 	$subtotal="";
 	$finalizar=0;
 }
+$uso_array = $db->uso();
+$forma_array = $db->forma_buscar();
+
 ?>
 <form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='guardar_factura' data-destino='a_operaciones/editar'>
 <input type="hidden" id="id" name="id" value="<?php echo $id; ?>" class="form-control" autocomplete=off>
@@ -51,14 +54,29 @@ else{
 
 			<div class="col-12">
 				<label for="uso">Uso de la factura</label>
-				<input type="text" placeholder="Uso de la factura" id="uso" name="uso" value="<?php echo $uso; ?>" class="form-control" autocomplete=off>
-				<div id='uso_auto' class='flotante'></div>
+					<select id='uso' name='uso' class="form-control retorno" onchange="retornoret()">
+						<option selected disabled>Seleccione una opcion</option>
+						<?php
+						foreach($uso_array as $val){
+							echo "<option value='".$val['clave']." - ".$val['descripcion']."' "; if($uso==$val['clave']." - ".$val['descripcion']) { echo " selected ";} echo " >".$val['clave']." - ".$val['descripcion']."</option>";
+						}
+						?>
+					</select>
 			</div>
 
 			<div class="col-12">
-				<label for="uso">Forma de pago</label>
-				<input type="text" placeholder="Forma de pago" id="forma" name="forma" value="<?php echo $forma; ?>" class="form-control" autocomplete=off>
-				<div id='forma_auto' class='flotante'></div>
+				<label for="forma">Forma de pago</label>
+				<select id='forma' name='forma' class="form-control retorno" onchange="retornoret()">
+					<option selected disabled>Seleccione una opcion</option>
+					<?php
+					foreach($forma_array as $val){
+						echo "<option value='".$val['pago']."' "; if($forma==$val['pago']) { echo " selected ";} echo " >".$val['pago']."</option>";
+					}
+					?>
+				</select>
+
+
+
 			</div>
 
 			<div class="col-12">

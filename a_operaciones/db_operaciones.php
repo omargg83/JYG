@@ -158,24 +158,13 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-	public function uso_buscar(){
+	public function uso(){
 		try{
 			parent::set_names();
-			$x="";
-			$texto=$_REQUEST['valor'];
-			$sql="SELECT * FROM sat_uso where descripcion like '%$texto%' or clave like '%$texto%'";
+			$sql="SELECT * FROM sat_uso order by descripcion";
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
-			$res=$sth->fetchAll();
-			$x.="<table class='table table-sm' id='usotb' style='font-size:12px'>";
-			$x.="<tr><th>Uso de la factura</th></tr>";
-			foreach ($res as $key) {
-				$x.="<tr><td>";
-				$x.=$key['clave']." - ".$key['descripcion'];
-				$x.="</td></tr>";
-			}
-			$x.="</table>";
-			return $x;
+			return $sth->fetchAll();
 		}
 		catch(PDOException $e){
 			return "Database access FAILED! ".$e->getMessage();
@@ -184,21 +173,10 @@ class Operaciones extends Sagyc{
 	public function forma_buscar(){
 		try{
 			parent::set_names();
-			$x="";
-			$texto=$_REQUEST['valor'];
-			$sql="SELECT * FROM sat_fpago where pago like '%$texto%'";
+			$sql="SELECT * FROM sat_fpago order by pago";
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
-			$res=$sth->fetchAll();
-			$x.="<table class='table table-sm' id='formatb' style='font-size:12px'>";
-			$x.="<tr><th>Forma de pago</th></tr>";
-			foreach ($res as $key) {
-				$x.="<tr><td>";
-				$x.=$key['pago'];
-				$x.="</td></tr>";
-			}
-			$x.="</table>";
-			return $x;
+			return $sth->fetchAll();
 		}
 		catch(PDOException $e){
 			return "Database access FAILED! ".$e->getMessage();
@@ -644,9 +622,6 @@ class Operaciones extends Sagyc{
 				$x.=$this->update('retorno',array('idretorno'=>$id), $arreglo);
 			}
 			if($esquema==5){
-			/*	$sql="select sum(tcomisionjg) as stcomisionjg, sum(retornojg) as sretornojg,
-				sum(tcomision) as scomision, sum(retorno) as sretorno  from retorno where idoperacion=$idoperacion";
-*/
 				$sql="select sum(tcomision) as scomision, sum(retorno) as sretorno,
 				sum(if(creal=0,tcomision,tcomisionjg)) stcomisionjg,
 				sum(if(creal=0,retorno,retornojg)) sretornojg

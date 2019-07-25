@@ -9,6 +9,7 @@
 		$pers = $db->operacion_edit($id);
 		$idrazon=$pers['idrazon'];
 		$cli=$db->razon($idrazon);
+		
     set_include_path('../librerias15/pdf2/src/'.PATH_SEPARATOR.get_include_path());
     include 'Cezpdf.php';
     $pdf = new Cezpdf('letter','portrait','color',array(255,255,255));
@@ -44,5 +45,9 @@
 		}
 
 	}
+	if($tipo==2){			/////////////////formato retorno
 
+
+
+	}
 ?>
