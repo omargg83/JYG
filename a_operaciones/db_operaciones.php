@@ -1,5 +1,8 @@
 <?php
 require_once("../control_db.php");
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 if (isset($_REQUEST['function'])){$function=$_REQUEST['function'];}	else{ $function="";}
 
 class Operaciones extends Sagyc{
@@ -433,26 +436,6 @@ class Operaciones extends Sagyc{
 			$id=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
 		}
 
-		//////////////////////////comisionistas
-			$cliente=$this->razon($idrazon);
-			$comis=$this->comisionista($cliente['idcliente']);
-			foreach ($comis as $key) {
-				$sql="select * from operaciones_comi where idoperacion='$id' and idcom='".$key['idcom']."'";
-				$seek=$this->general($sql);
-				$total=($key['comision']*$comisionistas)/100;
-				$arreglo =array();
-				$arreglo+=array('porcentaje'=>$key['comision']);
-				$arreglo+=array('monto'=>$total);
-				if(count($seek)==0){
-					$arreglo+=array('idcom'=>$key['idcom']);
-					$arreglo+=array('idoperacion'=>$id);
-					$x.=$this->insert('operaciones_comi', $arreglo);
-				}
-				else{
-					$x.=$this->update('operaciones_comi',array('idoperacion'=>$id,'idcom'=>$key['idcom']), $arreglo);
-				}
-			}
-		//////////////////////////fin de comisionistas
 		return $id;
 	}
 	public function guardar_factura(){
@@ -621,60 +604,6 @@ class Operaciones extends Sagyc{
 			else{
 				$x.=$this->update('retorno',array('idretorno'=>$id), $arreglo);
 			}
-			if($esquema==5){
-				$sql="select sum(tcomision) as scomision, sum(retorno) as sretorno,
-				sum(if(creal=0,tcomision,tcomisionjg)) stcomisionjg,
-				sum(if(creal=0,retorno,retornojg)) sretornojg
-				from retorno where idoperacion=$idoperacion";
-
-				$val=$this->general($sql);
-				$arreglo=array();
-
-				$arreglo+=array('tcomision'=>$val[0]['scomision']);
-				$arreglo+=array('retorno'=>$val[0]['sretorno']);
-
-				$arreglo+=array('tcomision_r'=>$val[0]['stcomisionjg']);
-				$arreglo+=array('retorno_r'=>$val[0]['sretornojg']);
-
-				$pikito=$val[0]['sretorno']-$val[0]['sretornojg'];
-				$arreglo+=array('pikito'=>$pikito);
-
-				$comdesp=($val[0]['scomision']*$comdespa)/100;
-				$arreglo+=array('comdespa_t'=>$comdesp);
-
-				$comisionistas=($val[0]['stcomisionjg']-$comdesp);
-				$arreglo+=array('comisionistas'=>$comisionistas);
-
-				$sql="select SUM(if(creal=0,tcomision,tcomisionjg)) com_total, SUM(if(creal=0,retorno,retornojg)) ret_total from retorno where idoperacion=$idoperacion";
-				$total=$this->general($sql);
-
-				$arreglo+=array('comision_f'=>$total[0]['com_total']);
-				$arreglo+=array('retorno_f'=>$total[0]['ret_total']);
-				$this->update('operaciones',array('idoperacion'=>$idoperacion), $arreglo);
-
-
-				//////////////////////////comisionistas
-					$cliente=$this->razon($idrazon);
-					$comis=$this->comisionista($cliente['idcliente']);
-					foreach ($comis as $key) {
-						$sql="select * from operaciones_comi where idoperacion='$idoperacion' and idcom='".$key['idcom']."'";
-						$seek=$this->general($sql);
-						$total=($key['comision']*$comisionistas)/100;
-						$arreglo =array();
-						$arreglo+=array('porcentaje'=>$key['comision']);
-						$arreglo+=array('monto'=>$total);
-						if(count($seek)==0){
-							$arreglo+=array('idcom'=>$key['idcom']);
-							$arreglo+=array('idoperacion'=>$idoperacion);
-							$x.=$this->insert('operaciones_comi', $arreglo);
-						}
-						else{
-							$x.=$this->update('operaciones_comi',array('idoperacion'=>$idoperacion,'idcom'=>$key['idcom']), $arreglo);
-						}
-					}
-				//////////////////////////fin de comisionistas
-			}
-
 			if(is_numeric($x)){
 				return $idoperacion;
 			}
@@ -985,6 +914,116 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function recalcular(){
+		$esquema=0;
+		$esquema2=0;
+		$monto=0;
+		$subtotal=0;
+		$iva=0;
+		$comision=0;
+		$creal=0;
+		$comdespa=0;
+		$comdesp=0;
+		$comisionistas=0;
+		$tcomision_r=0;
+
+		$gtotal=0;
+		$retorno=0;
+		$gtotal_r=0;
+		$retorno_r=0;
+		$pikito=0;
+
+		$tipo=$_REQUEST['tipo'];
+		$monto=$_REQUEST['monto'];
+
+		if($monto>0){
+			$esquema=$_REQUEST['esquema'];
+			$esquema2=$_REQUEST['esquema2'];
+			$comision=$_REQUEST['comision'];
+			$creal=$_REQUEST['creal'];
+			$comdespa=$_REQUEST['comdespa'];
+			if(!is_numeric($comdespa)){
+				$comdespa=0;
+			}
+			$subtotal=round((($monto/1.16)*100)/100,2);
+			$iva=round((($subtotal*.16)*100)/100,2);
+
+			if($esquema<5){
+				if($esquema==1){
+					$gtotal=($monto*$comision)/100;
+				}
+				if($esquema==2){
+					$gtotal=($subtotal*$comision)/100;
+				}
+				if($esquema==3){
+					$gtotal=$iva+(($monto*$comision)/100);
+				}
+				if($esquema==4){
+					$gtotal=$iva+(($subtotal*$comision)/100);
+				}
+
+				if($esquema2==1){
+					$gtotal_r=($monto*$creal)/100;
+				}
+				if($esquema2==2){
+					$gtotal_r=($subtotal*$creal)/100;
+				}
+				if($esquema2==3){
+					$gtotal_r=$iva+(($monto*$creal)/100);
+				}
+				if($esquema2==4){
+					$gtotal_r=$iva+(($subtotal*$creal)/100);
+				}
+
+				$retorno=$monto-$gtotal;
+				$retorno_r=$monto-$gtotal_r;
+				$pikito=$gtotal_r-$gtotal;
+
+				if($creal>0){
+					$tcomision_r=$gtotal_r;
+					$retorno_r=$retorno_r;
+				}
+				else{
+					$tcomision_r=0;
+					$retorno_r=0;
+					$pikito=0;
+				}
+				$comdesp=($gtotal*$comdespa)/100;
+				$comisionistas=($gtotal-$comdesp)+$pikito;
+			}
+			else{
+				$gtotal=0;
+				$retorno=0;
+				$comision=0;
+				$creal=0;
+				$pikito=0;
+				$tcomision=0;
+				$tcomision_r=0;
+				$retorno_r=0;
+				$comdespa_t=0;
+				$comisionistas=0;
+				$comision=0;
+				$creal=0;
+			}
+		}
+
+		if($tipo==1){
+			$arreglo=array();
+			$arreglo+=array('subtotal'=>$subtotal);
+			$arreglo+=array('iva'=>$iva);
+			$arreglo+=array('tcomision'=>round($gtotal,2));
+			$arreglo+=array('retorno'=>round($retorno,2));
+			$arreglo+=array('pikito'=>round($pikito,2));
+			$arreglo+=array('tcomision_r'=>round($tcomision_r,2));
+			$arreglo+=array('retorno_r'=>round($retorno_r,2));
+			$arreglo+=array('comdespa_t'=>round($comdesp,2));
+			$arreglo+=array('comisionistas'=>round($comisionistas,2));
+			$arreglo+=array('comision'=>round($comision,2));
+			$arreglo+=array('creal'=>round($creal,2));
+			echo json_encode($arreglo);
+		}
+	}
+
 }
 
 $db = new Operaciones();

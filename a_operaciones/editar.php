@@ -8,10 +8,16 @@ if($id>0){
 	$pers = $db->operacion_edit($id);
 	$fact = $db->facturas($id);
 	$ret = $db->retorno($id);
-	$bloqueo=count($fact)+count($ret);
-	$idempresa=$pers['idempresa'];
-	$fecha=fecha($pers['fecha']);
 
+	$bloqueo=count($fact)+count($ret);
+	$idrazon=$pers['idrazon'];
+	$idempresa=$pers['idempresa'];
+
+
+	$cli=$db->razon($idrazon);
+	$empresa=$db->empresa($idempresa);
+
+	$fecha=fecha($pers['fecha']);
 	$subtotal=$pers['subtotal'];
 	$iva=$pers['iva'];
 	$monto=$pers['monto'];
@@ -20,11 +26,8 @@ if($id>0){
 	$retorno=$pers['retorno'];
 	$esquema=$pers['esquema'];
 	$esquema2=$pers['esquema2'];
-	$idrazon=$pers['idrazon'];
 	$tcomision=$pers['tcomision'];
-	$idempresa=$pers['idempresa'];
 	$idpersonal=$pers['idpersona'];
-
 	$contrato=$pers['contrato'];
 	$pikito=$pers['pikito'];
 	$tcomision_r=$pers['tcomision_r'];
@@ -34,15 +37,76 @@ if($id>0){
 	$comisionistas=$pers['comisionistas'];
 	$req_contrato=$pers['req_contrato'];
 	$finalizar=$pers['finalizar'];
-	$cli=$db->razon($idrazon);
-	$empresa=$db->empresa($idempresa);
+
 	$com_t=$pers['comision_f'];
 	$ret_t=$pers['retorno_f'];
+
+	if($esquema==5){
+		$tcomision=0;
+		$retorno=0;
+		$tcomision_r=0;
+		$retorno_r=0;
+		$pikito=0;
+		$comdesp=0;
+		$comisionistas=0;
+		$comision_f=0;
+		$retorno_f=0;
+		if(count($ret)>0){
+			$sql="select sum(tcomision) as scomision, sum(retorno) as sretorno,
+			sum(if(creal=0,tcomision,tcomisionjg)) stcomisionjg,
+			sum(if(creal=0,retorno,retornojg)) sretornojg
+			from retorno where idoperacion=$id";
+			$val=$db->general($sql);
+
+			$tcomision=$val[0]['scomision'];
+			$retorno=$val[0]['sretorno'];
+			$tcomision_r=$val[0]['stcomisionjg'];
+			$retorno_r=$val[0]['sretornojg'];
+			$pikito=$val[0]['sretorno']-$val[0]['sretornojg'];
+			$comdesp=($val[0]['scomision']*$comdespa)/100;
+			$comisionistas=($val[0]['stcomisionjg']-$comdesp);
+
+			$sql="select sum(if(creal=0,tcomision,tcomisionjg)) com_total, SUM(if(creal=0,retorno,retornojg)) ret_total from retorno where idoperacion=$id";
+			$total=$db->general($sql);
+			$comision_f=$total[0]['com_total'];
+			$retorno_f=$total[0]['ret_total'];
+		}
+		$arreglo=array();
+		$arreglo+=array('tcomision'=>$tcomision);
+		$arreglo+=array('retorno'=>$retorno);
+		$arreglo+=array('tcomision_r'=>$tcomision_r);
+		$arreglo+=array('retorno_r'=>$retorno_r);
+		$arreglo+=array('pikito'=>$pikito);
+		$arreglo+=array('comdespa_t'=>$comdesp);
+		$arreglo+=array('comisionistas'=>$comisionistas);
+		$arreglo+=array('comision_f'=>$comision_f);
+		$arreglo+=array('retorno_f'=>$retorno_f);
+		$db->update('operaciones',array('idoperacion'=>$id), $arreglo);
+	}
+	//////////////////////////comisionistas
+	$comis=$db->comisionista($cli['idcliente']);
+	foreach ($comis as $key) {
+		$sql="select * from operaciones_comi where idoperacion='$id' and idcom='".$key['idcom']."'";
+		$seek=$db->general($sql);
+		$total=($key['comision']*$comisionistas)/100;
+		$arreglo =array();
+		$arreglo+=array('porcentaje'=>$key['comision']);
+		$arreglo+=array('monto'=>$total);
+		if(count($seek)==0){
+			$arreglo+=array('idcom'=>$key['idcom']);
+			$arreglo+=array('idoperacion'=>$id);
+			$db->insert('operaciones_comi', $arreglo);
+		}
+		else{
+			$db->update('operaciones_comi',array('idoperacion'=>$id,'idcom'=>$key['idcom']), $arreglo);
+		}
+	}
+	//////////////////////////fin de comisionistas
 }
 else{
-	$monto="";
-	$subtotal="";
-	$iva="";
+	$monto="0";
+	$subtotal="0";
+	$iva="0";
 	$bloqueo=0;
 	$idrazon="";
 	$idempresa="";
@@ -56,11 +120,11 @@ else{
 	$tcomision=0;
 	$contrato="";
 	$pikito="";
-	$tcomision_r="";
-	$retorno_r="";
-	$comdespa="";
-	$comdespa_t="";
-	$comisionistas="";
+	$tcomision_r="0";
+	$retorno_r="0";
+	$comdespa="0";
+	$comdespa_t="0";
+	$comisionistas="0";
 	$cli=array();
 	$empresa=array();
 	$req_contrato=0;
@@ -144,13 +208,17 @@ $nombre=$ejecutivo['nombre'];
 							<label for="iva">Iva</label>
 							<input type="number" step='any' placeholder="Iva" id="iva" name="iva" onchange='retornooper()' value="<?php echo $iva; ?>" class="form-control" autocomplete=off readonly required dir='rtl'>
 						</div>
+
+						<div class="col-3" id='cargando'>
+						</div>
+
 					</div>
 					<hr>
 
 					<div class='row'>
 						<div class="col-3">
 							<label for="comision">% Comisión Cli/Desp</label>
-							<input type="text" placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()' dir='rtl'>
+							<input type="number" step='any' placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()' dir='rtl'>
 						</div>
 
 						<div class="col-3">
@@ -169,7 +237,7 @@ $nombre=$ejecutivo['nombre'];
 
 						<div class="col-3">
 							<label for="creal">% Comisión J&G</label>
-							<input type="text" placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()'>
+							<input type="number" step='any' placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()'>
 						</div>
 
 						<div class="col-3">
@@ -188,12 +256,12 @@ $nombre=$ejecutivo['nombre'];
 					<div class='row'>
 						<div class="col-2">
 							<label for="tcomision">Comisión</label>
-							<input type="text" placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class="col-2">
 							<label for="retorno">Retorno</label>
-							<input type="text" placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class="col-2">
@@ -201,17 +269,17 @@ $nombre=$ejecutivo['nombre'];
 
 						<div class="col-2">
 							<label for="tcomision">Comisión J&G</label>
-							<input type="text" placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class="col-2">
 							<label for="retorno">Retorno J&G</label>
-							<input type="text" placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class="col-2">
 							<label for="pikito">Pikito</label>
-							<input type="text" placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 					</div>
 					<hr>
@@ -219,17 +287,17 @@ $nombre=$ejecutivo['nombre'];
 					<div class='row'>
 						<div class="col-3">
 							<label for="comdespa">% Com. Despacho</label>
-							<input type="text" placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()' required>
+							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()' required>
 						</div>
 
 						<div class="col-3">
 							<label for="comdespa_t">Comisión Despacho</label>
-							<input type="text" placeholder="Com. Despacho" id="comdespa_t" name="comdespa_t" value="<?php echo $comdespa_t; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa_t" name="comdespa_t" value="<?php echo $comdespa_t; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class="col-3">
 							<label for="comisionistas">Comisionistas</label>
-							<input type="text" placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class='col-sm-3'>

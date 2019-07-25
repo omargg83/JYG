@@ -30,92 +30,61 @@
 
 	function retornooper(){
 		var monto=parseFloat($("#monto").val());
+		var esquema=parseFloat($("#esquema").val());
+		var esquema2=parseFloat($("#esquema2").val());
+		var comision=parseFloat($("#comision").val());
+		var creal=parseFloat($("#creal").val());
+		var comdespa=parseFloat($("#comdespa").val());
+
 		if (isNaN(monto)){
 			monto=0;
 			$("#monto").val(0);
 		}
-		var subtotal=Math.round((monto/1.16)*100)/100;
-		$("#subtotal").val(subtotal);
-		var iva=Math.round((subtotal*.16)*100)/100;
-		$("#iva").val(iva);
-
-		var esquema=$("#esquema").val();
-		var esquema2=$("#esquema2").val();
-		var com=parseFloat($("#comision").val());
-		var creal=parseFloat($("#creal").val());
-		var comdespa=$("#comdespa").val();
-		var gtotal=0;
-		var retorno=0;
-		var gtotal_r=0;
-		var retorno_r=0;
-		var pikito=0;
-
-
-		if(esquema==1){
-			gtotal=(monto*com)/100;
-		}
-		if(esquema==2){
-			gtotal=(subtotal*com)/100;
-		}
-		if(esquema==3){
-			gtotal=iva+((monto*com)/100);
-		}
-		if(esquema==4){
-			gtotal=iva+((subtotal*com)/100);
-		}
-		if(esquema==5){
-			gtotal=0;
-			retorno=0;
-			$("#comision").val(0);
+		if (isNaN(creal)){
+			creal=0;
 			$("#creal").val(0);
 		}
+		if (isNaN(comision)){
+			comision=0;
+			$("#comision").val(0);
+		}
+		if (isNaN(comdespa)){
+			comdespa=0;
+			$("#comdespa").val(0);
+		}
 
-		if(esquema2==1){
-			gtotal_r=(monto*creal)/100;
-		}
-		if(esquema2==2){
-			gtotal_r=(subtotal*creal)/100;
-		}
-		if(esquema2==3){
-			gtotal_r=iva+((monto*creal)/100);
-		}
-		if(esquema2==4){
-			gtotal_r=iva+((subtotal*creal)/100);
-		}
-		if(esquema<5){
-			retorno=monto-gtotal;
-			retorno_r=monto-gtotal_r;
-			pikito=gtotal_r-gtotal;
-
-			$("#tcomision").val(gtotal.toFixed(2));
-			$("#retorno").val(retorno.toFixed(2));
-			if(creal>0){
-				$("#pikito").val(pikito.toFixed(2));
-				$("#tcomision_r").val(gtotal_r.toFixed(2));
-				$("#retorno_r").val(retorno_r.toFixed(2));
+		$.ajax({
+			data:  {
+				"tipo":1,
+				"monto":monto,
+				"esquema":esquema,
+				"esquema2":esquema2,
+				"comision":comision,
+				"creal":creal,
+				"comdespa":comdespa,
+				"function":"recalcular"
+			},
+			url:   "a_operaciones/db_operaciones.php",
+			type:  'post',
+			beforeSend: function () {
+				$("#cargando").html("Calculando...");
+			},
+			success:  function (data) {
+				$("#cargando").html("");
+				var datos = JSON.parse(data);
+				$("#subtotal").val(datos.subtotal);
+				$("#iva").val(datos.iva);
+				$("#tcomision").val(datos.tcomision);
+				$("#retorno").val(datos.retorno);
+				$("#pikito").val(datos.pikito);
+				$("#tcomision_r").val(datos.tcomision_r);
+				$("#retorno_r").val(datos.retorno_r);
+				$("#comdespa_t").val(datos.comdespa_t);
+				$("#comisionistas").val(datos.comisionistas);
+				$("#comision").val(datos.comision);
+				$("#creal").val(datos.creal);
 			}
-			else{
-				$("#tcomision_r").val(0);
-				$("#retorno_r").val(0);
-				$("#pikito").val(0);
-				pikito=0;
-			}
-
-			var comdesp=(gtotal*comdespa)/100;
-			$("#comdespa_t").val(comdesp.toFixed(2));
-
-			var tmp=(gtotal-comdesp)+pikito;
-			$("#comisionistas").val(tmp.toFixed(2));
-		}
-		else{
-			$("#pikito").val(0);
-			$("#tcomision").val(0);
-			$("#retorno").val(0);
-			$("#tcomision_r").val(0);
-			$("#retorno_r").val(0);
-			$("#comdespa_t").val(0);
-			$("#comisionistas").val(0);
-		}
+		});
 	}
 	function desgloce(){
 		var monto=parseFloat($("#monto_fact").val());
@@ -181,6 +150,7 @@
 							var datos = JSON.parse(response);
 							$('#idempresa').html("<option value='"+datos.id+"'>"+datos.valor+"</option>");
 							$('#comdespa').val(datos.comision);
+							retornooper();
 							$('#myModal').modal('hide');
 						}
 					});
@@ -189,6 +159,7 @@
 				}
 			}
 		});
+
 	}
 	$(document).on('keyup','#producto',function(e){
 		var e = window.event;
