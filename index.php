@@ -155,7 +155,10 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 </body>
 <!--   Core JS Files   -->
 <script src="librerias15/jquery-3.3.1.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="librerias15/loader.js"></script>
+
+<!--   Boostrap   -->
+<link rel="stylesheet" href="librerias15/css/bootstrap.min.css">
+<script src="librerias15/js/bootstrap.js"></script>
 
 <!--   url   -->
 <script src="librerias15/jquery/jquery-ui.js"></script>
@@ -202,10 +205,6 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 
 <script src="librerias15/popper.js"></script>
 <script src="librerias15/tooltip.js"></script>
-
-<!--   Boostrap   -->
-<link rel="stylesheet" href="librerias15/css/bootstrap.min.css">
-<script src="librerias15/js/bootstrap.js"></script>
 
 <!--   Propios   -->
 <script src="sagyc.js"></script>

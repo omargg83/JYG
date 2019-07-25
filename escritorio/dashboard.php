@@ -4,13 +4,10 @@
 ?>
 	<div class='container-fluid'>
 
-		<div class='col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12' style='opacity:.5'>
-			<div class="alert alert-light" style='width:100%;height:300px; overflow:auto;'>
-				<canvas id="reporte1" height="100%" width="100%">
-				</canvas>
-			</div>
+		<div style='background-color: white;opacity:.8;'>
+			<canvas id="reporte1" height='80' width='600px' >
+			</canvas>
 		</div>
-
 	</div>
 
 	<script type="text/javascript">
@@ -52,7 +49,7 @@
 					]
 				  };
 				var ctx = $("#reporte1");
-					  var barGraph = new Chart(ctx, {
+				var barGraph = new Chart(ctx, {
 						type: 'bar',
 						data: chartdata,
 						options: {
@@ -68,7 +65,7 @@
 				error: function(data) {
 
 				}
-			  });
+			 });
 		};
 		function comisi_grap(){
 			var parametros={
