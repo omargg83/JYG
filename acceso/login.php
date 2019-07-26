@@ -10,21 +10,23 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<script src="librerias15/jquery-3.3.1.min.js" type="text/javascript"></script>
+
+	<script src="librerias15/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script src="librerias15/jquery/jquery-ui.js"></script>
-	
+
 	<script src="librerias15/swal/dist/sweetalert2.min.js"></script>
 	<link rel="stylesheet" href="librerias15/swal/dist/sweetalert2.min.css">
 
 	<link rel="stylesheet" href="librerias15/css/bootstrap.min.css">
 	<script src="librerias15/js/bootstrap.min.js"></script>
-	
+
 	<link rel="stylesheet" type="text/css" href="librerias15/modulos.css"/>
-	
-	<link rel="stylesheet" href="librerias15/fontawesome-free-5.8.1-web/css/all.css">	
+
+	<link rel="stylesheet" href="librerias15/fontawesome-free-5.8.1-web/css/all.css">
 	<script src="librerias15/jQuery-MD5-master/jquery.md5.js"></script>
 	<script src="sagyc.js" type="text/javascript"></script>
+
+	<link href="librerias15/animate.css" rel="stylesheet"/>
 </head>
 
 
@@ -50,13 +52,13 @@
 		<br>
 		<br>
 			<div class='container'>
-				<div class='logincard' style='
+				<div class='logincard animated fadeInDown delay-1s' style='
 				-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 				-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 				box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);'>
-					
+
 						<center><img src='img/logo.png' width='250px'></center>
-						
+
 						<p class='input_title'>Usuario o correo:</p>
 						<div class="form-group input-group">
 							<div class="input-group-prepend">
@@ -64,7 +66,7 @@
 							</div>
 							<input class="form-control" placeholder="Introduzca usuario o correo" type="text"  id="userAcceso" name="userAcceso" required>
 						</div>
-						
+
 						<p class='input_title'>Contraseña:</p>
 						<div class="form-group input-group">
 							<div class="input-group-prepend">
