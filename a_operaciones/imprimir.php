@@ -53,7 +53,7 @@
     $pdf = new Cezpdf('letter','portrait','color',array(255,255,255));
     $pdf->selectFont('../librerias15/fonts/Courier');
 		//////////////////////tu magia va aqui
-		$pdf->addPngFromFile("fretorno.png",27,0,555);
+		$pdf->addPngFromFile("formato.png",27,0,555);
 		$x=665;
 		$pdf->addText(170,$x-=45,12,$cli['razon'],200,'left');
 		$pdf->addText(170,$x-=20,12,"R.F.C.:",200,'left');

@@ -619,7 +619,7 @@ $nombre=$ejecutivo['nombre'];
 											echo "<td>";
 											echo "<div class='btn-group'>";
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$ret[$i]['idretorno']."' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-pencil-alt'></i></button>";
-											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='imprimir_formato' title='Imprimir' data-lugar='a_operaciones/imprimir' data-tipo='2'><i class='far fa-file-pdf'></i></button>";
+											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='imprimir_retorno' title='Imprimir' data-lugar='a_operaciones/imprimir' data-tipo='2'><i class='far fa-file-pdf'></i></button>";
 											if($finalizar==0){
 												echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_retorno' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$ret[$i]['idretorno']."' data-funcion='borrar_retorno' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
 											}
