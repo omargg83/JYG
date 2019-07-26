@@ -53,12 +53,20 @@
     $pdf = new Cezpdf('letter','portrait','color',array(255,255,255));
     $pdf->selectFont('../librerias15/fonts/Courier');
 		//////////////////////tu magia va aqui
+		$pdf->addPngFromFile("formato.png",27,0,555);
+		$x=665;
+		$pdf->addText(170,$x-=45,12,$cli['razon'],200,'left');
+		$pdf->addText(170,$x-=20,12,"R.F.C.:",200,'left');
+		$pdf->addText(170,$x-=20,12,"CURP",200,'left');
+		$pdf->addText(170,$x-=20,12,"CLABE",200,'left');
+		$pdf->addText(170,$x-=20,12,"BANCO",200,'left');
+		$pdf->addText(170,$x-=20,12,"MONTO",200,'left');
 
 		///////hasta aca
 		////////////////////////////////esto genera el archivo o para adjuntarlo en mail
 		if($file==1){
 			$documento_pdf = $pdf->ezOutput();
-			$file='historial/'.$id.'_solfact.pdf';
+			$file='historial/'.$id.'_forretorno.pdf';
 			$fichero = fopen("../".$file,'wb');
 			fwrite ($fichero, $documento_pdf);
 			fclose ($fichero);
