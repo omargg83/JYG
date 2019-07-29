@@ -29,7 +29,7 @@
 			<div class='col-1'>
 				<div class='alert alert-success' style='opacity:.7;font-size:12px'>
 					<?php
-					echo "<center>Operaciones: <br>".$row[0]['proceso']."en proceso</center>";
+					echo "<center>Operaciones: <br>".$row[0]['proceso']." en proceso</center>";
 				 	?>
 		 		</div>
 			</div>
@@ -223,7 +223,7 @@
 					labels: player,
 					datasets : [
 						{
-						label: 'Operaciones por mes',
+						label: 'Retornos por mes',
 						backgroundColor: 'rgba(255, 99, 132, 0.6)',
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
