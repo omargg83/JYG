@@ -125,7 +125,9 @@
 					datasets : [
 					  {
 						label: 'Operaciones por mes',
-						backgroundColor: 'rgba(255, 99, 132, 0.6)',
+						backgroundColor: ['rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
+						,'rgba(153, 102, 255, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)',
+						'rgba(54, 162, 235, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 159, 64, 0.6)'],
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 						hoverBorderColor: 'rgba(200, 200, 200, 1)',
@@ -138,6 +140,7 @@
 						type: 'bar',
 						data: chartdata,
 						options: {
+
 							legend: {
 								"display": true
 							},
@@ -175,7 +178,9 @@
 					datasets : [
 						{
 						label: 'Facturas por mes',
-						backgroundColor: 'rgba(255, 99, 132, 0.6)',
+						backgroundColor: ['rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
+						,'rgba(153, 102, 255, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)',
+						'rgba(54, 162, 235, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 159, 64, 0.6)'],
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 						hoverBorderColor: 'rgba(200, 200, 200, 1)',
@@ -185,15 +190,23 @@
 					};
 				var ctx = $("#reporte2");
 				var barGraph = new Chart(ctx, {
-						type: 'radar',
+						type: 'polarArea',
 						data: chartdata,
 						options: {
+							title: {
+								display: true,
+								fontSize:20,
+								text: 'Facturas por mes'
+
+							},
+
 							legend: {
 								"display": true
 							},
 							tooltips: {
 								"enabled": true
 							}
+
 						}
 						});
 				},
@@ -224,7 +237,7 @@
 					datasets : [
 						{
 						label: 'Retornos por mes',
-						backgroundColor: 'rgba(255, 99, 132, 0.6)',
+						backgroundColor:'rgba(255, 99, 132, 0.6)',
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 						hoverBorderColor: 'rgba(200, 200, 200, 1)',
@@ -237,6 +250,13 @@
 						type: 'line',
 						data: chartdata,
 						options: {
+
+							title: {
+								display: true,
+								fontSize:20,
+								text: 'Retornos por mes'
+
+							},
 							legend: {
 								"display": true
 							},
