@@ -54,16 +54,6 @@
     $pdf->selectFont('../librerias15/fonts/Courier');
 		//////////////////////tu magia va aqui
 
-		$data = array(
- array('num' => 0, 'name' => 'gandalf', 'type' => 'wizard'), array('num' => 2, 'name' => 'bilbo', 'type' => 'hobbit', 'url' => 'http://www.ros.co.nz/pdf/'), array('num' => 3, 'name' => 'frodo', 'type' => 'hobbit'), array('num' => 4, 'name' => 'saruman', 'type' => 'bad dude', 'url' => 'http://sourceforge.net/projects/pdf-php'), array('num' => 5, 'name' => 'sauron', 'type' => 'really bad dude'),
-);
-$cols = array('num' => 'No', 'type' => 'Type', 'name' => '<i>Alias</i>');
-$coloptions = array('num' => array('justification' => 'right'), 'name' => array('justification' => 'left'), 'type' => array('justification' => 'center'));
-
-		$pdf->ezText("\nFormato Retorno\n");
-$pdf->ezTable($data, $cols, '', array('shadeHeadingCol' => array(0.4, 0.6, 0.6), 'width' => 400));
-
-
 
 		$x=665;
 		$pdf->addText(170,$x-=45,12,$cli['razon'],200,'left');
