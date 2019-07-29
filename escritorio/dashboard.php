@@ -29,7 +29,7 @@
 			<div class='col-1'>
 				<div class='alert alert-success' style='opacity:.7;font-size:12px'>
 					<?php
-					echo "<center>Operaciones: <br>".$row[0]['proceso']." proceso</center>";
+					echo "<center>Operaciones: <br>".$row[0]['proceso']."en proceso</center>";
 				 	?>
 		 		</div>
 			</div>
@@ -162,6 +162,7 @@
 				method: "GET",
 				data: parametros,
 				success: function(data) {
+
 					var player = [];
 					var score = [];
 					var datos = JSON.parse(data);
@@ -184,7 +185,7 @@
 					};
 				var ctx = $("#reporte2");
 				var barGraph = new Chart(ctx, {
-						type: 'bar',
+						type: 'radar',
 						data: chartdata,
 						options: {
 							legend: {
@@ -233,7 +234,7 @@
 					};
 				var ctx = $("#reporte3");
 				var barGraph = new Chart(ctx, {
-						type: 'bar',
+						type: 'line',
 						data: chartdata,
 						options: {
 							legend: {
