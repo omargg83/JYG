@@ -142,7 +142,7 @@
 								"display": true
 							},
 							tooltips: {
-								"enabled": false
+								"enabled": true
 							}
 						}
 					  });
@@ -192,7 +192,7 @@
 								"display": true
 							},
 							tooltips: {
-								"enabled": false
+								"enabled": true
 							}
 						}
 						});
@@ -241,7 +241,7 @@
 								"display": true
 							},
 							tooltips: {
-								"enabled": false
+								"enabled": true
 							}
 						}
 						});
