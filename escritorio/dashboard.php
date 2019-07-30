@@ -141,6 +141,13 @@
 						data: chartdata,
 						options: {
 
+							title: {
+								display: true,
+								fontSize:20,
+								text: 'Operaciones por mes'
+
+							},
+
 							legend: {
 								"display": true
 							},
