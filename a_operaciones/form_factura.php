@@ -54,7 +54,7 @@ $forma_array = $db->forma_buscar();
 
 			<div class="col-12">
 				<label for="uso">Uso de la factura</label>
-					<select id='uso' name='uso' class="form-control retorno" onchange="retornoret()">
+					<select id='uso' name='uso' class="form-control">
 						<option selected disabled>Seleccione una opcion</option>
 						<?php
 						foreach($uso_array as $val){
@@ -66,7 +66,7 @@ $forma_array = $db->forma_buscar();
 
 			<div class="col-12">
 				<label for="forma">Forma de pago</label>
-				<select id='forma' name='forma' class="form-control retorno" onchange="retornoret()">
+				<select id='forma' name='forma' class="form-control">
 					<option selected disabled>Seleccione una opcion</option>
 					<?php
 					foreach($forma_array as $val){

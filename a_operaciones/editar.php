@@ -386,12 +386,12 @@ $nombre=$ejecutivo['nombre'];
 							echo $key['nombre'];
 							echo "</td>";
 
-							echo "<td>";
+							echo "<td> <center>";
 							echo $key['porcentaje'];
-							echo "</td>";
+							echo "</center></td>";
 
-							echo "<td>";
-							echo $key['monto'];
+							echo "<td align='right'>";
+							echo moneda($key['monto']);
 							echo "</td>";
 
 							echo "</tr>";
@@ -634,11 +634,11 @@ $nombre=$ejecutivo['nombre'];
 											echo $ret[$i]["idproducto"];
 											echo "</td>";
 
-											echo "<td>";
+											echo "<td align='right'>";
 											echo moneda($ret[$i]["retorno"]);
 											echo "</td>";
 
-											echo "<td>";
+											echo "<td align='right'>";
 											$retorno_x+=$ret[$i]["monto"];
 											echo moneda($ret[$i]["monto"]);
 											echo "</td>";
@@ -693,7 +693,7 @@ $nombre=$ejecutivo['nombre'];
 						echo "<div class='col-2'>";
 						echo "<label>Saldo de facturas:</label><br>";
 						if($esquema<5){
-							echo moneda($r_final-$suma);
+							echo moneda($monto-$suma);
 						}
 						else{
 							echo "N/A";

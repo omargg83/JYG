@@ -490,7 +490,7 @@ class Operaciones extends Sagyc{
 		$llave=1;
 		if($esquema<5){
 			if($creal>0){
-				$retorno=$pers['retorno_r'];
+				$retorno=$pers['monto'];
 			}
 			$sql="select sum(monto) as monto from facturas where idoperacion=$idoperacion";
 			$fact=$this->general($sql);
