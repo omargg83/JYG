@@ -205,6 +205,28 @@ class Clientes extends Sagyc{
 		if (isset($_REQUEST['rfcrazon'])){
 			$arreglo+=array('rfcrazon'=>$_REQUEST['rfcrazon']);
 		}
+		if (isset($_REQUEST['telefono'])){
+			$arreglo+=array('telefono'=>$_REQUEST['telefono']);
+		}
+		if (isset($_REQUEST['domicilio'])){
+			$arreglo+=array('domicilio'=>$_REQUEST['domicilio']);
+		}
+		if (isset($_REQUEST['colonia'])){
+			$arreglo+=array('colonia'=>$_REQUEST['colonia']);
+		}
+		if (isset($_REQUEST['ciudad'])){
+			$arreglo+=array('ciudad'=>$_REQUEST['ciudad']);
+		}
+		if (isset($_REQUEST['municipio'])){
+			$arreglo+=array('municipio'=>$_REQUEST['municipio']);
+		}
+		if (isset($_REQUEST['estado'])){
+			$arreglo+=array('estado'=>$_REQUEST['estado']);
+		}
+		if (isset($_REQUEST['cp'])){
+			$arreglo+=array('cp'=>$_REQUEST['cp']);
+		}
+
 		if (isset($_REQUEST['idcliente'])){
 			$idcliente=$_REQUEST['idcliente'];
 			$arreglo+=array('idcliente'=>$idcliente);
