@@ -156,9 +156,7 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 <!--   Core JS Files   -->
 <script src="librerias15/jquery-3.4.1.min.js" type="text/javascript"></script>
 
-<!--   Boostrap   -->
-<link rel="stylesheet" href="librerias15/css/bootstrap.min.css">
-<script src="librerias15/js/bootstrap.js"></script>
+
 
 <!--   url   -->
 <script src="librerias15/jquery/jquery-ui.js"></script>
@@ -177,8 +175,7 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 <link rel="stylesheet" type="text/css" href="librerias15/DataTables/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="librerias15/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.css"/>
 
-<!-- Animation library for notifications   -->
-<link href="librerias15/animate.min.css" rel="stylesheet"/>
+
 
 <!--   Alertas   -->
 <script src="librerias15/swal/dist/sweetalert2.min.js"></script>
@@ -217,4 +214,10 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 <script src='librerias15/fullcalendar-4.0.1/packages/interaction/main.js'></script>
 <script src='librerias15/fullcalendar-4.0.1/packages/daygrid/main.js'></script>
 
+<!--   Boostrap   -->
+<link rel="stylesheet" href="librerias15/css/bootstrap.min.css">
+<script src="librerias15/js/bootstrap.js"></script>
+
+<!-- Animation library for notifications   -->
+<link href="librerias15/animate.css" rel="stylesheet"/>
 </html>

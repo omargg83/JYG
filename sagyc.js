@@ -150,7 +150,6 @@
 		if ( $(this).data('proceso') ) {
 			proceso=$(this).data('proceso');
 		}
-
 		$("#modal_form").load("archivo.php?id="+id+"&ruta="+ruta+"&ext="+ext+"&tipo="+tipo+"&tabla="+tabla+"&campo="+campo+"&keyt="+keyt+"&destino="+destino+"&iddest="+iddest+"&proceso="+proceso+"&divdest="+divdest);
 	});
 	$(document).on('change',"#prefile",function(e){
@@ -224,6 +223,8 @@
 				success:  function (response) {
 					if (!isNaN(response)){
 						lugar=destino+".php?id="+iddest;
+						console.log(lugar);
+						console.log("#"+divdest);
 						$("#"+divdest).load(lugar);
 						$('#myModal').modal('hide');
 						Swal.fire({
@@ -612,7 +613,7 @@
 								})
 							}
 							else{
-								$.alert(echo);
+								$.alert(response);
 							}
 						}
 					});
