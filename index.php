@@ -128,7 +128,7 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 	</div>
 
 
-	<div class="modal animated fadeIn delay-2s" tabindex="-1" role="dialog" id="myModal">
+	<div class="modal animated fadeIn " tabindex="-1" role="dialog" id="myModal">
 		<div class="modal-dialog modal-lg" role="document">if (isset($_REQUEST['funcion'])){
 	$nombre=$_REQUEST['funcion'];
 }
