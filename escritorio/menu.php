@@ -2,24 +2,24 @@
 		<button class="btn btn-outline-secondary" type="button" id="sidebarCollapse">
 		  <span class="navbar-toggler-icon"></span>
 		</button>
-		
+
 		<img src='img/Escudo.png' width='40' height='30' alt=''>
 		<img src='img/SSH.png' width='40' height='30' alt=''>
 
-		<a class="navbar-brand" href="#escritorio/dashboard" style='font-size:10px'>Sistema Administrativo de Salud Pública</a>
-		
+		<a class="navbar-brand" href="#escritorio/dashboard" style='font-size:10px'>Sistema Administrativo</a>
+
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#principal" aria-controls="principal" aria-expanded="false" aria-label="Toggle navigation">
 			<i class="fab fa-rocketchat"></i>
 		</button>
-		
+
 		<div class="collapse navbar-collapse" id="principal">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item dropdown">
 					<a class="nav-link navbar-brand" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					</a>
 				</li>
-			</ul> 
-		
+			</ul>
+
 			<ul class="nav navbar-nav navbar-right">
 			<?php
 				echo '<ul class="nav navbar-nav navbar-right" id="chatx"></ul>';
@@ -60,7 +60,7 @@
 					  ?>
 					</div>
 				</li>
-			</ul> 
+			</ul>
 
 			<ul class='nav navbar-nav navbar-right'>
 				<li class="nav-item">

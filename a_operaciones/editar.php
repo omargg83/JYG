@@ -153,7 +153,7 @@ $nombre=$ejecutivo['nombre'];
 				<div class="card-body">
 					<div class="row">
 						<div class="col-2">
-							<label for="fecha">ID</label>
+							<label for="id">ID</label>
 							<input type="text" placeholder="ID" id="id" name="id" value="<?php echo $id; ?>" class="form-control" readonly>
 						</div>
 
