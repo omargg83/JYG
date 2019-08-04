@@ -59,3 +59,27 @@
 		</div>
 	</form>
 </div>
+<script>
+$(function() {
+	fechas();
+	$(document).ready( function () {
+		$('table.datatable').DataTable({
+			"pageLength": 100,
+			"language": {
+				"sSearch": "Buscar aqui",
+				"lengthMenu": "Mostrar _MENU_ registros",
+				"zeroRecords": "No se encontró",
+				"info": " Página _PAGE_ de _PAGES_",
+				"infoEmpty": "No records available",
+				"infoFiltered": "(filtered from _MAX_ total records)",
+				"paginate": {
+					"first":      "Primero",
+					"last":       "Ultimo",
+					"next":       "Siguiente",
+					"previous":   "Anterior"
+				},
+			}
+		});
+	});
+});
+</script>

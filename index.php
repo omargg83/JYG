@@ -82,7 +82,7 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 					<div class="dropdown-menu" aria-labelledby="dropdown06">
 						<a class="dropdown-item" href="#a_gastos/index"><i class="fas fa-hand-holding-usd"></i>Registro de Gastos</a>
 						<hr>
-						<a class="dropdown-item" href="#a_reportes/index"><i class="far fa-sticky-note"></i>Reportes</a>
+						<a class="dropdown-item" href="#a_reportes2/index"><i class="far fa-sticky-note"></i>Reporte</a>
 					</div>
 				</li>
 
