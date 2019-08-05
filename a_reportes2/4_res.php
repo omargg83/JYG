@@ -4,7 +4,7 @@
 	echo "<div class='container-fluid' style='background-color:".$_SESSION['cfondo']."; '>";
 ?>
 <div class="content table-responsive table-full-width">
-<table class='table' id='x_lista' style='font-size:10px'>
+<table class='table' id='x_lista' style='font-size:15px'>
 
 <thead><tr><th>#</th><th>Fecha</th><th>Gasto</th><th>Descripción</th><th>Costo</th>
 
@@ -13,9 +13,6 @@
 
 <?php
   $monto_t=0;
-  $com=0;
-  $ret=0;
-  $pik=0;
   foreach($row as $key){
     echo "<tr id=".$key['idgastos']." class='edit-t";
 
