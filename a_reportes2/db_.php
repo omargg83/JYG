@@ -39,6 +39,15 @@ class Reportes2 extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
+	public function reporte4(){
+		$sql="SELECT month(fecha) as mes, sum(costo) as total FROM gastos where year(fecha)=year(now()) group by month(fecha);";
+		$response=$this->general($sql);
+		$arreglo=array();
+		for($i=0;$i<count($response);$i++){
+			$arreglo[$i]=array('mes'=>$response[$i]['mes'], 'total'=>$response[$i]['total']);
+		}
+		return json_encode($arreglo);
+	}
 }
 
 $db = new Reportes2();
