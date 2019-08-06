@@ -6,7 +6,8 @@
 
 	if($tipo==1){			/////////////////solicitud factura
 		$row=$db->facturas_edit($id);
-		$pers = $db->operacion_edit($id);
+		$id_oper=$row['idoperacion'];
+		$pers = $db->operacion_edit($id_oper);
 		$idrazon=$pers['idrazon'];
 		$cli=$db->razon($idrazon);
 

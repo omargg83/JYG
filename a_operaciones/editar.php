@@ -470,7 +470,6 @@ $nombre=$ejecutivo['nombre'];
 										$suma=0;
 										foreach($fact as $key){
 											echo "<tr id=".$key['idfactura']." class='edit-t'>";
-
 											echo "<td>";
 											echo "<div class='btn-group'>";
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idfactura']."' data-id2='$id' data-lugar='a_operaciones/form_factura'><i class='fas fa-pencil-alt'></i></button>";
