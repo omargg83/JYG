@@ -60,11 +60,15 @@
     $pdf = new Cezpdf('letter','portrait','color',array(255,255,255));
     $pdf->selectFont('../librerias15/fonts/Courier');
 
+		$row=$db->retorno_edit($id);
+		$id_oper=$row['idoperacion'];
 
-		$pers = $db->operacion_edit($id);
+		$pers = $db->operacion_edit($id_oper);
+		$idrazon=$pers['idrazon'];
+		$idempresa=$pers['idempresa'];
+
 		$despa=$db->empresa_despacho($idempresa);
 		$prod=$db->producto_despacho($iddespacho);
-		$row=$db->retorno_edit($id);
 		$idrazon=$pers['idrazon'];
 		$cli=$db->razon($idrazon);
 
