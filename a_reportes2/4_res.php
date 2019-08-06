@@ -16,9 +16,7 @@
   foreach($row as $key){
     echo "<tr id=".$key['idgastos']." class='edit-t";
 
-    if($key["finalizar"]==0){
-      echo " table-danger ";
-    }
+
     echo "'>";
     echo "<td>";
     	echo "<button class='btn btn-outline-secondary btn-sm' id='edit_persona' title='Editar' data-lugar='a_gastos/editar'><i class='fas fa-pencil-alt'></i>".$key['idgastos']."</button>";
