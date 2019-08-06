@@ -18,7 +18,7 @@
 		$pdf->addPngFromFile("formato2.png",27,0,555);
 		$x=665;
 		$pdf->addText(170,$x-=45,12,$cli['razon'],200,'left');
-		$pdf->addText(170,$x-=20,12,$cli['rfc'],200,'left');
+		$pdf->addText(170,$x-=20,12,$cli['rfcrazon'],200,'left');
 		$pdf->addText(170,$x-=20,12,"REGIMEN FISCAL:",200,'left');
 		$pdf->addText(170,$x-=20,12,$row['uso'],200,'left');
 		$pdf->addText(170,$x-=20,12,$row['fecha'],200,'left');
