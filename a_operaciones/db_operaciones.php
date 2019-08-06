@@ -73,7 +73,15 @@ class Operaciones extends Sagyc{
 	public function razon($idrazon){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente where idrazon=:idrazon";
+			$sql="SELECT clientes_razon.razon,
+			clientes_razon.rfc,
+			clientes_razon.domicilio,
+			clientes_razon.colonia,
+			clientes_razon.ciudad,
+			clientes_razon.municipio,
+			clientes_razon.estado,
+			clientes_razon.cp
+			FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente where idrazon=:idrazon";
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":idrazon",$idrazon);
 			$sth->execute();
