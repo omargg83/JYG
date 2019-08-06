@@ -9,7 +9,7 @@
 		$telefono=$pers['telefono'];
 		$banco=$pers['banco'];
 		$cuentabanco=$pers['cuentabanco'];
-		$comision=$pers['comision'];
+
 
 	}
 	else{
@@ -18,7 +18,7 @@
 		$telefono="";
 		$banco="";
 		$cuentabanco="";
-		$comision="";
+
 
 	}
 ?>
