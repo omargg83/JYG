@@ -215,76 +215,88 @@ $nombre=$ejecutivo['nombre'];
 					</div>
 					<hr>
 
+					<!-- COMISION -->
 					<div class='row'>
-						<div class="col-3">
-							<label for="comision">% Comisión Cli/Desp</label>
-							<input type="number" step='any' placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()' dir='rtl'>
+						<div class="col-6" style='border:1px solid black;background:silver;'>
+							<h5><center>% Comisión Cli/Desp</center></h5>
+							<div class='row'>
+								<div class="col-6">
+									<label for="comision">% Comisión Cli/Desp</label>
+									<input type="number" step='any' placeholder="Comisión pactada" id="comision" name="comision" value="<?php echo $comision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()' dir='rtl'>
+								</div>
+
+								<div class="col-6">
+									<label for="Esquema">Tipo de Comisión</label>
+									<?php
+									echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled required>";
+									echo "<option value='' selected disabled>Seleccione una opción</option>";
+									echo "<option value='1' "; if ($esquema==1) { echo "selected";} echo ">1. Total</option>";
+									echo "<option value='2' "; if ($esquema==2) { echo "selected";} echo ">2. Subtotal</option>";
+									echo "<option value='3' "; if ($esquema==3) { echo "selected";} echo ">3. Total + Iva</option>";
+									echo "<option value='4' "; if ($esquema==4) { echo "selected";} echo ">4. Subtotal + Iva</option>";
+									echo "<option value='5' "; if ($esquema==5) { echo "selected";} echo ">5. Al hacer el Retorno</option>";
+									echo "</select>";
+									?>
+								</div>
+							</div>
+
+							<div class='row'>
+								<div class="col-4">
+									<label for="tcomision">Comisión</label>
+									<input type="number" step='any' placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+								</div>
+
+								<div class="col-4">
+									<label for="retorno">Retorno</label>
+									<input type="number" step='any' placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+								</div>
+							</div>
 						</div>
 
-						<div class="col-3">
-							<label for="Esquema">Tipo de Comisión</label>
-							<?php
-							echo "<select id='esquema' name='esquema' class='form-control' required onchange='retornooper()' $disabled required>";
-							echo "<option value='' selected disabled>Seleccione una opción</option>";
-							echo "<option value='1' "; if ($esquema==1) { echo "selected";} echo ">1. Total</option>";
-							echo "<option value='2' "; if ($esquema==2) { echo "selected";} echo ">2. Subtotal</option>";
-							echo "<option value='3' "; if ($esquema==3) { echo "selected";} echo ">3. Total + Iva</option>";
-							echo "<option value='4' "; if ($esquema==4) { echo "selected";} echo ">4. Subtotal + Iva</option>";
-							echo "<option value='5' "; if ($esquema==5) { echo "selected";} echo ">5. Al hacer el Retorno</option>";
-							echo "</select>";
-							?>
-						</div>
+						<!-- COMISION CLI -->
+						<div class="col-6" style='border:1px solid black;background:green;'>
+							<h5><center>% Comisión J&G</center></h5>
+							<div class='row'>
+								<div class="col-6">
+									<label for="creal">% Comisión J&G</label>
+									<input type="number" step='any' placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()'>
+								</div>
 
-						<div class="col-3">
-							<label for="creal">% Comisión J&G</label>
-							<input type="number" step='any' placeholder="Comisión real" id="creal" name="creal" value="<?php echo $creal; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> onchange='retornooper()'>
-						</div>
+								<div class="col-6">
+									<label for="Esquema">Tipo de Comisión</label>
+									<?php
+									echo "<select id='esquema2' name='esquema2' class='form-control' required onchange='retornooper()' $disabled required>";
+									echo "<option value='1' "; if ($esquema2==1) { echo "selected";} echo ">1. Total</option>";
+									echo "<option value='2' "; if ($esquema2==2) { echo "selected";} echo ">2. Subtotal</option>";
+									echo "<option value='3' "; if ($esquema2==3) { echo "selected";} echo ">3. Total + Iva</option>";
+									echo "<option value='4' "; if ($esquema2==4) { echo "selected";} echo ">4. Subtotal + Iva</option>";
+									echo "</select>";
+									?>
+								</div>
+							</div>
 
-						<div class="col-3">
-							<label for="Esquema">Tipo de Comisión</label>
-							<?php
-							echo "<select id='esquema2' name='esquema2' class='form-control' required onchange='retornooper()' $disabled required>";
-							echo "<option value='1' "; if ($esquema2==1) { echo "selected";} echo ">1. Total</option>";
-							echo "<option value='2' "; if ($esquema2==2) { echo "selected";} echo ">2. Subtotal</option>";
-							echo "<option value='3' "; if ($esquema2==3) { echo "selected";} echo ">3. Total + Iva</option>";
-							echo "<option value='4' "; if ($esquema2==4) { echo "selected";} echo ">4. Subtotal + Iva</option>";
-							echo "</select>";
-							?>
-						</div>
-					</div>
+							<div class='row'>
+								<div class="col-4">
+									<label for="tcomision">Comisión J&G</label>
+									<input type="number" step='any' placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+								</div>
 
-					<div class='row'>
-						<div class="col-2">
-							<label for="tcomision">Comisión</label>
-							<input type="number" step='any' placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
-						</div>
+								<div class="col-4">
+									<label for="retorno">Retorno J&G</label>
+									<input type="number" step='any' placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+								</div>
 
-						<div class="col-2">
-							<label for="retorno">Retorno</label>
-							<input type="number" step='any' placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
-						</div>
-
-						<div class="col-2">
-						</div>
-
-						<div class="col-2">
-							<label for="tcomision">Comisión J&G</label>
-							<input type="number" step='any' placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
-						</div>
-
-						<div class="col-2">
-							<label for="retorno">Retorno J&G</label>
-							<input type="number" step='any' placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
-						</div>
-
-						<div class="col-2">
-							<label for="pikito">Pikito</label>
-							<input type="number" step='any' placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							</div>
 						</div>
 					</div>
 					<hr>
 
 					<div class='row'>
+						<div class="col-2">
+							<label for="pikito">Pikito</label>
+							<input type="number" step='any' placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+						</div>
+
 						<div class="col-3">
 							<label for="comdespa">% Com. Despacho</label>
 							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()' required>
@@ -295,13 +307,13 @@ $nombre=$ejecutivo['nombre'];
 							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa_t" name="comdespa_t" value="<?php echo $comdespa_t; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 
-						<div class="col-3">
+						<div class="col-2">
 							<label for="comisionistas">Comisionistas</label>
 							<input type="number" step='any' placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
 						</div>
 
-						<div class='col-sm-3'>
-							<label>Contrato requerido: </label>
+						<div class='col-sm-2'>
+							<label>Contrato requerido: </label><br>
 							<input type='checkbox' name='req_contrato' id='req_contrato' value=1
 							<?php
 							if($req_contrato==1){ echo " checked";}
