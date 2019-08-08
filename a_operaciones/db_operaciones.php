@@ -173,7 +173,7 @@ class Operaciones extends Sagyc{
 		    foreach($res as $key){
 		      $x.= "<tr id='".$key['idempresa']."' class='edit-t'>";
 		        $x.= "<td>";
-		          $x.= "<button class='btn btn-outline-secondary btn-sm' id='seleccomision' title='Editar' onclick='seleccliente(".$key['idempresa'].")'><i class='fas fa-pencil-alt'></i></i></button>";
+		          $x.= "<button class='btn btn-outline-secondary btn-sm' id='seleccomision' title='Seleccionar' onclick='seleccliente(".$key['idempresa'].")'><i class='fas fa-check'></i></i></button>";
 		        $x.= "</td>";
 
 		        $x.= "<td>";

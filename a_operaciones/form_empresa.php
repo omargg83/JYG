@@ -20,7 +20,7 @@
 	</div>
 	<div class="card-footer">
 		<div class='btn-group'>
-			<button class='btn btn-outline-secondary btn-sm' type='submit' id='lista_empresa' data-lugar='a_operaciones/lista_empresa' data-valor='cliente_bus' data-function='buscar_empresa' data-div='resultadosx'><i class='fas fa-search'></i>Buscar</button>
+			<button class='btn btn-outline-secondary btn-sm' type='submit' onclick='despachosel()' id='lista_empresa' data-lugar='a_operaciones/lista_empresa' data-valor='cliente_bus' data-function='buscar_empresa' data-div='resultadosx'><i class='fas fa-search'></i>Selecionar</button>
 			<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal"><i class="fas fa-sign-out-alt"></i>Cerrar</button>
 		</div>
 	</div>

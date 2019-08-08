@@ -254,7 +254,7 @@ $nombre=$ejecutivo['nombre'];
 						</div>
 
 						<!-- COMISION CLI -->
-						<div class="col-6" style='border:1px solid black;background:green;'>
+						<div class="col-6" style='border:1px solid black;background:#ffb6c1;'>
 							<h5><center>% Comisión J&G</center></h5>
 							<div class='row'>
 								<div class="col-6">
