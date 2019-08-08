@@ -21,7 +21,7 @@
 	}
 ?>
 <div class="container">
-	<form action="" id="form_personal" data-lugar="a_despachos/db_despachos" data-funcion="guardar_despacho">
+	<form action="" id="form_personal" data-lugar="a_despachos/db_despachos" data-funcion="guardar_despacho" data-destino="a_despachos/editar">
 		<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 		<div class="card">
 			<div class="card-header">Despacho</div>
@@ -62,7 +62,8 @@
 
 							<?php
 							if($id>0){
-								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_despachos/form_oper' title='operador'><i class='fas fa-pencil-alt'></i>Agregar operador</button>";
+								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_despachos/form_oper' title='operador'><i class='fas fa-pencil-alt'></i>+ operador</button>";
+								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_empresa' data-id='0' data-id2='$id' data-lugar='a_despachos/form_empresa' title='operador'><i class='fas fa-pencil-alt'></i>+ empresa</button>";
 							}
 
 							?>
@@ -73,23 +74,38 @@
 				</div>
 			</div>
 
-			<?php if($id>0){ ?>
-				<div class="card-body" id='social'>
-					<center><img src='img/carga.gif' width='300px'></center>
 
+			<div class="card-header">
+				<ul class='nav nav-tabs card-header-tabs nav-fill' id='myTab' role='tablist'>
+					<li class='nav-item'>
+						<a class='nav-link active' id='ssh-tab' data-toggle='tab' href='#ssh' role='ssh' aria-controls='home' aria-selected='true'>Razon</a>
+					</li>
+					<li class='nav-item'>
+						<a class='nav-link'  id='home-tab' data-toggle='tab' href='#home' role='tab' aria-controls='home' aria-selected='true'>Empresas</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class='card-body'>
+				<div class='tab-content' id='myTabContent'>
+					<div class='tab-pane fade show active' id='ssh' role='tabpanel' aria-labelledby='ssh-tab'>
+						<div class="row" id='razon'>
+							<div class='col-12'>
+								<?php include "lista_operador.php"; ?>
+							</div>
+						</div>
+					</div>
+					<div class='tab-pane fade show' id='home' role='tabpanel' aria-labelledby='home-tab'>
+						<div class="row" id='comisionista'>
+							<div class='col-12'>
+								<?php include "lista_empresas.php"; ?>
+							</div>
+						</div>
+					</div>
 				</div>
+			</div>
 
-				<?php
-			}
-			?>
+
 		</div>
 	</form>
 </div>
-
-<script>
-$(function() {
-	var id= $("#id").val();
-	$("#social").load("a_despachos/lista_operador.php?id="+id);
-});
-
-</script>

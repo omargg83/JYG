@@ -53,9 +53,6 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 						if ($_SESSION['tipousuario']=='administrativo')
 						echo "<a class='dropdown-item' href='#a_despachos/index'><i class='fas fa-store-alt'></i>Despachos</a>";
 
-						if ($_SESSION['tipousuario']=='administrativo')
-						echo "<a class='dropdown-item' href='#a_empresas/index'><i class='far fa-building'></i>Empresas Despacho</a>";
-
 						echo "<a class='dropdown-item' href='#a_comisionistas/index'><i class='fas fa-hand-holding-usd'></i>Comisionistas</a>";
 						?>
 					</div>

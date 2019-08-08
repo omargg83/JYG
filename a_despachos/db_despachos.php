@@ -121,6 +121,77 @@ class Despachos extends Sagyc{
 		}
 		return $x;
 	}
+
+	public function empresas_lista($id){
+		try{
+			self::set_names();
+			$sql="SELECT * FROM empresas where iddespacho=:iddespa";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":iddespa",$id);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function empresa_edit($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM empresas where idempresa=:idempresa";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idempresa",$id);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function guardar_empresa(){
+		$x="";
+		$id=$_REQUEST['id'];
+		$iddespacho=$_REQUEST['iddespacho'];
+
+		$arreglo =array();
+		$arreglo+=array('iddespacho'=>$iddespacho);
+		if (isset($_REQUEST['razon'])){
+			$arreglo+=array('razon'=>$_REQUEST['razon']);
+		}
+		if (isset($_REQUEST['rfc'])){
+			$arreglo+=array('rfc'=>$_REQUEST['rfc']);
+		}
+		if (isset($_REQUEST['giro'])){
+			$arreglo+=array('giro'=>$_REQUEST['giro']);
+		}
+		if (isset($_REQUEST['objeto'])){
+			$arreglo+=array('objeto'=>$_REQUEST['objeto']);
+		}
+		if (isset($_REQUEST['banco'])){
+			$arreglo+=array('banco'=>$_REQUEST['banco']);
+		}
+		if (isset($_REQUEST['clabe'])){
+			$arreglo+=array('clabe'=>$_REQUEST['clabe']);
+		}
+		if (isset($_REQUEST['cuenta'])){
+			$arreglo+=array('cuenta'=>$_REQUEST['cuenta']);
+		}
+
+		if($id==0){
+			$x.=$this->insert('empresas', $arreglo);
+		}
+		else{
+			$x.=$this->update('empresas',array('idempresa'=>$id), $arreglo);
+		}
+		if(is_numeric($x)){
+			return $iddespacho;
+		}
+		else{
+			return $x;
+		}
+	}
 }
 
 
