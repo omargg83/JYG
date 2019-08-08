@@ -7,7 +7,7 @@
     foreach($row as $key){
       echo "<tr id='".$key['idrazon']."' class='edit-t'>";
         echo "<td>";
-          echo "<button class='btn btn-outline-secondary btn-sm' id='seleccomision' title='Editar' onclick='seleccomision(".$key['idrazon'].")'><i class='fas fa-pencil-alt'></i></i></button>";
+          echo "<button class='btn btn-outline-secondary btn-sm' id='seleccomision' title='Seleccionar' onclick='seleccomision(".$key['idrazon'].")'><i class='fas fa-check'></i></i></button>";
         echo "</td>";
 
         echo "<td>";
