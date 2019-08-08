@@ -158,13 +158,52 @@ class Operaciones extends Sagyc{
 		$arreglo+=array('comision'=>$empresa['comision']);
 		return json_encode($arreglo);
 	}
-	public function buscar_empresa($texto){
+	public function buscar_empresa(){
+		try{
+			parent::set_names();
+			$iddespacho=$_REQUEST['iddespacho'];
+			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where despachos.iddespacho=:texto";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":texto",$iddespacho);
+			$sth->execute();
+			$res=$sth->fetchAll();
+
+			$x="<table class='table table-sm'>";
+		  $x.="<tr><th>-</th><th>Despacho</th><th>Razon</th><th>Empresa</th></tr>";
+		    foreach($res as $key){
+		      $x.= "<tr id='".$key['idempresa']."' class='edit-t'>";
+		        $x.= "<td>";
+		          $x.= "<button class='btn btn-outline-secondary btn-sm' id='seleccomision' title='Editar' onclick='seleccliente(".$key['idempresa'].")'><i class='fas fa-pencil-alt'></i></i></button>";
+		        $x.= "</td>";
+
+		        $x.= "<td>";
+		          $x.= $key['nombre'];
+		        $x.= "</td>";
+
+		        $x.= "<td>";
+		          $x.= $key['razon'];
+		        $x.= "</td>";
+
+		        $x.= "<td>";
+		          $x.= $key['rfc'];
+		        $x.= "</td>";
+
+		      $x.= "</tr>";
+		    }
+		  $x.= "</table>";
+
+			return $x;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function despachos(){
 		try{
 			parent::set_names();
 
-			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where (empresas.razon like :texto or despachos.nombre like :texto)";
+			$sql="SELECT * FROM despachos";
 			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":texto","%$texto%");
 			$sth->execute();
 			$res=$sth->fetchAll();
 			return $res;
@@ -635,7 +674,6 @@ class Operaciones extends Sagyc{
 
 		$arreglo=array();
 		$arreglo=array('pventa'=>$pventa);
-
 		return json_encode($arreglo);
 	}
 	public function forma(){

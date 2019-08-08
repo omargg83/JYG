@@ -1,13 +1,21 @@
 <?php
   require_once("db_operaciones.php");
+  $data=$db->despachos();
 ?>
 
 <div class="card">
 <form id='form_buscar' action=''>
-	<div class="card-header">Buscar empresa</div>
+	<div class="card-header">Despachos</div>
 	<div class="card-body">
 		<div clas='row'>
-			<input type="text" name="cliente_bus" id='cliente_bus' placeholder='buscar empresa' class='form-control' autocomplete="off">
+      <?php
+          echo "<select id='iddespacho_xsel' name='iddespacho_xsel' class='form-control' onchange='despachosel()' required>";
+          echo "<option value='' disabled selected>Seleccione una opción</option>";
+          foreach ($data as $key) {
+            echo "<option value='".$key['iddespacho']."'>".$key['nombre']."</option>";
+          }
+          echo "</select>";
+       ?>
 		</div>
 	</div>
 	<div class="card-footer">

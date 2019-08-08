@@ -194,6 +194,7 @@
 		$('#producto').val($(this).find('td:first').html());
 		$("#producto_auto").hide();
 	});
+
 	$(document).on('change','.retorno',function(e){
 			e.preventDefault();
 			e.stopPropagation();
@@ -210,11 +211,12 @@
 				},
 				success:  function (response) {
 					var datos = JSON.parse(response);
-					$("#comision_r").val(datos.pventa);
+					$("#comision_ret").val(datos.pventa);
 				}
 			});
 			retornoret();
 		});
+
 	function retornoret(){
 		var gtotal=0;
 		var monto=parseFloat($("#monto_ret").val());
@@ -319,5 +321,25 @@
 			}
 		});
 	}
+	function despachosel(){
+			var xyId = $("#iddespacho_xsel").val();
+			$.ajax({
+				data:  {
+					"iddespacho":xyId,
+					"function":"buscar_empresa"
+				},
+				url:   "a_operaciones/db_operaciones.php",
+				type:  'post',
+				beforeSend: function () {
+
+				},
+				success:  function (response) {
+					$("#resultadosx").html(response);
+				}
+			});
+	}
+
+
+
 
 </script>
