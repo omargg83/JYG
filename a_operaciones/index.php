@@ -83,6 +83,8 @@
 				$("#comisionistas").val(datos.comisionistas);
 				$("#comision").val(datos.comision);
 				$("#creal").val(datos.creal);
+				$("#com_final").val(datos.com_final);
+				$("#compikito").val(datos.compikito);	
 			}
 		});
 	}

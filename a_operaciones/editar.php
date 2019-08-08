@@ -37,6 +37,8 @@ if($id>0){
 	$comisionistas=$pers['comisionistas'];
 	$req_contrato=$pers['req_contrato'];
 	$finalizar=$pers['finalizar'];
+	$com_final=$pers['com_final'];
+	$compikito=$pers['compikito'];
 
 	$com_t=$pers['comision_f'];
 	$ret_t=$pers['retorno_f'];
@@ -292,11 +294,6 @@ $nombre=$ejecutivo['nombre'];
 					<hr>
 
 					<div class='row'>
-						<div class="col-2">
-							<label for="pikito">Pikito</label>
-							<input type="number" step='any' placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
-						</div>
-
 						<div class="col-3">
 							<label for="comdespa">% Com. Despacho</label>
 							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()' required>
@@ -319,6 +316,23 @@ $nombre=$ejecutivo['nombre'];
 							if($req_contrato==1){ echo " checked";}
 							?>
 							>
+						</div>
+					</div>
+
+					<div class='row'>
+						<div class="col-2">
+							<label for="pikito">Pikito</label>
+							<input type="number" step='any' placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off readonly dir='rtl' onchange='retornooper()'>
+						</div>
+
+						<div class="col-3">
+							<label for="com_final">Comisión final jyg</label>
+							<input type="number" step='any' placeholder="Comisión" id="com_final" name="com_final" value="<?php echo $com_final; ?>" class="form-control" autocomplete=off readonly dir='rtl' onchange='retornooper()'>
+						</div>
+
+						<div class="col-4">
+							<label for="compikito">Comisión final jyg + Pikito</label>
+							<input type="number" step='any' placeholder="Comisión" id="compikito" name="compikito" value="<?php echo $compikito; ?>" class="form-control" autocomplete=off readonly dir='rtl' onchange='retornooper()'>
 						</div>
 					</div>
 

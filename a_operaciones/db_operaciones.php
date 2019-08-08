@@ -421,6 +421,12 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['esquema2'])){
 			$arreglo+=array('esquema2'=>$_REQUEST['esquema2']);
 		}
+		if (isset($_REQUEST['com_final'])){
+			$arreglo+=array('com_final'=>$_REQUEST['com_final']);
+		}
+		if (isset($_REQUEST['compikito'])){
+			$arreglo+=array('compikito'=>$_REQUEST['compikito']);
+		}
 
 		$creal=0;
 		if (isset($_REQUEST['creal'])){
@@ -982,6 +988,8 @@ class Operaciones extends Sagyc{
 		$gtotal_r=0;
 		$retorno_r=0;
 		$pikito=0;
+		$com_final=0;
+		$compikito=0;
 
 		$tipo=$_REQUEST['tipo'];
 		$monto=$_REQUEST['monto'];
@@ -1040,6 +1048,8 @@ class Operaciones extends Sagyc{
 				}
 				$comdesp=($gtotal*$comdespa)/100;
 				$comisionistas=($gtotal-$comdesp)+$pikito;
+				$com_final=$gtotal-$comdesp;
+				$compikito=$pikito+$com_final;
 			}
 			else{
 				$gtotal=0;
@@ -1054,6 +1064,8 @@ class Operaciones extends Sagyc{
 				$comisionistas=0;
 				$comision=0;
 				$creal=0;
+				$com_final=0;
+				$compikito=0;
 			}
 		}
 
@@ -1067,9 +1079,13 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('tcomision_r'=>round($tcomision_r,2));
 			$arreglo+=array('retorno_r'=>round($retorno_r,2));
 			$arreglo+=array('comdespa_t'=>round($comdesp,2));
+
 			$arreglo+=array('comisionistas'=>round($comisionistas,2));
 			$arreglo+=array('comision'=>round($comision,2));
 			$arreglo+=array('creal'=>round($creal,2));
+			$arreglo+=array('com_final'=>round($com_final,2));
+			$arreglo+=array('compikito'=>round($compikito,2));
+
 			echo json_encode($arreglo);
 		}
 	}
