@@ -875,11 +875,11 @@ class Operaciones extends Sagyc{
 			$sql="select sum(monto) as monto from retorno where idoperacion=$id";
 			$ret=$this->general($sql);
 
-			if($retorno==$fact[0]['monto'] and $retorno==$ret[0]['monto']){
+			if($monto==$fact[0]['monto'] and $retorno==$ret[0]['monto']){
 				$actualiza=1;
 			}
 			else{
-				if($retorno!=$fact[0]['monto']){
+				if($monto!=$fact[0]['monto']){
 					$x.="Revisar monto de facturas<br>";
 				}
 				if($retorno!=$ret[0]['monto']){
@@ -892,14 +892,14 @@ class Operaciones extends Sagyc{
 			$ret=$pers['retorno_f'];
 			//////////////////////falta esto
 			$acumulado=$com+$ret;
-			if($acumulado==$monto and $fact[0]['monto']==$ret){
+			if($acumulado==$monto and $fact[0]['monto']==$monto){
 				$actualiza=1;
 			}
 			else{
 				if($acumulado!=$monto){
 					$x.="Verificar montos de retorno<br>";
 				}
-				if($fact[0]['monto']!=$ret){
+				if($fact[0]['monto']!=$monto){
 					$x.="Verificar montos de facturas<br>";
 				}
 			}
