@@ -990,6 +990,7 @@ class Operaciones extends Sagyc{
 		$pikito=0;
 		$com_final=0;
 		$compikito=0;
+		$utilidad=0;
 
 		$tipo=$_REQUEST['tipo'];
 		$monto=$_REQUEST['monto'];
@@ -1066,6 +1067,7 @@ class Operaciones extends Sagyc{
 				$creal=0;
 				$com_final=0;
 				$compikito=0;
+				$utilidad=0;
 			}
 		}
 
