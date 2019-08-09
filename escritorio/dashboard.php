@@ -1,7 +1,7 @@
 <?php
 	require_once("../control_db.php");
 	$db = new Sagyc();
-
+if ($_SESSION['tipousuario']=='administrativo'){
 	$sql="select SUM(finalizar=1) as finalizada, SUM(finalizar=0) as proceso from operaciones";
 	$row=$db->general($sql);
 
@@ -16,6 +16,8 @@
 
 	$sql="select count(idcliente) as total from clientes where prospecto=1";
 	$pros=$db->general($sql);
+
+
 ?>
 	<div class='container-fluid'>
 		<div class='row'>
@@ -94,6 +96,7 @@
 		<br>
 
 	</div>
+
 
 	<script type="text/javascript">
 
@@ -284,3 +287,7 @@
 			 });
 		};
 </script>
+
+	<?php
+	}
+?>
