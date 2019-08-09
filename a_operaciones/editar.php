@@ -38,7 +38,6 @@ if($id>0){
 	$req_contrato=$pers['req_contrato'];
 	$finalizar=$pers['finalizar'];
 	$com_final=$pers['com_final'];
-	$compikito=$pers['compikito'];
 	$utilidad=$pers['utilidad'];
 
 	$com_t=$pers['comision_f'];
@@ -288,7 +287,7 @@ echo $readonly;
 							<div class='row'>
 								<div class="col-4">
 									<label for="tcomision">Comisión J&G</label>
-									<input type="number" step='any' placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl' onchange='retornooper()'>
+									<input type="number" step='any' placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()'>
 								</div>
 
 								<div class="col-4">
@@ -302,48 +301,45 @@ echo $readonly;
 					<hr>
 
 					<div class='row'>
-						<div class="col-3">
+						<div class="col-2">
 							<label for="comdespa">% Com. Despacho</label>
 							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()' required>
 						</div>
 
-						<div class="col-3">
+						<div class="col-2">
 							<label for="comdespa_t">Comisión Despacho</label>
 							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa_t" name="comdespa_t" value="<?php echo $comdespa_t; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class="col-2">
-							<label for="comisionistas">Comisionistas</label>
-							<input type="number" step='any' placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()'>
+							<label for="com_final">Comisión final jyg</label>
+							<input type="number" step='any' placeholder="Comisión" id="com_final" name="com_final" value="<?php echo $com_final; ?>" class="form-control" autocomplete=off readonly dir='rtl' onchange='retornooper()'>
 						</div>
 
-						<div class="col-2">
-							<label for="utilidad">Utilidad</label>
-							<input type="number" step='any' placeholder="utilidad" id="utilidad" name="utilidad" value="<?php echo $utilidad; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()'>
-						</div>
-
-
-					</div>
-
-					<div class='row'>
 						<div class="col-2">
 							<label for="pikito">Pikito</label>
 							<input type="number" step='any' placeholder="Pikito" id="pikito" name="pikito" value="<?php echo $pikito; ?>" class="form-control" autocomplete=off readonly dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class="col-3">
-							<label for="com_final">Comisión final jyg</label>
-							<input type="number" step='any' placeholder="Comisión" id="com_final" name="com_final" value="<?php echo $com_final; ?>" class="form-control" autocomplete=off readonly dir='rtl' onchange='retornooper()'>
+							<label for="comisionistas">Comisión final jyg + Pikito</label>
+							<input type="number" step='any' placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()'>
 						</div>
 
-						<div class="col-4">
-							<label for="compikito">Comisión final jyg + Pikito (MALDITO CAMPO DOBLE)</label>
-							<input type="number" step='any' placeholder="Comisión" id="compikito" name="compikito" value="<?php echo $compikito; ?>" class="form-control" autocomplete=off readonly dir='rtl' onchange='retornooper()'>
-							quitar en editar.php, en guardar_operacion,, en el a_operaciones/index.php en la parte del js funcion retornooper. y en recalcular.. asi como en la tabla (son los que recuerdo)
+					</div>
+
+					<div class='row'>
+
+
+
+						<div class="col-2">
+							<label for="utilidad">Utilidad</label>
+							<input type="number" step='any' placeholder="utilidad" id="utilidad" name="utilidad" value="<?php echo $utilidad; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()'>
 						</div>
+
 					</div>
 					<div class='row'>
-						<div class='col-sm-2'>
+						<div class='col-sm-3'>
 							<label>Contrato requerido: </label><br>
 							<input type='checkbox' name='req_contrato' id='req_contrato' value=1
 							<?php

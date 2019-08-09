@@ -40,6 +40,17 @@
 		echo json_encode($arreglo);
 	}
 
+	function reporte4(){
+		$sagyc = new Sagyc();
+		$sql="SELECT mes as mes, sum(meta) as total FROM meta_factura where anio=year(now()) group by mes;";
+		$response=$sagyc->general($sql);
+		$arreglo=array();
+		for($i=0;$i<count($response);$i++){
+			$arreglo[$i]=array('mes'=>$response[$i]['mes'], 'total'=>$response[$i]['total']);
+		}
+		echo json_encode($arreglo);
+	}
+
 
 
 

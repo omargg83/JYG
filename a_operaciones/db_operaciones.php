@@ -424,9 +424,6 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['com_final'])){
 			$arreglo+=array('com_final'=>$_REQUEST['com_final']);
 		}
-		if (isset($_REQUEST['compikito'])){
-			$arreglo+=array('compikito'=>$_REQUEST['compikito']);
-		}
 
 		$creal=0;
 		if (isset($_REQUEST['creal'])){
@@ -989,7 +986,6 @@ class Operaciones extends Sagyc{
 		$retorno_r=0;
 		$pikito=0;
 		$com_final=0;
-		$compikito=0;
 		$utilidad=0;
 
 		$tipo=$_REQUEST['tipo'];
@@ -1050,7 +1046,6 @@ class Operaciones extends Sagyc{
 				$comdesp=($gtotal*$comdespa)/100;
 				$comisionistas=($gtotal-$comdesp)+$pikito;
 				$com_final=$gtotal-$comdesp;
-				$compikito=$pikito+$com_final;
 			}
 			else{
 				$gtotal=0;
@@ -1066,7 +1061,6 @@ class Operaciones extends Sagyc{
 				$comision=0;
 				$creal=0;
 				$com_final=0;
-				$compikito=0;
 				$utilidad=0;
 			}
 		}
@@ -1086,7 +1080,7 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('comision'=>round($comision,2));
 			$arreglo+=array('creal'=>round($creal,2));
 			$arreglo+=array('com_final'=>round($com_final,2));
-			$arreglo+=array('compikito'=>round($compikito,2));
+
 
 			echo json_encode($arreglo);
 		}
