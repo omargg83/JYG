@@ -62,6 +62,7 @@
 							if($id>0){
 								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_despachos/form_oper' title='Agregar Operador'><i class='fas fa-plus'></i>Operador</button>";
 								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_empresa' data-id='0' data-id2='$id' data-lugar='a_despachos/form_empresa' title='Agregar Empresa'><i class='fas fa-plus'></i>Empresa</button>";
+								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_producto' data-id='0' data-id2='$id' data-lugar='a_despachos/form_producto' title='Agregar producto'><i class='fas fa-plus'></i>Producto</button>";
 							}
 
 							?>

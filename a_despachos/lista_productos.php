@@ -30,7 +30,7 @@
 				echo "<td>";
 				echo $pd[$i]["producto"];
 				echo "</td>";
-				echo "<td>".$pd[$i]["pventa"]."</td>";
+				echo "<td>".$pd[$i]["pventa"]." %</td>";
 				echo "</tr>";
 			}
 		?>

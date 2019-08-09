@@ -76,6 +76,13 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 					</div>
 				</li>
 
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Metas</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown06">
+						<a class="dropdown-item" href="#a_metas/index"><i class="fas fa-hand-holding-usd"></i>Facturación</a>						
+					</div>
+				</li>
+
 				<?php
 				if ($_SESSION['tipousuario']=='administrativo'){
 					echo "<li class='nav-item active'>";
