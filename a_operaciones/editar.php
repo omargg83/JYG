@@ -245,12 +245,12 @@ $nombre=$ejecutivo['nombre'];
 							<div class='row'>
 								<div class="col-4">
 									<label for="tcomision">Comisión</label>
-									<input type="number" step='any' placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+									<input type="number" step='any' placeholder="Retorno" id="tcomision" name="tcomision" value="<?php echo $tcomision; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()'>
 								</div>
 
 								<div class="col-4">
 									<label for="retorno">Retorno</label>
-									<input type="number" step='any' placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+									<input type="number" step='any' placeholder="Retorno" id="retorno" name="retorno" value="<?php echo $retorno; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()'>
 								</div>
 							</div>
 						</div>
@@ -280,12 +280,12 @@ $nombre=$ejecutivo['nombre'];
 							<div class='row'>
 								<div class="col-4">
 									<label for="tcomision">Comisión J&G</label>
-									<input type="number" step='any' placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+									<input type="number" step='any' placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()'>
 								</div>
 
 								<div class="col-4">
 									<label for="retorno">Retorno J&G</label>
-									<input type="number" step='any' placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+									<input type="number" step='any' placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()'>
 								</div>
 
 							</div>
@@ -296,17 +296,17 @@ $nombre=$ejecutivo['nombre'];
 					<div class='row'>
 						<div class="col-3">
 							<label for="comdespa">% Com. Despacho</label>
-							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()' required>
+							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()' required>
 						</div>
 
 						<div class="col-3">
 							<label for="comdespa_t">Comisión Despacho</label>
-							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa_t" name="comdespa_t" value="<?php echo $comdespa_t; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa_t" name="comdespa_t" value="<?php echo $comdespa_t; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class="col-2">
 							<label for="comisionistas">Comisionistas</label>
-							<input type="number" step='any' placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> dir='rtl' onchange='retornooper()'>
+							<input type="number" step='any' placeholder="comisionistas" id="comisionistas" name="comisionistas" value="<?php echo $comisionistas; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()'>
 						</div>
 
 						<div class='col-sm-2'>
