@@ -9,9 +9,9 @@
 			<table class="table table-sm" id="x_lista2">
 			<thead>
 			<th>-</th>
-			<th>Cliente</th>
-			<th>Contacto</th>
-			<th>Correo</th>
+			<th>Facturadora</th>
+			<th>Rfc</th>
+			<th>Giro</th>
 			</tr>
 			</thead>
 			<tbody>

@@ -111,8 +111,8 @@ echo "<div class='container'>";
 						<?php
 						if($id>0){
 
-							echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_clientes/form_razon' title='Razon'><i class='fas fa-pencil-alt'></i>Nueva razon</button>";
-							echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_clientes/form_comi' title='Comi'><i class='fas fa-pencil-alt'></i>Agregar Comisionista</button>";
+							echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_clientes/form_razon' title='Agregar Razon'><i class='fas fa-plus'></i>Nueva razon</button>";
+							echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_clientes/form_comi' title='Agregar Comisionusta'><i class='fas fa-plus'></i>Agregar Comisionista</button>";
 
 						}
 						?>

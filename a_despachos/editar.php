@@ -62,8 +62,8 @@
 
 							<?php
 							if($id>0){
-								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_despachos/form_oper' title='operador'><i class='fas fa-pencil-alt'></i>+ operador</button>";
-								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_empresa' data-id='0' data-id2='$id' data-lugar='a_despachos/form_empresa' title='operador'><i class='fas fa-pencil-alt'></i>+ empresa</button>";
+								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_despachos/form_oper' title='Agregar Operador'><i class='fas fa-plus'></i>Operador</button>";
+								echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_empresa' data-id='0' data-id2='$id' data-lugar='a_despachos/form_empresa' title='Agregar Empresa'><i class='fas fa-plus'></i>Empresa</button>";
 							}
 
 							?>
@@ -78,7 +78,7 @@
 			<div class="card-header">
 				<ul class='nav nav-tabs card-header-tabs nav-fill' id='myTab' role='tablist'>
 					<li class='nav-item'>
-						<a class='nav-link active' id='ssh-tab' data-toggle='tab' href='#ssh' role='ssh' aria-controls='home' aria-selected='true'>Razon</a>
+						<a class='nav-link active' id='ssh-tab' data-toggle='tab' href='#ssh' role='ssh' aria-controls='home' aria-selected='true'>Operadores</a>
 					</li>
 					<li class='nav-item'>
 						<a class='nav-link'  id='home-tab' data-toggle='tab' href='#home' role='tab' aria-controls='home' aria-selected='true'>Empresas</a>
