@@ -62,8 +62,13 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 					<a class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Operaciones</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown06">
 						<a class="dropdown-item" href="#a_operaciones/index"><i class="fas fa-hand-holding-usd"></i>Operaciones</a>
-						<hr>
-						<a class="dropdown-item" href="#a_reportes/index"><i class="far fa-sticky-note"></i>Reportes</a>
+						<?php
+
+							if ($_SESSION['tipousuario']=='administrativo'){
+								echo "<hr>";
+								echo '<a class="dropdown-item" href="#a_reportes/index"><i class="far fa-sticky-note"></i>Reportes</a>';
+							}
+						?>
 					</div>
 				</li>
 
@@ -71,15 +76,21 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 					<a class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Control de Gastos</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown06">
 						<a class="dropdown-item" href="#a_gastos/index"><i class="fas fa-hand-holding-usd"></i>Registro de Gastos</a>
-						<hr>
-						<a class="dropdown-item" href="#a_reportes2/index"><i class="far fa-sticky-note"></i>Reporte</a>
+
+						<?php
+						if ($_SESSION['tipousuario']=='administrativo'){
+							echo "<hr>";
+							echo '<a class="dropdown-item" href="#a_reportes2/index"><i class="far fa-sticky-note"></i>Reporte</a>';
+						}
+						?>
+
 					</div>
 				</li>
 
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Metas</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown06">
-						<a class="dropdown-item" href="#a_metas/index"><i class="fas fa-hand-holding-usd"></i>Facturación</a>						
+						<a class="dropdown-item" href="#a_metas/index"><i class="fas fa-hand-holding-usd"></i>Facturación</a>
 					</div>
 				</li>
 
