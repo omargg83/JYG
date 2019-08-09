@@ -59,13 +59,6 @@ if(isset($_SESSION['idpersona']) and $_SESSION['autoriza'] == 1) {
 				</li>
 
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
-					<div class="dropdown-menu" aria-labelledby="dropdown06">
-						<a class="dropdown-item" href="#a_productos/index"><i class="fas fa-archive"></i>Consulta y alta de Productos</a>
-					</div>
-				</li>
-
-				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Operaciones</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown06">
 						<a class="dropdown-item" href="#a_operaciones/index"><i class="fas fa-hand-holding-usd"></i>Operaciones</a>

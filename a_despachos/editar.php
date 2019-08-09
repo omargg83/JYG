@@ -1,7 +1,5 @@
 <?php
 	require_once("db_despachos.php");
-	$db = new Despachos();
-
 
 	$id=$_REQUEST['id'];
 	if($id>0){
@@ -83,6 +81,9 @@
 					<li class='nav-item'>
 						<a class='nav-link'  id='home-tab' data-toggle='tab' href='#home' role='tab' aria-controls='home' aria-selected='true'>Empresas</a>
 					</li>
+					<li class='nav-item'>
+						<a class='nav-link'  id='prod-tab' data-toggle='tab' href='#prod' role='tab' aria-controls='home' aria-selected='true'>Productos</a>
+					</li>
 				</ul>
 			</div>
 
@@ -99,6 +100,13 @@
 						<div class="row" id='comisionista'>
 							<div class='col-12'>
 								<?php include "lista_empresas.php"; ?>
+							</div>
+						</div>
+					</div>
+					<div class='tab-pane fade show' id='prod' role='tabpanel' aria-labelledby='prod-tab'>
+						<div class="row" id='comisionista'>
+							<div class='col-12'>
+								<?php include "lista_productos.php"; ?>
 							</div>
 						</div>
 					</div>

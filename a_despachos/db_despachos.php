@@ -192,6 +192,62 @@ class Despachos extends Sagyc{
 			return $x;
 		}
 	}
+
+	public function productos($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM productos where iddespacho=:iddespa";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":iddespa",$id);
+			$sth->execute();
+			$res=$sth->fetchAll();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function producto_edit($id){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM productos where idproducto=:idproducto";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idproducto",$id);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $res;
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function guardar_producto(){
+		$x="";
+		$id=$_REQUEST['id'];
+		$iddespacho=$_REQUEST['iddespacho'];
+
+		$arreglo =array();
+		$arreglo+=array('iddespacho'=>$iddespacho);
+
+		if (isset($_REQUEST['producto'])){
+			$arreglo+=array('producto'=>$_REQUEST['producto']);
+		}
+		if (isset($_REQUEST['pventa'])){
+			$arreglo+=array('pventa'=>$_REQUEST['pventa']);
+		}
+		if($id==0){
+			$x.=$this->insert('productos', $arreglo);
+		}
+		else{
+			$x.=$this->update('productos',array('idproducto'=>$id), $arreglo);
+		}
+		if(is_numeric($x)){
+			return $iddespacho;
+		}
+		else{
+			return $x;
+		}
+	}
 }
 
 

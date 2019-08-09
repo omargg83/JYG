@@ -1,32 +1,29 @@
 <?php
-	require_once("db_productos.php");
-	$db = new Productos();
+	require_once("db_despachos.php");;
+
 	$id=$_REQUEST['id'];
-	$despacho=$db->despachos();
-	$tipos=$db->tipos();
+  $iddespacho=$_REQUEST['id2'];
 
 	if($id>0){
 		$pers = $db->producto_edit($id);
 		$producto=$pers['producto'];
-		$iddespacho=$pers['iddespacho'];
 		$pventa=$pers['pventa'];
 
 	}
 	else{
 		$producto="";
-		$iddespacho="";
 		$pventa="";
 
 	}
 ?>
-<div class="container">
-	<form action="" id="form_personal" data-lugar="a_productos/db_productos" data-funcion="guardar_producto">
+	<form action="" id="form_personal" data-lugar="a_despachos/db_despachos" data-funcion="guardar_producto" data-destino="a_despachos/editar">
 		<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
+    <input type="hidden" value="<?php echo $iddespacho; ?>" name="iddespacho" id="iddespacho">
 		<div class="card">
 			<div class="card-header">Producto</div>
 			<div class="card-body">
 				<div class="row">
-					<div class="col-3">
+					<div class="col-6">
 						<label for="producto">Producto</label>
 
 						<select class='form-control' id='producto' name='producto'>
@@ -45,17 +42,8 @@
 						</select>
 
 					</div>
-					<div class="col-3">
-						<label for="iddespacho">Despacho</label>
-						<select class='form-control' id='iddespacho' name='iddespacho'>
-						<?php
-							foreach ($despacho as $key => $value) {
-								echo "<option"; if($iddespacho==$value['iddespacho']){ echo " selected"; } echo " value='".$value['iddespacho']."'>".$value['nombre']."</option>";
-							}
-						?>
-						</select>
-					</div>
-					<div class="col-2">
+
+					<div class="col-4">
 						<label for="pventa">% de venta</label>
 						<input type="text" placeholder="% de venta" id="pventa" name="pventa" value="<?php echo $pventa; ?>" class="form-control">
 					</div>
@@ -68,11 +56,10 @@
 					<div class="col-12">
 						<div class="btn-group">
 							<button class="btn btn-outline-secondary btn-sm" type="submit"><i class='far fa-save'></i>Guardar</button>
-							<button class='btn btn-outline-secondary btn-sm' id='lista_penarea' data-lugar='a_productos/lista' title='regresar'><i class='fas fa-undo-alt'></i>Regresar</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal"><i class="fas fa-sign-out-alt"></i>Cerrar</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
-</div>
