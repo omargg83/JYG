@@ -299,26 +299,30 @@ if ($_SESSION['tipousuario']=='administrativo'){
 		function reporte4(){
 			var MONTHS = ['-','Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 			var parametros={
-				"function":"reporte4"
-
+				"function":"reporte4",
 			};
 			var parametros2={
-				"function":"reporte1"
-
+				"function":"reporte5",
 			};
+
+
 			$.ajax({
 				url: "escritorio/datos_orga.php",
 				method: "GET",
 				data: parametros,
 				data2: parametros2,
+
 				success: function(data) {
 					var player = [];
 					var score = [];
+					var score2 = [];
 					var datos = JSON.parse(data);
+					var datos2 = JSON.parse(data);
 					for (var x = 0; x < datos.length; x++) {
 						player.push(MONTHS[datos[x].mes]);
 						score.push(datos[x].total);
 					}
+
 				  var chartdata = {
 					labels: player,
 					datasets : [
@@ -331,6 +335,7 @@ if ($_SESSION['tipousuario']=='administrativo'){
 						data: score
 					},
 					{
+
 					label: 'Monto Facturas',
 					backgroundColor: ['rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
 					,'rgba(153, 102, 255, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)',
@@ -338,15 +343,16 @@ if ($_SESSION['tipousuario']=='administrativo'){
 					borderColor: 'rgba(200, 200, 200, 0.75)',
 					hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 					hoverBorderColor: 'rgba(200, 200, 200, 1)',
-					data2: score
+						data2: score2
 
 				},
 					]
 				  };
 				var ctx = $("#reporte4");
-				var barGraph = new Chart(ctx, {
+				var mixedChart  = new Chart(ctx, {
 						type: 'bar',
 						data: chartdata,
+
 						options: {
 							title: {
 								display: true,
@@ -369,6 +375,7 @@ if ($_SESSION['tipousuario']=='administrativo'){
 			        }
 						}
 					  });
+
 				},
 
 				error: function(data) {

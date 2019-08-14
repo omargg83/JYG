@@ -137,8 +137,8 @@
 			"function":"guarda_empresa"
 		};
 		$.confirm({
-			title: 'Despacho',
-			content: '¿Desea seleccionar el despacho?',
+			title: 'Despacho - Empresas',
+			content: '¿Deseas seleccionar esta empresa?',
 			buttons: {
 				Aceptar: function () {
 					$.ajax({

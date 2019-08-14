@@ -290,12 +290,24 @@ echo $readonly;
 									<input type="number" step='any' placeholder="Retorno" id="tcomision_r" name="tcomision_r" value="<?php echo $tcomision_r; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?>readonly required dir='rtl' onchange='retornooper()'>
 								</div>
 
-								<div class="col-4">
-									<label for="retorno">Retorno J&G</label>
-									<input type="number" step='any' placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()'>
-								</div>
-
 							</div>
+						</div>
+					</div>
+					<hr>
+
+					<hr>
+					<div class="col-12" style='border:1px solid black;background:#ffadbb;border-radius:10px;opacity:.8'>
+						<h5><center>Monto real a retornar:</center></h5>
+
+					  	<div class='row'>
+
+								<div  class="col-4">
+  							</div>
+
+							<div  class="col-4" align="center">
+								<input style="font-size:25px; text-align:center;" size=18 type="text" step='any' placeholder="Retorno" id="retorno_r" name="retorno_r" value="<?php echo $retorno_r; ?>" class="form-control" autocomplete=off readonly required  dir='rtl' onchange='retornooper()'>
+							</div>
+
 						</div>
 					</div>
 					<hr>
@@ -704,7 +716,7 @@ echo $readonly;
 						<?php
 
 						echo "<div class='col-2'>";
-						echo "<label>Monto:</label><br>";
+						echo "<label>Monto Neto:</label><br>";
 						echo moneda($monto);
 						echo "</div>";
 
@@ -727,12 +739,12 @@ echo $readonly;
 						echo "</div>";
 
 						echo "<div class='col-2'>";
-						echo "<label>Monto de facturas:</label><br>";
+						echo "<label>Monto facturado:</label><br>";
 						echo moneda($suma);
 						echo "</div>";
 
 						echo "<div class='col-2'>";
-						echo "<label>Saldo de facturas:</label><br>";
+						echo "<label>Saldo por facturar:</label><br>";
 						if($esquema<5){
 							echo moneda($monto-$suma);
 						}
@@ -742,7 +754,7 @@ echo $readonly;
 						echo "</div>";
 
 						echo "<div class='col-2'>";
-						echo "<label>Monto de retorno:</label></br>";
+						echo "<label>Monto retornado:</label></br>";
 						if($esquema<5){
 							echo moneda($retorno_x);
 						}
@@ -752,7 +764,7 @@ echo $readonly;
 						echo "</div>";
 
 						echo "<div class='col-2'>";
-						echo "<label>Saldo de retorno:</label><br>";
+						echo "<label>Saldo por retornar:</label><br>";
 						if($esquema<5){
 							echo moneda($r_final-$retorno_x);
 						}

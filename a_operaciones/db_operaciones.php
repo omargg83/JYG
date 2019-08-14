@@ -169,7 +169,7 @@ class Operaciones extends Sagyc{
 			$res=$sth->fetchAll();
 
 			$x="<table class='table table-sm'>";
-		  $x.="<tr><th>-</th><th>Despacho</th><th>Razon</th><th>Empresa</th></tr>";
+		  $x.="<tr><th>-</th><th>Despacho</th><th>Empresa</th><th>Rfc</th></tr>";
 		    foreach($res as $key){
 		      $x.= "<tr id='".$key['idempresa']."' class='edit-t'>";
 		        $x.= "<td>";
