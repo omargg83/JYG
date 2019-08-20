@@ -10,6 +10,7 @@
 		$banco=$pers['banco'];
 		$cuentabanco=$pers['cuentabanco'];
 		$rfc=$pers['rfc'];
+		$cumple=fecha($pers['cumple']);
 
 
 	}
@@ -20,7 +21,7 @@
 		$banco="";
 		$cuentabanco="";
 		$rfc="";
-
+		$cumple=date("d-m-Y");
 
 	}
 ?>
@@ -57,6 +58,11 @@
 						<label for="cuentabanco">Cuenta bancaria</label>
 						<input type="text" placeholder="Cuenta bancaria" id="cuentabanco" name="cuentabanco" value="<?php echo $cuentabanco; ?>" class="form-control" required>
 					</div>
+
+					<div class="col-2">
+						<label for="cumple">Cumpleaños</label>
+						<input type="text" placeholder="Cumple" id="cumple" name="cumple" value="<?php echo $cumple; ?>" class="form-control fechaclass" autocomplete=off >
+					</div>
 				</div>
 			</div>
 			<div class="card-footer">
@@ -72,3 +78,28 @@
 		</div>
 	</form>
 </div>
+
+<script>
+$(function() {
+	fechas();
+	$(document).ready( function () {
+		$('table.datatable').DataTable({
+			"pageLength": 100,
+			"language": {
+				"sSearch": "Buscar aqui",
+				"lengthMenu": "Mostrar _MENU_ registros",
+				"zeroRecords": "No se encontró",
+				"info": " Página _PAGE_ de _PAGES_",
+				"infoEmpty": "No records available",
+				"infoFiltered": "(filtered from _MAX_ total records)",
+				"paginate": {
+					"first":      "Primero",
+					"last":       "Ultimo",
+					"next":       "Siguiente",
+					"previous":   "Anterior"
+				},
+			}
+		});
+	});
+});
+</script>
