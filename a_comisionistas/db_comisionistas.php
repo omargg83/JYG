@@ -54,6 +54,11 @@ class Comisionistas extends Sagyc{
 		if (isset($_REQUEST['nombre'])){
 			$arreglo+=array('nombre'=>$_REQUEST['nombre']);
 		}
+		if (isset($_REQUEST['cumple'])){
+			$fx=explode("-",$_REQUEST['cumple']);
+			$arreglo+=array('cumple'=>$fx['2']."-".$fx['1']."-".$fx['0']);
+		}
+
 		if (isset($_REQUEST['rfc'])){
 			$arreglo+=array('rfc'=>$_REQUEST['rfc']);
 		}
