@@ -10,8 +10,7 @@ foreach($pd as $key){
 	echo "<tr id=".$key['idrazon']." class='edit-t'>";
 	echo "<td>";
 	echo "<div class='btn-group'>";
-	echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idrazon']."' data-id2='$id' data-lugar='a_clientes/form_razon' title='Cambiar cargo'><i class='fas fa-pencil-alt'></i></button>";
-
+		echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idrazon']."' data-id2='$id' data-lugar='a_clientes/form_razon' title='Cambiar cargo'><i class='fas fa-pencil-alt'></i></button>";
 	echo "</div>";
 	echo "</td>";
 

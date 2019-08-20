@@ -475,6 +475,13 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('req_contrato'=>0);
 		}
 
+		if (isset($_REQUEST['req_contrato2'])){
+			$arreglo+=array('req_contrato2'=>$_REQUEST['req_contrato2']);
+		}
+		else{
+			$arreglo+=array('req_contrato2'=>0);
+		}
+
 		$arreglo+=array('comision_f'=>$tcomision_f);
 		$arreglo+=array('retorno_f'=>$retorno_f);
 
@@ -546,7 +553,15 @@ class Operaciones extends Sagyc{
 			if($creal>0){
 				$retorno=$pers['monto'];
 			}
-			$sql="select sum(monto) as monto from facturas where idoperacion=$idoperacion";
+
+			if($id==0){
+				$sql="select sum(monto) as monto from facturas where idoperacion=$idoperacion";
+			}
+			else{
+					$sql="select sum(monto) as monto from facturas where idoperacion=$idoperacion and idfactura!=$id";
+			}
+
+
 			$fact=$this->general($sql);
 			$total=$fact[0]['monto']+$monto;
 			if($retorno<$total){
@@ -639,10 +654,17 @@ class Operaciones extends Sagyc{
 		$retorno=$pers['retorno'];
 		$llave=1;
 		if($esquema<5){
+			/*
 			if($creal>0){
 				$retorno=$pers['retorno_r'];
 			}
-			$sql="select sum(monto) as monto from retorno where idoperacion=$idoperacion";
+			*/
+			if($id==0){
+				$sql="select sum(monto) as monto from retorno where idoperacion=$idoperacion";
+			}
+			else{
+				$sql="select sum(monto) as monto from retorno where idoperacion='$idoperacion' and idretorno!=$id";
+			}
 			$ret=$this->general($sql);
 			$total=$ret[0]['monto']+$monto;
 			if($retorno<$total){
@@ -855,17 +877,22 @@ class Operaciones extends Sagyc{
 		$creal=$pers['creal'];
 		$esquema=$pers['esquema'];
 		$retorno=$pers['retorno'];
-		$req_contrato=$pers['req_contrato'];
+		$retorno_r=$pers['retorno_r'];
+
 		$contrato=$pers['contrato'];
+		$req_contrato=$pers['req_contrato'];
+
+		$contrato2=$pers['contrato2'];
+		$req_contrato2=$pers['req_contrato2'];
 		$actualiza=0;
 
 		$sql="select sum(monto) as monto from facturas where idoperacion=$id";
 		$fact=$this->general($sql);
 
 		if($esquema<5){
-			if($creal>0){
+		/*	if($creal>0){
 				$retorno=$pers['retorno_r'];
-			}
+			}*/
 			$sql="select sum(monto) as monto from facturas where idoperacion=$id";
 			$fact=$this->general($sql);
 
@@ -879,8 +906,8 @@ class Operaciones extends Sagyc{
 				if($monto!=$fact[0]['monto']){
 					$x.="Revisar monto de facturas<br>";
 				}
-				if($retorno!=$ret[0]['monto']){
-					$x.="Revisar monto de retornos<br>";
+				if($retorno_r!=$ret[0]['monto']){
+					$x.="Revisar monto de retornos $retorno_r ".$ret[0]['monto']."<br>";
 				}
 			}
 		}
@@ -904,7 +931,13 @@ class Operaciones extends Sagyc{
 		if($req_contrato==1){
 			if(strlen($contrato)<2 or !file_exists("../".$this->doc.trim($contrato))){
 				$actualiza=0;
-				$x.="Falta contrato";
+				$x.="Falta contrato de operación";
+			}
+		}
+		if($req_contrato2==1){
+			if(strlen($contrato2)<2 or !file_exists("../".$this->doc.trim($contrato2))){
+				$actualiza=0;
+				$x.="Falta contrato individual";
 			}
 		}
 

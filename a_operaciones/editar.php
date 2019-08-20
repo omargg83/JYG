@@ -28,14 +28,20 @@ if($id>0){
 	$esquema2=$pers['esquema2'];
 	$tcomision=$pers['tcomision'];
 	$idpersonal=$pers['idpersona'];
+
 	$contrato=$pers['contrato'];
+	$req_contrato=$pers['req_contrato'];
+
+	$contrato2=$pers['contrato2'];
+	$req_contrato2=$pers['req_contrato2'];
+
 	$pikito=$pers['pikito'];
 	$tcomision_r=$pers['tcomision_r'];
 	$retorno_r=$pers['retorno_r'];
 	$comdespa=$pers['comdespa'];
 	$comdespa_t=$pers['comdespa_t'];
 	$comisionistas=$pers['comisionistas'];
-	$req_contrato=$pers['req_contrato'];
+
 	$finalizar=$pers['finalizar'];
 	$com_final=$pers['com_final'];
 	$utilidad=$pers['utilidad'];
@@ -127,6 +133,10 @@ else{
 	$retorno=0;
 	$tcomision=0;
 	$contrato="";
+	$req_contrato=0;
+
+	$contrato2="";
+	$req_contrato2=0;
 	$pikito="";
 	$utilidad=0;
 	$tcomision_r="0";
@@ -136,7 +146,7 @@ else{
 	$comisionistas="0";
 	$cli=array();
 	$empresa=array();
-	$req_contrato=0;
+
 	$finalizar=0;
 }
 $readonly="";
@@ -148,7 +158,6 @@ if($bloqueo>0 ){
 }
 $ejecutivo=$db->personal_edit($idpersonal);
 $nombre=$ejecutivo['nombre'];
-echo $readonly;
 ?>
 <form action="" id="form_operacion" data-lugar="a_operaciones/db_operaciones" data-funcion="guardar_operacion" data-destino='a_operaciones/editar'>
 	<div id="accordion">
@@ -318,7 +327,7 @@ echo $readonly;
 							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa" name="comdespa" value="<?php echo $comdespa; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()' required>
 						</div>
 
-						<div class="col-2">
+						<div class="col-3">
 							<label for="comdespa_t">Comisión Despacho</label>
 							<input type="number" step='any' placeholder="Com. Despacho" id="comdespa_t" name="comdespa_t" value="<?php echo $comdespa_t; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()'>
 						</div>
@@ -342,20 +351,25 @@ echo $readonly;
 
 					<div class='row'>
 
-
-
 						<div class="col-2">
 							<label for="utilidad">Utilidad</label>
 							<input type="number" step='any' placeholder="utilidad" id="utilidad" name="utilidad" value="<?php echo $utilidad; ?>" class="form-control" autocomplete=off readonly required dir='rtl' onchange='retornooper()'>
 						</div>
 
-					</div>
-					<div class='row'>
 						<div class='col-sm-3'>
-							<label>Contrato requerido: </label><br>
+							<label>Contrato operación: </label><br>
 							<input type='checkbox' name='req_contrato' id='req_contrato' value=1
 							<?php
 							if($req_contrato==1){ echo " checked";}
+							?>
+							>
+						</div>
+
+						<div class='col-sm-3'>
+							<label>Contrato individual: </label><br>
+							<input type='checkbox' name='req_contrato2' id='req_contrato2' value=1
+							<?php
+							if($req_contrato2==1){ echo " checked";}
 							?>
 							>
 						</div>
@@ -380,14 +394,15 @@ echo $readonly;
 									}
 
 									if((strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))) and $finalizar==0){
-										echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar contrato' data-toggle='modal' data-target='#myModal'
 										id='fileup_contrato' data-ruta='".$db->doc."' data-tabla='operaciones' data-campo='contrato' data-tipo='1' data-id='$id' data-keyt='idoperacion'
-										data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Contrato</button>";
+										data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>C. Operación</button>";
 									}
 									else{
 										if(strlen($contrato)>2){
 											echo "<div class='btn-group' role='group'>";
-											echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-paperclip'></i>XML</button>";
+											echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+											<i class='fas fa-paperclip'></i>PDF</button>";
 											echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
 											echo "<a class='dropdown-item' href='".$db->doc.trim($contrato)."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
 											if($finalizar==0){
@@ -398,6 +413,38 @@ echo $readonly;
 												data-key='$id'
 												data-tabla='operaciones'
 												data-campo='contrato'
+												data-tipo='1'
+												data-iddest='$id'
+												data-divdest='trabajo'
+												data-borrafile='1'
+												data-dest='a_operaciones/editar.php?id='
+												><i class='far fa-trash-alt'></i>Eliminar</a>";
+											}
+											echo "</div>";
+											echo "</div>";
+										}
+									}
+
+									if((strlen($contrato2)<2 or !file_exists("../".$db->doc.trim($contrato2))) and $finalizar==0){
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar contrato' data-toggle='modal' data-target='#myModal'
+										id='fileup_contrato2' data-ruta='".$db->doc."' data-tabla='operaciones' data-campo='contrato2' data-tipo='1' data-id='$id' data-keyt='idoperacion'
+										data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>C. individual</button>";
+									}
+									else{
+										if(strlen($contrato2)>2){
+											echo "<div class='btn-group' role='group'>";
+											echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+											<i class='fas fa-paperclip'></i>PDF</button>";
+											echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
+											echo "<a class='dropdown-item' href='".$db->doc.trim($contrato2)."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
+											if($finalizar==0){
+												echo "<a class='dropdown-item' title='Eliminar archivo'
+												id='delfile_contrato2'
+												data-ruta='".$db->doc.trim($contrato2)."'
+												data-keyt='idoperacion'
+												data-key='$id'
+												data-tabla='operaciones'
+												data-campo='contrato2'
 												data-tipo='1'
 												data-iddest='$id'
 												data-divdest='trabajo'
@@ -659,6 +706,7 @@ echo $readonly;
 											<th>-</th>
 											<th>Fecha</th>
 											<th>Tipo</th>
+											<th>Archivos</th>
 											<th>Retorno</th>
 											<th>Monto</th>
 										</tr>
@@ -666,34 +714,94 @@ echo $readonly;
 									<tbody>
 										<?php
 										$retorno_x=0;
-										for($i=0;$i<count($ret);$i++){
-											echo "<tr id=".$ret[$i]['idretorno']." class='edit-t'>";
+										//for($i=0;$i<count($ret);$i++){
+										foreach ($ret as $key){
+											echo "<tr id=".$key['idretorno']." class='edit-t'>";
 
 											echo "<td>";
 											echo "<div class='btn-group'>";
-											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$ret[$i]['idretorno']."' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-pencil-alt'></i></button>";
+											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idretorno']."' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-pencil-alt'></i></button>";
 											echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='imprimir_retorno' title='Imprimir' data-lugar='a_operaciones/imprimir' data-tipo='2'><i class='far fa-file-pdf'></i></button>";
 											if($finalizar==0){
-												echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_retorno' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$ret[$i]['idretorno']."' data-funcion='borrar_retorno' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
+												echo "<button class='btn btn-outline-secondary btn-sm' id='eliminar_retorno' data-lugar='a_operaciones/db_operaciones' data-destino='a_operaciones/editar' data-id='".$key['idretorno']."' data-funcion='borrar_retorno' data-iddest='$id'><i class='far fa-trash-alt'></i></button>";
 											}
 											echo "</div>";
 											echo "</td>";
 
 											echo "<td>";
-											echo $ret[$i]["fecha"];
+											echo $key["fecha"];
 											echo "</td>";
 
 											echo "<td>";
-											echo $ret[$i]["idproducto"];
+											echo $key["idproducto"];
+											echo "</td>";
+
+											echo "<td>";
+											echo "<div class='btn-group'>";
+											if(strlen($key['cretorno'])<2 or !file_exists("../".$db->doc.trim($key['cretorno']))){
+												echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Comprobante de retorno' data-toggle='modal' data-target='#myModal'
+												id='fileup_retorno' data-ruta='".$db->doc."' data-tabla='retorno' data-campo='cretorno' data-tipo='1' data-id='".$key['idretorno']."' data-keyt='idretorno'
+												data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>C. Retorno</button>";
+											}
+											else{
+												echo "<div class='btn-group' role='group'>";
+												echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+												<i class='fas fa-paperclip'></i>C. retorno.</button>";
+												echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
+												echo "<a class='dropdown-item' href='".$db->doc.trim($key['cretorno'])."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
+												echo "<a class='dropdown-item' title='Eliminar archivo'
+												id='delfile_retorno'
+												data-ruta='".$db->doc.trim($key['cretorno'])."'
+												data-keyt='idretorno'
+												data-key='".$key['idretorno']."'
+												data-tabla='retorno'
+												data-campo='cretorno'
+												data-tipo='1'
+												data-iddest='$id'
+												data-divdest='trabajo'
+												data-borrafile='1'
+												data-dest='a_operaciones/editar.php?id='
+												><i class='far fa-trash-alt'></i>Eliminar</a>";
+												echo "</div>";
+												echo "</div>";
+											}
+
+											if(strlen($key['cpikito'])<2 or !file_exists("../".$db->doc.trim($key['cpikito']))){
+												echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Comprobante de pikito' data-toggle='modal' data-target='#myModal'
+												id='fileup_cpikito' data-ruta='".$db->doc."' data-tabla='retorno' data-campo='cpikito' data-tipo='1' data-id='".$key['idretorno']."' data-keyt='idretorno'
+												data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>C. Pikito</button>";
+											}
+											else{
+												echo "<div class='btn-group' role='group'>";
+												echo "<button id='btnGroupDrop1' type='button' class='btn btn-outline-secondary btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+												<i class='fas fa-paperclip'></i>C. Pikito.</button>";
+												echo "<div class='dropdown-menu' aria-labelledby='btnGroupDrop1'>";
+												echo "<a class='dropdown-item' href='".$db->doc.trim($key['cpikito'])."' target='_blank'><i class='fas fa-paperclip'></i>Ver</a>";
+												echo "<a class='dropdown-item' title='Eliminar archivo'
+												id='delfile_retorno'
+												data-ruta='".$db->doc.trim($key['cpikito'])."'
+												data-keyt='idretorno'
+												data-key='".$key['idretorno']."'
+												data-tabla='retorno'
+												data-campo='cpikito'
+												data-tipo='1'
+												data-iddest='$id'
+												data-divdest='trabajo'
+												data-borrafile='1'
+												data-dest='a_operaciones/editar.php?id='
+												><i class='far fa-trash-alt'></i>Eliminar</a>";
+												echo "</div>";
+												echo "</div>";
+											}
 											echo "</td>";
 
 											echo "<td align='right'>";
-											echo moneda($ret[$i]["retorno"]);
+											echo moneda($key["retorno"]);
 											echo "</td>";
 
 											echo "<td align='right'>";
-											$retorno_x+=$ret[$i]["monto"];
-											echo moneda($ret[$i]["monto"]);
+											$retorno_x+=$key["monto"];
+											echo moneda($key["monto"]);
 											echo "</td>";
 
 											echo "</tr>";
@@ -723,14 +831,15 @@ echo $readonly;
 						echo "<div class='col-2'>";
 						echo "<label>Retorno:</label><br>";
 						$r_final=0;
+						$r_final=$retorno;
 						if($esquema<5){
 							if($creal==0){
-								$r_final=$retorno;
-								echo moneda($retorno);
+								//$r_final=$retorno;
+								echo moneda($r_final);
 							}
 							else{
-								$r_final=$retorno_r;
-								echo moneda($retorno_r);
+								//$r_final=$retorno_r;
+								echo moneda($r_final);
 							}
 						}
 						else{
