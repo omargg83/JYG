@@ -9,6 +9,7 @@
 		$telefono=$pers['telefono'];
 		$banco=$pers['banco'];
 		$cuentabanco=$pers['cuentabanco'];
+		$rfc=$pers['rfc'];
 
 
 	}
@@ -18,6 +19,7 @@
 		$telefono="";
 		$banco="";
 		$cuentabanco="";
+		$rfc="";
 
 
 	}
@@ -30,8 +32,13 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-5">
-						<label for="razon">Nombre</label>
+						<label for="nombre">Nombre</label>
 						<input type="text" placeholder="Nombre" id="nombre" name="nombre" value="<?php echo $nombre; ?>" class="form-control">
+					</div>
+
+					<div class="col-5">
+						<label for="rfc">Rfc</label>
+						<input type="text" placeholder="Rfc" id="rfc" name="rfc" value="<?php echo $rfc; ?>" class="form-control">
 					</div>
 
 					<div class="col-3">
