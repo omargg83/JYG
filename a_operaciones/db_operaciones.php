@@ -215,7 +215,31 @@ class Operaciones extends Sagyc{
 	public function uso(){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM sat_uso order by descripcion";
+			$sql="SELECT * FROM sat_uso order by clave";
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			return $sth->fetchAll();
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function metodo(){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM sat_metodopago order by clave";
+			$sth = $this->dbh->prepare($sql);
+			$sth->execute();
+			return $sth->fetchAll();
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
+	public function unidad(){
+		try{
+			parent::set_names();
+			$sql="SELECT * FROM sat_unidad order by clave";
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			return $sth->fetchAll();
@@ -529,6 +553,12 @@ class Operaciones extends Sagyc{
 
 		if (isset($_REQUEST['uso'])){
 			$arreglo+=array('uso'=>$_REQUEST['uso']);
+		}
+		if (isset($_REQUEST['metodo'])){
+			$arreglo+=array('metodo'=>$_REQUEST['metodo']);
+		}
+		if (isset($_REQUEST['unidad'])){
+			$arreglo+=array('unidad'=>$_REQUEST['unidad']);
 		}
 
 		if (isset($_REQUEST['forma'])){

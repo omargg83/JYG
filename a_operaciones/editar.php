@@ -214,7 +214,7 @@ $nombre=$ejecutivo['nombre'];
 					<div class="row">
 						<div class="col-3">
 							<label for="monto">Monto</label>
-							<input type="number" step='any' placeholder="Monto" id="monto" name="monto" onchange='retornooper()' value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
+							<input type="text" step='any' placeholder="Monto" id="monto" name="monto" onchange='retornooper()' value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
 						</div>
 
 						<div class="col-3">
@@ -596,7 +596,7 @@ $nombre=$ejecutivo['nombre'];
 											echo "<td>";
 											echo "<div class='btn-group'>";
 											if(strlen($key['trans'])<2 or !file_exists("../".$db->doc.trim($key['trans']))){
-												echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
+												echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar comprobante de pago' data-toggle='modal' data-target='#myModal'
 												id='fileup_logo' data-ruta='".$db->doc."' data-tabla='facturas' data-campo='trans' data-tipo='1' data-id='".$key['idfactura']."' data-keyt='idfactura'
 												data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Transf.</button>";
 											}
@@ -622,9 +622,9 @@ $nombre=$ejecutivo['nombre'];
 												echo "</div>";
 											}
 											if(strlen($key['timbre'])<2 or !file_exists("../".$db->doc.trim($key['timbre']))){
-												echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
+												echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar Factura Generada' data-toggle='modal' data-target='#myModal'
 												id='fileup_logo' data-ruta='".$db->doc."' data-tabla='facturas' data-campo='timbre' data-tipo='1' data-id='".$key['idfactura']."' data-keyt='idfactura'
-												data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Timbre</button>";
+												data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>Factura</button>";
 											}
 											else{
 												echo "<div class='btn-group' role='group'>";
@@ -648,7 +648,7 @@ $nombre=$ejecutivo['nombre'];
 												echo "</div>";
 											}
 											if(strlen($key['xml'])<2 or !file_exists("../".$db->doc.trim($key['xml']))){
-												echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar transferencia' data-toggle='modal' data-target='#myModal'
+												echo "<button type='button' class='btn btn-outline-secondary btn-sm' title='Agregar xml' data-toggle='modal' data-target='#myModal'
 												id='fileup_logo' data-ruta='".$db->doc."' data-tabla='facturas' data-campo='xml' data-tipo='1' data-id='".$key['idfactura']."' data-keyt='idfactura'
 												data-destino='a_operaciones/editar' data-iddest='$id' data-ext='.pdf' data-divdest='trabajo'><i class='fas fa-cloud-upload-alt'></i>XML</button>";
 											}

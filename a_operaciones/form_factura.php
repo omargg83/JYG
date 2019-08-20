@@ -12,8 +12,10 @@ if($id>0){
 	$fecha=fecha($row['fecha']);
 	$monto=$row['monto'];
 	$uso=$row['uso'];
+	$metodo=$row['metodo'];
 	$forma=$row['forma'];
 	$producto=$row['producto'];
+	$unidad=$row['unidad'];
 	$descripcion=$row['descripcion'];
 	$iva=$row['iva'];
 	$subtotal=$row['subtotal'];
@@ -25,6 +27,8 @@ else{
 	$monto="";
 	$uso="";
 	$forma="";
+	$metodo="";
+	$unidad="";
 	$producto="";
 	$descripcion="";
 	$iva="";
@@ -32,6 +36,9 @@ else{
 	$finalizar=0;
 }
 $uso_array = $db->uso();
+$metodo_array = $db->metodo();
+$unidad_array = $db->unidad();
+
 $forma_array = $db->forma_buscar();
 
 ?>
@@ -65,6 +72,18 @@ $forma_array = $db->forma_buscar();
 			</div>
 
 			<div class="col-12">
+				<label for="metodo">Metodo de pago</label>
+					<select id='metodo' name='metodo' class="form-control">
+						<option selected disabled>Seleccione una opcion</option>
+						<?php
+						foreach($metodo_array as $val){
+							echo "<option value='".$val['clave']." - ".$val['descripcion']."' "; if($metodo==$val['clave']." - ".$val['descripcion']) { echo " selected ";} echo " >".$val['clave']." - ".$val['descripcion']."</option>";
+						}
+						?>
+					</select>
+			</div>
+
+			<div class="col-12">
 				<label for="forma">Forma de pago</label>
 				<select id='forma' name='forma' class="form-control">
 					<option selected disabled>Seleccione una opcion</option>
@@ -74,13 +93,22 @@ $forma_array = $db->forma_buscar();
 					}
 					?>
 				</select>
-
-
-
 			</div>
 
 			<div class="col-12">
-				<label for="uso">Servicio</label>
+				<label for="unidad">Unidad</label>
+					<select id='unidad' name='unidad' class="form-control">
+						<option selected disabled>Seleccione una opcion</option>
+						<?php
+						foreach($unidad_array as $val){
+							echo "<option value='".$val['clave']." - ".$val['nombre']."' "; if($unidad==$val['clave']." - ".$val['nombre']) { echo " selected ";} echo " >".$val['clave']." - ".$val['nombre']."</option>";
+						}
+						?>
+					</select>
+			</div>
+
+			<div class="col-12">
+				<label for="uso">Clave Sat</label>
 				<input type="text" placeholder="servicio" id="producto" name="producto" value="<?php echo $producto; ?>" class="form-control" autocomplete=off>
 				<div id='producto_auto' class='flotante'></div>
 			</div>
@@ -95,12 +123,12 @@ $forma_array = $db->forma_buscar();
 
 			<div class="col-4">
 				<label>Iva</label>
-				<input type="text" placeholder="Iva" id="iva_fact" name="iva_fact" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
+				<input type="text" placeholder="Iva" id="iva_fact" name="iva_fact" value="<?php echo $iva; ?>" class="form-control" autocomplete=off onchange='desgloce()' readonly required>
 			</div>
 
 			<div class="col-4">
 				<label>Subtotal</label>
-				<input type="text" placeholder="Subtotal" id="subtotal_fact" name="subtotal_fact" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()' required>
+				<input type="text" placeholder="Subtotal" id="subtotal_fact" name="subtotal_fact" value="<?php echo $subtotal; ?>" class="form-control" autocomplete=off onchange='desgloce()' readonly required>
 			</div>
 
 		</div>

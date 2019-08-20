@@ -29,14 +29,15 @@
 						<select class='form-control' id='producto' name='producto'>
 
 						<?php
-
-							echo "<option"; if($producto=='CHEQUE'){ echo " selected"; } echo " value='CHEQUE'>CHEQUE</option>";
-							echo "<option"; if($producto=='SPEI'){ echo " selected"; } echo " value='SPEI'>SPEI</option>";
 							echo "<option"; if($producto=='ASIMILADOS'){ echo " selected"; } echo " value='ASIMILADOS'>ASIMILADOS</option>";
-							echo "<option"; if($producto=='PLAN PRIVADO'){ echo " selected"; } echo " value='PLAN PRIVADO'>PLAN PRIVADO</option>";
-							echo "<option"; if($producto=='EFECTIVO'){ echo " selected"; } echo " value='EFECTIVO'>EFECTIVO</option>";
+							echo "<option"; if($producto=='CHEQUE'){ echo " selected"; } echo " value='CHEQUE'>CHEQUE</option>";
 							echo "<option"; if($producto=='CUCA'){ echo " selected"; } echo " value='CUCA'>CUCA</option>";
+							echo "<option"; if($producto=='EFECTIVO'){ echo " selected"; } echo " value='EFECTIVO'>EFECTIVO</option>";
+							echo "<option"; if($producto=='MONEDERO'){ echo " selected"; } echo " value='MONEDERO'>MONEDERO</option>";
 							echo "<option"; if($producto=='SINDICATO'){ echo " selected"; } echo " value='SINDICATO'>SINDICATO</option>";
+							echo "<option"; if($producto=='SPEI'){ echo " selected"; } echo " value='SPEI'>SPEI</option>";
+							echo "<option"; if($producto=='PLAN PRIVADO'){ echo " selected"; } echo " value='PLAN PRIVADO'>PLAN PRIVADO</option>";
+
 
 						?>
 						</select>
