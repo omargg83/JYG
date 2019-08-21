@@ -874,8 +874,8 @@ class Operaciones extends Sagyc{
 
 
 		$mail->AltBody = "Notificacion2";
-		//$mail->addAddress($correo);
-		$mail->addAddress("omargg83@gmail.com");
+		$mail->addAddress($correo);
+		//$mail->addAddress("omargg83@gmail.com");
 
 		$titulo="";
 		if(strlen($file)>0){
