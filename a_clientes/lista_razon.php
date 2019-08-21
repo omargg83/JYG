@@ -4,10 +4,18 @@ $id=$_REQUEST['id'];
 $pd=$db->razon($id);
 
 echo "<table class='table table-sm' id='x_lista'>";
-echo "<thead><tr><th>#</th><th>Razon social</th><th>Acta constitutiva</th><th>Poder</th><th>INE</th><th>RFC</th><th>32D</th><th>Comprobante</th></tr></thead>";
+echo "<thead><tr><th>#</th><th>Razon social</th><th>Activo</th><th>Acta constitutiva</th><th>Poder</th><th>INE</th><th>RFC</th><th>32D</th><th>Comprobante</th></tr></thead>";
 echo "<tbody>";
+$clase="";
 foreach($pd as $key){
-	echo "<tr id=".$key['idrazon']." class='edit-t'>";
+	if ($key["activo"]==0){
+		$clase="table-danger";
+	}
+	else{
+		$clase="";
+	}
+
+	echo "<tr id=".$key['idrazon']." class='edit-t $clase'>";
 	echo "<td>";
 	echo "<div class='btn-group'>";
 		echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='".$key['idrazon']."' data-id2='$id' data-lugar='a_clientes/form_razon' title='Cambiar cargo'><i class='fas fa-pencil-alt'></i></button>";
@@ -15,6 +23,9 @@ foreach($pd as $key){
 	echo "</td>";
 
 	echo "<td>".$key["razon"]."</td>";
+	echo "<td>";
+	if ($key["activo"]==1) echo "Activo"; else echo "Inactivo";
+	echo  "</td>";
 
 	echo "<td>";
 	if(strlen($key['acta'])<2 or !file_exists("../".$db->doc.trim($key['acta']))){

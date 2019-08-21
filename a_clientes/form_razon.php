@@ -15,12 +15,11 @@
 		$municipio=$razonx['municipio'];
 		$estado=$razonx['estado'];
 		$cp=$razonx['cp'];
-
+		$activo=$razonx['activo'];
 	}
 	else{
 		$razon="";
 		$rfcrazon="";
-
 		$telefono="";
 		$domicilio="";
 		$colonia="";
@@ -28,6 +27,7 @@
 		$municipio="";
 		$estado="";
 		$cp="";
+		$activo=1;
 	}
 ?>
 	<form action="" id="form_razon" data-lugar="a_clientes/db_" data-funcion="guardar_razon" data-destino="a_clientes/editar">
@@ -68,6 +68,14 @@
 					<div class="col-6">
 						<label for="estado">Estado</label>
 						<input type="text" placeholder="Estado" id="estado" name="estado" value="<?php echo $estado; ?>" class="form-control">
+					</div>
+					<div class='col-sm-3'>
+						<label>Activo: </label><br>
+						<input type='checkbox' name='activo' id='activo' value=1
+						<?php
+						if($activo==1){ echo " checked";}
+						?>
+						>
 					</div>
 				</div>
 			</div>

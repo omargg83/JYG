@@ -116,9 +116,10 @@ if($id>0){
 
 	$db->update('operaciones',array('idoperacion'=>$id), array('utilidad'=>$utilidad));
 	//////////////////////////fin de comisionistas
+
 }
 else{
-	$monto="";
+	$monto="0";
 	$subtotal="0";
 	$iva="0";
 	$bloqueo=0;
@@ -146,7 +147,7 @@ else{
 	$comisionistas="0";
 	$cli=array();
 	$empresa=array();
-
+	$com_final=0;
 	$finalizar=0;
 }
 $readonly="";
@@ -189,7 +190,7 @@ $nombre=$ejecutivo['nombre'];
 						}
 						echo "</div>";
 						echo "<select id='idrazon' name='idrazon' class='form-control' required $readonly >";
-						echo "<option value='".$cli['idrazon']."'>".$cli['cliente']." - ".$cli['razon']."</option>";
+							echo "<option value='".$cli['idrazon']."'>".$cli['cliente']." - ".$cli['razon']."</option>";
 						echo "</select>";
 						echo "</div>";
 						echo "</div>";

@@ -12,11 +12,12 @@
 
   $nombre=$oper['operador'];
   $correo=$oper['correo'];
-  $texto="-----------------------aqui poner texto predeterminado";
+  $texto="";   //  <----------------------aqui poner texto predeterminado";
 ?>
 
 <div class="card">
 <form action='' id='form_fact' data-lugar='a_operaciones/db_operaciones' data-funcion='notificar' data-destino='a_operaciones/editar'>
+  <input type="hidden" name="id" id='id' value='<?php echo $id2; ?>' class='form-control'>
 	<div class="card-header">Enviar correo</div>
 	<div class="card-body">
 		<div class='row'>
@@ -37,7 +38,7 @@
     </div>
 
     <div class='row'>
-      <div class='col-10'>
+      <div class='col-4'>
           <label>Factura:</label>
           <?php
             echo "<select id='idfactura' name='idfactura' class='form-control' onchange='solicitud()' >";
@@ -48,10 +49,19 @@
             echo "</select>";
           ?>
           <input type="hidden" name="file" id='file' placeholder='file' value='' class='form-control' autocomplete="off" required>
+          <input type="hidden" name="comprobante" id='comprobante' placeholder='comprobante' value='' class='form-control' autocomplete="off" required>
+      </div>
+      <div class='col-sm-4' id='trans_visible' style='display:none;'>
+        <label>Transferencia: </label><br>
+        <input type='checkbox' name='com_pago' id='com_pago' value=1 onchange='comprobante_adj()'>
       </div>
       <div class='col-2' id='archivo'>
       </div>
+      <div class='col-2' id='compro_file'>
+      </div>
+
     </div>
+
 
     <div class='row'>
       <div class='col-10'>

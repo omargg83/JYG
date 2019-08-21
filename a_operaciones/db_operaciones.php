@@ -17,7 +17,7 @@ class Operaciones extends Sagyc{
 
 		}
 		else{
-			include "../error.php";
+			include "error.php";
 			die();
 		}
 	}
@@ -114,16 +114,15 @@ class Operaciones extends Sagyc{
 		try{
 			parent::set_names();
 			if ($_SESSION['tipousuario']=='administrativo'){
-				$sql="SELECT * FROM clientes_razon
-				left outer join clientes on clientes.idcliente=clientes_razon.idcliente
-				where (clientes.cliente like :texto or clientes_razon.razon like :texto)";
+				$sql="SELECT * FROM clientes_razon left outer join clientes on clientes.idcliente=clientes_razon.idcliente
+				where (clientes.cliente like :texto or clientes_razon.razon like :texto) and activo=1";
 				$sth = $this->dbh->prepare($sql);
 			}
 			else{
 				$sql="SELECT * FROM clientes_razon
 				left outer join clientes on clientes.idcliente=clientes_razon.idcliente
 				where clientes.idpersona=:idpersona and
-				(clientes.cliente like :texto or clientes_razon.razon like :texto)";
+				(clientes.cliente like :texto or clientes_razon.razon like :texto) and activo=1";
 				$sth = $this->dbh->prepare($sql);
 				$sth->bindValue(":idpersona",$_SESSION['idpersona']);
 			}
@@ -848,11 +847,16 @@ class Operaciones extends Sagyc{
 		require '../librerias15/PHPMailer-5.2-stable/PHPMailerAutoload.php';
 
 		$telefono="";
+		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+		$pers = $this->operacion_edit($id);
+		$idrazon=$pers['idrazon'];
+		$cli=$this->razon($idrazon);
+
 		if (isset($_REQUEST['correo'])){$correo=$_REQUEST['correo'];}
 		if (isset($_REQUEST['texto'])){$texto=$_REQUEST['texto'];}
 		if (isset($_REQUEST['file'])){$file=$_REQUEST['file'];}
 		if (isset($_REQUEST['file_ret'])){$file_ret=$_REQUEST['file_ret'];}
-
+		if (isset($_REQUEST['comprobante'])){$comprobante=$_REQUEST['comprobante'];}
 
 		$x.=$correo;
 		$mail = new PHPMailer;
@@ -867,21 +871,35 @@ class Operaciones extends Sagyc{
 
 		$mail->From = "sistema_jyg@sagyc2.com.mx";
 		$mail->FromName = "Sistema JYG";
-		$mail->Subject = "Notificacion";
-		$mail->AltBody = "Notificacion2";
-		$mail->addAddress($correo);     // Add a recipient
-		//$mail->addCC('omargg83@gmail.com');
 
-		// $mail->addAddress('ellen@example.com');               // Name is optional
-		// $mail->addReplyTo('info@example.com', 'Information');
-		// $mail->addCC('cc@example.com');
-		// $mail->addBCC('bcc@example.com');
+
+		$mail->AltBody = "Notificacion2";
+		//$mail->addAddress($correo);
+		$mail->addAddress("omargg83@gmail.com");
+
+		$titulo="";
 		if(strlen($file)>0){
+			$titulo.="Solicitud de factura ";
 			$mail->addAttachment("../".$file,"Solicitud.pdf");         // Add attachments
+
+			if(strlen($comprobante)>0){
+				$mail->addAttachment("../".$comprobante,"Transferencia.pdf");         // Add attachments
+			}
+
 		}
 		if(strlen($file_ret)>0){
+			if(strlen($titulo)>0){
+				$titulo.=" y ";
+			}
+			$titulo.="Movimiento ";
 			$mail->addAttachment("../".$file_ret,"Retorno.pdf");         // Add attachments
+			$texto.="<br><br>Buena tarde se deposito a ".$cli['razon'];
+			$texto.="<br><br>Deposito: ".moneda($pers['monto']);
+			$texto.="<br><br>Comisión: ".$pers['comision']."%   ".moneda($pers['tcomision']);
+			$texto.="<br><br>Retorno: ".moneda($pers['retorno']);
 		}
+		$mail->Subject = $titulo.$cli['cliente']." - ".$cli['razon'];
+
 		$mail->isHTML(true);
 
 		$mail->Body    = $texto;
@@ -1148,7 +1166,21 @@ class Operaciones extends Sagyc{
 			echo json_encode($arreglo);
 		}
 	}
-
+	public function comprobante_adj(){
+		try{
+			parent::set_names();
+			$id=$_REQUEST['id'];
+			$sql="SELECT * FROM facturas where idfactura=:idfactura";
+			$sth = $this->dbh->prepare($sql);
+			$sth->bindValue(":idfactura",$id);
+			$sth->execute();
+			$res=$sth->fetch();
+			return $this->doc.trim($res['trans']);
+		}
+		catch(PDOException $e){
+			return "Database access FAILED! ".$e->getMessage();
+		}
+	}
 }
 
 $db = new Operaciones();

@@ -226,6 +226,12 @@ class Clientes extends Sagyc{
 		if (isset($_REQUEST['cp'])){
 			$arreglo+=array('cp'=>$_REQUEST['cp']);
 		}
+		if (isset($_REQUEST['activo'])){
+			$arreglo+=array('activo'=>$_REQUEST['activo']);
+		}
+		else{
+			$arreglo+=array('activo'=>0);
+		}
 
 		if (isset($_REQUEST['idcliente'])){
 			$idcliente=$_REQUEST['idcliente'];

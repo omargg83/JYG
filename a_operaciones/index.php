@@ -84,7 +84,6 @@
 				$("#comision").val(datos.comision);
 				$("#creal").val(datos.creal);
 				$("#com_final").val(datos.com_final);
-
 			}
 		});
 	}
@@ -163,6 +162,7 @@
 		});
 
 	}
+
 	$(document).on('keyup','#producto',function(e){
 		var e = window.event;
 		var tecla = (document.all) ? e.keyCode : e.which;
@@ -197,28 +197,6 @@
 		$("#producto_auto").hide();
 	});
 
-	$(document).on('change','.retorno',function(e){
-			e.preventDefault();
-			e.stopPropagation();
-			var xyId = $("#idproducto_selx").val();
-			$.ajax({
-				data:  {
-					"idproducto":xyId,
-					"function":"producto_tipo"
-				},
-				url:   "a_operaciones/db_operaciones.php",
-				type:  'post',
-				beforeSend: function () {
-
-				},
-				success:  function (response) {
-					var datos = JSON.parse(response);
-					$("#comision_ret").val(datos.pventa);
-				}
-			});
-			retornoret();
-		});
-
 	function retornoret(){
 		var gtotal=0;
 		var monto=parseFloat($("#monto_ret").val());
@@ -243,6 +221,7 @@
 	}
 	function solicitud(){
 		var id=$("#idfactura").val();
+		$( "#trans_visible" ).show();
 		$.ajax({
 			data:  {
 				"id":id,
@@ -255,10 +234,36 @@
 				$("#archivo").html("Generando solicitud");
 			},
 			success:  function (response) {
-				$("#archivo").html("<a href='"+response+"' target='_blank'><i class='far fa-file-pdf'></i>Archivo</a>");
+				$("#archivo").html("<a href='"+response+"' target='_blank'><i class='far fa-file-pdf'></i>Solicitud</a>");
 				$("#file").val(response);
 			}
 		});
+	}
+	function comprobante_adj(){
+		var id=$("#idfactura").val();
+		var com_pago=$("#com_pago").prop('checked');
+
+		if(com_pago && id){
+			$.ajax({
+				data:  {
+					"id":id,
+					"function":"comprobante_adj"
+				},
+				url:   "a_operaciones/db_operaciones.php",
+				type:  'post',
+				beforeSend: function () {
+					$("#compro_file").html("Generando solicitud");
+				},
+				success:  function (response) {
+					$("#compro_file").html("<a href='"+response+"' target='_blank'><i class='far fa-file-pdf'></i>Transferencia</a>");
+					$("#comprobante").val(response);
+				}
+			});
+		}
+		else{
+			$("#compro_file").html("");
+			$("#comprobante").val("");
+		}
 	}
 	function solicitud_ret(){
 		var id=$("#idretorno").val();

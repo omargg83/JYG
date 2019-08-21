@@ -15,8 +15,9 @@
     include 'Cezpdf.php';
     $pdf = new Cezpdf('letter','portrait','color',array(255,255,255));
     $pdf->selectFont('../librerias15/fonts/Courier');
-		$pdf->addPngFromFile("formato2.png",27,0,555);
+		//$pdf->addPngFromFile("formato2.png",27,0,555); #error
 		$x=665;
+
 		$pdf->addText(170,$x-=45,12,$cli['razon'],200,'left');
 		$pdf->addText(170,$x-=20,12,$cli['rfcrazon'],200,'left');
 		$pdf->addText(170,$x-=20,12,"REGIMEN FISCAL:",200,'left');
@@ -28,7 +29,7 @@
 		$pdf->addText(170,$x-=20,12,$cli['municipio'],200,'left');
 		$pdf->addText(170,$x-=20,12,$cli['ciudad'],200,'left');
 		$pdf->addText(170,$x-=20,12,$cli['estado'],200,'left');
-		/*$pdf->addText(170,$x-=47,12,$empresa['razon'],200,'left');*/
+		//$pdf->addText(170,$x-=47,12,$empresa['razon'],200,'left');
 		$pdf->addText(170,373,12,$row['monto'],200,'left');
 		$pdf->addText(390,373,12,$row['forma'],200,'left');
 		$pdf->addText(170,353,12,$row['fecha'],200,'left');
@@ -39,6 +40,7 @@
 		$pdf->addText(505,140,12,$row['subtotal'],200,'left');
 		$pdf->addText(505,120,12,$row['iva'],200,'left');
 		$pdf->addText(505,100,12,$row['monto'],200,'left');
+
 		////////////////////////////////esto genera el archivo o para adjuntarlo en mail
 		if($file==1){
 			$documento_pdf = $pdf->ezOutput();
@@ -68,7 +70,7 @@
 		$idempresa=$pers['idempresa'];
 
 		$despa=$db->empresa_despacho($idempresa);
-		$prod=$db->producto_despacho($iddespacho);
+	//	$prod=$db->producto_despacho($iddespacho); #error
 		$idrazon=$pers['idrazon'];
 		$cli=$db->razon($idrazon);
 
@@ -79,11 +81,11 @@
 		$pdf->addText(115,620,12,"BENEFICIARIO:",200,'left');
 		$pdf->addText(210,$x-=45,12,$row['persona'],200,'left');
 		$pdf->addText(115,600,12,"RFC:",200,'left');
-		$pdf->addText(170,$x-=20,12,$cli['rfc'],200,'left');
+//		$pdf->addText(170,$x-=20,12,$cli['rfc'],200,'left'); #error
 		$pdf->addText(115,580,12,"CURP:",200,'left');
 		$pdf->addText(170,$x-=20,12,"CURP",200,'left');
 		$pdf->addText(115,560,12,"TIPO:",200,'left');
-		$pdf->addText(170,$x-=20,12,$val['producto'],200,'left');
+//		$pdf->addText(170,$x-=20,12,$val['producto'],200,'left'); #error
 		/*$pdf->addText(170,$x-=20,12,"BANCO",200,'left');*/
 		$pdf->addText(115,540,12,"MONTO:",200,'left');
 		$pdf->addText(170,$x-=20,12,$row['monto'],200,'left');
