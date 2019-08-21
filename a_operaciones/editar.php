@@ -118,7 +118,7 @@ if($id>0){
 	//////////////////////////fin de comisionistas
 }
 else{
-	$monto="0";
+	$monto="";
 	$subtotal="0";
 	$iva="0";
 	$bloqueo=0;
