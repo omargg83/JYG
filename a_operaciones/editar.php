@@ -119,7 +119,7 @@ if($id>0){
 
 }
 else{
-	$monto="0";
+	$monto="";
 	$subtotal="0";
 	$iva="0";
 	$bloqueo=0;
@@ -215,7 +215,7 @@ $nombre=$ejecutivo['nombre'];
 					<div class="row">
 						<div class="col-3">
 							<label for="monto">Monto</label>
-							<input type="text" step='any' placeholder="Monto" id="monto" name="monto" onchange='retornooper()' value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
+							<input type="text" step='any' placeholder="Monto - Solo números" id="monto" name="monto" onchange='retornooper()' value="<?php echo $monto; ?>" class="form-control" autocomplete=off <?php echo $readonly; ?> required dir='rtl'>
 						</div>
 
 						<div class="col-3">
