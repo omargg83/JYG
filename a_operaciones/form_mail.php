@@ -12,7 +12,7 @@
 
   $nombre=$oper['operador'];
   $correo=$oper['correo'];
-  $texto="";   //  <----------------------aqui poner texto predeterminado";
+  $texto="Favor de no contestar este correo";   //  <----------------------aqui poner texto predeterminado";
 ?>
 
 <div class="card">

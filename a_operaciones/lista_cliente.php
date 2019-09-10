@@ -15,7 +15,7 @@
         echo "</td>";
 
         echo "<td>";
-          echo $key['rfc'];
+          echo $key['rfcrazon'];
         echo "</td>";
 
         echo "<td>";

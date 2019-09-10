@@ -278,7 +278,7 @@ class Operaciones extends Sagyc{
 			parent::set_names();
 			$x="";
 			$texto=$_REQUEST['valor'];
-			$sql="SELECT * FROM sat_prodserv where descripcion like '%$texto%'";
+			$sql="SELECT * FROM sat_prodserv where descripcion like '%$texto%' or claveprod like '%$texto%'";
 			$sth = $this->dbh->prepare($sql);
 			$sth->execute();
 			$res=$sth->fetchAll();
