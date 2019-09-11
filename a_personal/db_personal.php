@@ -78,6 +78,12 @@ class Personal extends Sagyc{
 			$rfc=$_REQUEST['rfc'];
 			$arreglo+=array('rfc'=>$rfc);
 		}
+
+		if (isset($_REQUEST['cumple'])){
+			$fx=explode("-",$_REQUEST['cumple']);
+			$arreglo+=array('cumple'=>$fx['2']."-".$fx['1']."-".$fx['0']);
+		}
+		
 		if (isset($_REQUEST['correo'])){
 			$correo=$_REQUEST['correo'];
 			$arreglo+=array('correo'=>$correo);

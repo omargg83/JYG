@@ -13,6 +13,7 @@ if($id>0){
 	$cuenta=$pers['cuenta'];
 	$comision=$pers['comision'];
 	$tipo=$pers['tipo'];
+	$cumple=fecha($pers['cumple']);
 }
 else{
 	$estudio="";
@@ -25,6 +26,7 @@ else{
 	$cuenta="";
 	$comision="";
 	$tipo="";
+	$cumple=date("d-m-Y");
 }
 ?>
 <div class="container">
@@ -42,10 +44,15 @@ else{
 						<label for="nombre">Nombre</label>
 						<input type="text" placeholder="Nombre" id="nombre" name="nombre" value="<?php echo $nombre; ?>" class="form-control" required>
 					</div>
-					<div class="col-4">
+					<div class="col-2">
 						<label for="rfc">RFC</label>
 						<input type="text" placeholder="RFC" id="rfc" name="rfc" value="<?php echo $rfc; ?>" class="form-control" required>
 					</div>
+					<div class="col-2">
+						<label for="cumple">Cumpleaños</label>
+						<input type="text" placeholder="Cumple" id="cumple" name="cumple" value="<?php echo $cumple; ?>" class="form-control fechaclass" autocomplete=off >
+					</div>
+
 					<div class="col-4">
 						<label for="nick">Nick</label>
 						<input type="text" placeholder="Nick para el chat" id="nick" name="nick" value="<?php echo $nick; ?>" class="form-control" required>
@@ -104,3 +111,28 @@ else{
 		</div>
 	</form>
 </div>
+
+<script>
+$(function() {
+	fechas();
+	$(document).ready( function () {
+		$('table.datatable').DataTable({
+			"pageLength": 100,
+			"language": {
+				"sSearch": "Buscar aqui",
+				"lengthMenu": "Mostrar _MENU_ registros",
+				"zeroRecords": "No se encontró",
+				"info": " Página _PAGE_ de _PAGES_",
+				"infoEmpty": "No records available",
+				"infoFiltered": "(filtered from _MAX_ total records)",
+				"paginate": {
+					"first":      "Primero",
+					"last":       "Ultimo",
+					"next":       "Siguiente",
+					"previous":   "Anterior"
+				},
+			}
+		});
+	});
+});
+</script>
