@@ -137,9 +137,9 @@ if ($_SESSION['tipousuario']=='administrativo'){
 					datasets : [
 					  {
 						label: 'Operaciones por mes',
-						backgroundColor: ['rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
-						,'rgba(153, 102, 255, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)',
-						'rgba(54, 162, 235, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 159, 64, 0.6)'],
+						backgroundColor: ['rgba(0, 191, 255)','rgba(119, 136, 153)','rgba(0, 191, 255)','rgba(119, 136, 153)'
+						,'rgba(0, 191, 255)','rgba(119, 136, 153)','rgba(0, 191, 255)','rgba(119, 136, 153)','rgba(0, 191, 255)','rgba(119, 136, 153)'
+						,'rgba(0, 191, 255)','rgba(119, 136, 153)'],
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 						hoverBorderColor: 'rgba(200, 200, 200, 1)',
@@ -202,7 +202,7 @@ if ($_SESSION['tipousuario']=='administrativo'){
 					datasets : [
 						{
 						label: 'Facturas por mes',
-						backgroundColor: ['rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
+						backgroundColor: ['rgba(0, 191, 255)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
 						,'rgba(153, 102, 255, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)',
 						'rgba(54, 162, 235, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 159, 64, 0.6)'],
 						borderColor: 'rgba(200, 200, 200, 0.75)',
@@ -261,7 +261,7 @@ if ($_SESSION['tipousuario']=='administrativo'){
 					datasets : [
 						{
 						label: 'Retornos por mes',
-						backgroundColor:'rgba(255, 99, 132, 0.6)',
+						backgroundColor:'rgba(0, 191, 255)',
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 						hoverBorderColor: 'rgba(200, 200, 200, 1)',
