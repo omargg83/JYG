@@ -383,7 +383,9 @@ class Operaciones extends Sagyc{
 	public function retorno($id){
 		try{
 			self::set_names();
-			$sql="SELECT * FROM retorno where idoperacion=:id";
+			$sql="SELECT * FROM retorno
+			left outer join productos on productos.idproducto=retorno.idproducto
+			where idoperacion=:id";
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":id",$id);
 			$sth->execute();
@@ -418,6 +420,22 @@ class Operaciones extends Sagyc{
 			$fx=explode("-",$_REQUEST['fecha']);
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
+		if (isset($_REQUEST['fech_contrato'])){
+			$fx=explode("-",$_REQUEST['fech_contrato']);
+			$arreglo+=array('fech_contrato'=>$fx['2']."-".$fx['1']."-".$fx['0']);
+		}
+		else{
+			$arreglo+=array('fech_contrato'=>null);
+		}
+
+		if (isset($_REQUEST['fech_contratoind'])){
+			$fx=explode("-",$_REQUEST['fech_contratoind']);
+			$arreglo+=array('fech_contratoind'=>$fx['2']."-".$fx['1']."-".$fx['0']);
+		}
+		else{
+			$arreglo+=array('fech_contratoind'=>null);
+		}
+
 		if (isset($_REQUEST['monto'])){
 			$arreglo+=array('monto'=>$_REQUEST['monto']);
 		}
@@ -497,6 +515,7 @@ class Operaciones extends Sagyc{
 		else{
 			$arreglo+=array('req_contrato'=>0);
 		}
+
 
 		if (isset($_REQUEST['req_contrato2'])){
 			$arreglo+=array('req_contrato2'=>$_REQUEST['req_contrato2']);
@@ -872,7 +891,6 @@ class Operaciones extends Sagyc{
 		$mail->From = "sistema_jyg@sagyc2.com.mx";
 		$mail->FromName = "Sistema JYG";
 
-
 		$mail->AltBody = "Notificacion2";
 		$mail->addAddress($correo);
 		//$mail->addAddress("omargg83@gmail.com");
@@ -898,7 +916,7 @@ class Operaciones extends Sagyc{
 			$texto.="<br><br>Comisión: ".$pers['comision']."%   ".moneda($pers['tcomision']);
 			$texto.="<br><br>Retorno: ".moneda($pers['retorno']);
 		}
-		$mail->Subject = $titulo.$cli['cliente']." - ".$cli['razon'];
+		$mail->Subject = $titulo.$cli['cliente']." - ".$cli['razon']. "   # $id";
 
 		$mail->isHTML(true);
 

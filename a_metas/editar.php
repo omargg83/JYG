@@ -16,7 +16,6 @@ else{
 echo "<div class='container'>";
 ?>
 
-
 <form action="" id="form_personal" data-lugar="a_metas/db_" data-funcion="guardar_meta" data-destino='a_metas/editar'>
 	<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 	<div class="card">

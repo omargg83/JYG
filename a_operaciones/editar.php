@@ -13,7 +13,6 @@ if($id>0){
 	$idrazon=$pers['idrazon'];
 	$idempresa=$pers['idempresa'];
 
-
 	$cli=$db->razon($idrazon);
 	$empresa=$db->empresa($idempresa);
 
@@ -48,7 +47,18 @@ if($id>0){
 
 	$com_t=$pers['comision_f'];
 	$ret_t=$pers['retorno_f'];
-
+	if(strlen($pers['fech_contrato'])>0){
+		$fech_contrato=fecha($pers['fech_contrato']);
+	}
+	else{
+		$fech_contrato="";
+	}
+	if(strlen($pers['fech_contratoind'])>0){
+		$fech_contratoind=fecha($pers['fech_contratoind']);
+	}
+	else{
+		$fech_contratoind="";
+	}
 	if($esquema==5){
 		$tcomision=0;
 		$retorno=0;
@@ -135,7 +145,8 @@ else{
 	$tcomision=0;
 	$contrato="";
 	$req_contrato=0;
-
+	$fech_contratoind="";
+	$fech_contrato="";
 	$contrato2="";
 	$req_contrato2=0;
 	$pikito="";
@@ -364,6 +375,8 @@ $nombre=$ejecutivo['nombre'];
 							if($req_contrato==1){ echo " checked";}
 							?>
 							>
+							<input type="text" placeholder="Fecha contrato" id="fech_contrato" name="fech_contrato" value="<?php echo $fech_contrato; ?>" class="form-control fechaclass" autocomplete=off readonly >
+
 						</div>
 
 						<div class='col-sm-3'>
@@ -373,6 +386,7 @@ $nombre=$ejecutivo['nombre'];
 							if($req_contrato2==1){ echo " checked";}
 							?>
 							>
+							<input type="text" placeholder="Fecha contrato" id="fech_contratoind" name="fech_contratoind" value="<?php echo $fech_contratoind; ?>" class="form-control fechaclass" autocomplete=off readonly >
 						</div>
 					</div>
 
@@ -692,6 +706,7 @@ $nombre=$ejecutivo['nombre'];
 					</div>
 				</div>
 				<!--............................................fin facturas...................................... -->
+
 				<!--...........................................INICIA RETORNO ...................................... -->
 				<div class="card-header">
 					<button type='button' class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#collapsetres" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-compress-arrows-alt"></i></button>
@@ -715,7 +730,6 @@ $nombre=$ejecutivo['nombre'];
 									<tbody>
 										<?php
 										$retorno_x=0;
-										//for($i=0;$i<count($ret);$i++){
 										foreach ($ret as $key){
 											echo "<tr id=".$key['idretorno']." class='edit-t'>";
 
@@ -734,7 +748,7 @@ $nombre=$ejecutivo['nombre'];
 											echo "</td>";
 
 											echo "<td>";
-											echo $key["idproducto"];
+											echo $key["producto"];
 											echo "</td>";
 
 											echo "<td>";
