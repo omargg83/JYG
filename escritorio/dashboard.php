@@ -19,57 +19,90 @@ if ($_SESSION['tipousuario']=='administrativo'){
 
 
 ?>
-	<div class='container-fluid'>
-		<div class='row'>
-			<div class='col-1'>
-				<div class='alert alert-success' style='opacity:.7;font-size:12px'>
-					<?php
-					echo "<center>Operaciones: <br>".$row[0]['finalizada']." Finalizadas</center>";
-				 	?>
-		 		</div>
-			</div>
-			<div class='col-1'>
-				<div class='alert alert-success' style='opacity:.7;font-size:12px'>
-					<?php
-					echo "<center>Operaciones: <br>".$row[0]['proceso']." en proceso</center>";
-				 	?>
-		 		</div>
-			</div>
+<div class='container-fluid'>
+	<div class='row'>
+		<div class='col-2'>
+				 <div class="card text-center text-white bg-dark border-light mb-3" style="max-width: 13rem;">
+		<div class="card-header">Operaciones Cerradas</div>
+		<div class="card-body">
+		<h5 class="card-title">
+			<?php
+			echo "<center>".$row[0]['finalizada']."</center>";
+			?></h5>
 
-			<div class='col-1'>
-				<div class='alert alert-success' style='opacity:.7;font-size:12px'>
-					<?php
-					echo "<center>Facturas:<br>".$fact[0]['total']."</center>";
-				 	?>
-		 		</div>
-			</div>
-
-			<div class='col-1'>
-				<div class='alert alert-success' style='opacity:.7;font-size:12px'>
-					<?php
-					echo "<center>Retornos:<br>".$ret[0]['total']."</center>";
-				 	?>
-		 		</div>
-			</div>
-
-			<div class='col-1'>
-				<div class='alert alert-success' style='opacity:.7;font-size:12px'>
-					<?php
-					echo "<center>Prospectos:<br>".$pros[0]['total']."</center>";
-					?>
+		</div>
 				</div>
-			</div>
-
-			<div class='col-1'>
-				<div class='alert alert-success' style='opacity:.7;font-size:12px'>
-					<?php
-					echo "<center>Clientes:<br>".$cli[0]['total']."</center>";
-				 	?>
-		 		</div>
-			</div>
 		</div>
 
+		<div class='col-2'>
+				 <div class="card text-center text-white bg-dark border-light mb-3" style="max-width: 13rem;">
+		<div class="card-header font-size:12px">Operaciones Activas</div>
+		<div class="card-body">
+		<h5 class="card-title">
+			<?php
+			echo "<center>".$row[0]['proceso']."</center>";
+			?></h5>
 
+		</div>
+				</div>
+		</div>
+
+		<div class='col-2'>
+				 <div class="card text-center text-white bg-dark border-light mb-3" style="max-width: 13rem;">
+		<div class="card-header">Facturas Emitidas</div>
+			<div class="card-body">
+				<h5 class="card-title">
+					<?php
+					echo "<center>".$fact[0]['total']."</center>";
+					?></h5>
+
+				</div>
+				</div>
+		</div>
+
+		<div class='col-2'>
+				 <div class="card text-center text-white bg-dark border-light mb-3" style="max-width: 13rem;">
+		<div class="card-header">Retornos Realizados</div>
+			<div class="card-body">
+				<h5 class="card-title">
+					<?php
+					echo "<center>".$ret[0]['total']."</center>";
+					?></h5>
+
+				</div>
+				</div>
+		</div>
+
+		<div class='col-2'>
+				 <div class="card text-center text-white bg-dark border-light mb-3" style="max-width: 13rem;">
+		<div class="card-header">Total de Prospectos</div>
+			<div class="card-body">
+				<h5 class="card-title">
+					<?php
+					echo "<center>".$pros[0]['total']."</center>";
+					?></h5>
+
+				</div>
+				</div>
+		</div>
+
+		<div class='col-2'>
+				 <div class="card text-center text-white bg-dark border-light mb-3" style="max-width: 13rem;">
+		<div class="card-header">Total de Clientes</div>
+			<div class="card-body">
+				<h5 class="card-title">
+					<?php
+					echo "<center>".$cli[0]['total']."</center>";
+					?></h5>
+
+				</div>
+				</div>
+		</div>
+
+</div>
+</div>
+
+	<div class='container-fluid'>
 
 		<div class='row'>
 			<div style='background-color: white;opacity:.8;' class='col-12'>
@@ -137,9 +170,9 @@ if ($_SESSION['tipousuario']=='administrativo'){
 					datasets : [
 					  {
 						label: 'Operaciones por mes',
-						backgroundColor: ['rgba(0, 191, 255)','rgba(119, 136, 153)','rgba(0, 191, 255)','rgba(119, 136, 153)'
-						,'rgba(0, 191, 255)','rgba(119, 136, 153)','rgba(0, 191, 255)','rgba(119, 136, 153)','rgba(0, 191, 255)','rgba(119, 136, 153)'
-						,'rgba(0, 191, 255)','rgba(119, 136, 153)'],
+						backgroundColor: ['#abd2de','rgba(119, 136, 153)','#abd2de','rgba(119, 136, 153)'
+						,'#abd2de','rgba(119, 136, 153)','#abd2de','rgba(119, 136, 153)','#abd2de','rgba(119, 136, 153)'
+						,'#abd2de','rgba(119, 136, 153)'],
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 						hoverBorderColor: 'rgba(200, 200, 200, 1)',
@@ -202,7 +235,7 @@ if ($_SESSION['tipousuario']=='administrativo'){
 					datasets : [
 						{
 						label: 'Facturas por mes',
-						backgroundColor: ['rgba(0, 191, 255)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
+						backgroundColor: ['#abd2de','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
 						,'rgba(153, 102, 255, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)',
 						'rgba(54, 162, 235, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 159, 64, 0.6)'],
 						borderColor: 'rgba(200, 200, 200, 0.75)',
@@ -261,7 +294,7 @@ if ($_SESSION['tipousuario']=='administrativo'){
 					datasets : [
 						{
 						label: 'Retornos por mes',
-						backgroundColor:'rgba(0, 191, 255)',
+						backgroundColor:'#abd2de',
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
 						hoverBorderColor: 'rgba(200, 200, 200, 1)',
@@ -337,7 +370,7 @@ if ($_SESSION['tipousuario']=='administrativo'){
 					{
 
 					label: 'Monto Facturas',
-					backgroundColor: ['rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
+					backgroundColor: ['#abd2de','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)','rgba(54, 162, 235, 0.6)'
 					,'rgba(153, 102, 255, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 159, 64, 0.6)','rgba(75, 192, 192, 0.6)',
 					'rgba(54, 162, 235, 0.6)','rgba(201, 203, 207, 0.6)','rgba(255, 159, 64, 0.6)'],
 					borderColor: 'rgba(200, 200, 200, 0.75)',
