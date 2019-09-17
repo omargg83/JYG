@@ -1,7 +1,7 @@
 <?php
 	if (!isset($_SESSION)) { session_start(); }
 	error_reporting(E_ALL);
-	ini_set('display_errors', '1');	
+	ini_set('display_errors', '1');
 
 	date_default_timezone_set("America/Mexico_City");
 
@@ -437,7 +437,8 @@
 	}
 
 	function moneda($valor){
-		return "$ ".number_format( $valor, 2, "." , "," );
+		return "$ ".number_format($valor,2);
+		//return "$ ".number_format( $valor, 2, "." , "," );
 	}
 	function fecha($fecha,$key=""){
 		$fecha = new DateTime($fecha);
