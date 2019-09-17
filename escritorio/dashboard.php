@@ -60,18 +60,20 @@ if ($_SESSION['tipousuario']=='administrativo'){
 				</div>
 		</div>
 
+		<!--
 		<div class='col-2'>
 				 <div class="card text-center text-white bg-dark border-light mb-3" style="max-width: 13rem;">
 		<div class="card-header">Retornos Realizados</div>
 			<div class="card-body">
 				<h5 class="card-title">
 					<?php
-					echo "<center>".$ret[0]['total']."</center>";
+				//	echo "<center>".$ret[0]['total']."</center>";
 					?></h5>
 
 				</div>
 				</div>
 		</div>
+		-->
 
 		<div class='col-2'>
 				 <div class="card text-center text-white bg-dark border-light mb-3" style="max-width: 13rem;">
