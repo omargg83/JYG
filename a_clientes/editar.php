@@ -19,6 +19,7 @@ if($id>0){
 	$correo=$pers['correo'];
 	$telefono=$pers['telefono'];
 	$idpersona=$pers['idpersona'];
+	$cumple=fecha($pers['cumple']);
 }
 else{
 	$cliente="";
@@ -34,7 +35,7 @@ else{
 	$municipio="";
 	$estado="";
 	$cp="";
-
+	$cumple=date("d-m-Y");
 }
 echo "<div class='container'>";
 ?>
@@ -48,7 +49,7 @@ echo "<div class='container'>";
 		<div class="card-body">
 			<div class="row">
 				<div class="col-3">
-					<label for="rfc">RFC</label>
+					<label for="rfc">Rfc</label>
 					<input type="text" placeholder="RFC" id="rfc" name="rfc" value="<?php echo $rfc; ?>" class="form-control" required>
 				</div>
 				<div class="col-5">
@@ -71,26 +72,32 @@ echo "<div class='container'>";
 					<label for="cp">CP</label>
 					<input type="text" placeholder="CP" id="cp" name="cp" value="<?php echo $cp; ?>" class="form-control">
 				</div>
-				<div class="col-5">
+				<div class="col-4">
 					<label for="ciudad">Ciudad</label>
 					<input type="text" placeholder="Ciudad" id="ciudad" name="ciudad" value="<?php echo $ciudad; ?>" class="form-control">
 				</div>
-				<div class="col-5">
+				<div class="col-6">
 					<label for="municipio">Municipio</label>
 					<input type="text" placeholder="Municipio" id="municipio" name="municipio" value="<?php echo $municipio; ?>" class="form-control">
 				</div>
-				<div class="col-4">
+				<div class="col-3">
 					<label for="estado">Estado</label>
 					<input type="text" placeholder="Estado" id="estado" name="estado" value="<?php echo $estado; ?>" class="form-control">
 				</div>
-				<div class="col-5">
+				<div class="col-4">
 					<label for="correo">Correo</label>
 					<input type="mail" placeholder="Correo electronico" id="correo" name="correo" value="<?php echo $correo; ?>" class="form-control" required>
 				</div>
-				<div class="col-3">
+				<div class="col-2">
 					<label for="telefono">Telefono</label>
 					<input type="text" placeholder="Telefono/Telefonos" id="telefono" name="telefono" value="<?php echo $telefono; ?>" class="form-control" required>
 				</div>
+
+				<div class="col-2">
+					<label for="cumple">Cumpleaños</label>
+					<input type="text" placeholder="Cumple" id="cumple" name="cumple" value="<?php echo $cumple; ?>" class="form-control fechaclass" autocomplete=off >
+				</div>
+
 				<div class="col-3">
 					<label for="iddespacho">Ejecutivo</label>
 					<select class='form-control' id='idpersona' name='idpersona'>
@@ -157,3 +164,28 @@ echo "<div class='container'>";
 	</div>
 </form>
 </div>
+
+<script>
+$(function() {
+	fechas();
+	$(document).ready( function () {
+		$('table.datatable').DataTable({
+			"pageLength": 100,
+			"language": {
+				"sSearch": "Buscar aqui",
+				"lengthMenu": "Mostrar _MENU_ registros",
+				"zeroRecords": "No se encontró",
+				"info": " Página _PAGE_ de _PAGES_",
+				"infoEmpty": "No records available",
+				"infoFiltered": "(filtered from _MAX_ total records)",
+				"paginate": {
+					"first":      "Primero",
+					"last":       "Ultimo",
+					"next":       "Siguiente",
+					"previous":   "Anterior"
+				},
+			}
+		});
+	});
+});
+</script>
