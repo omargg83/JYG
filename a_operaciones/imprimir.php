@@ -17,8 +17,9 @@
     $pdf->selectFont('../librerias15/fonts/Courier');
 		//$pdf->addPngFromFile("formato2.png",27,0,555); #error
 		$x=665;
-
+		$pdf->addText(60,620,12,"Razón Social:",200,'left');
 		$pdf->addText(170,$x-=45,12,$cli['razon'],200,'left');
+		$pdf->addText(60,600,12,"Rfc:",200,'left');
 		$pdf->addText(170,$x-=20,12,$cli['rfcrazon'],200,'left');
 		$pdf->addText(170,$x-=20,12,"REGIMEN FISCAL:",200,'left');
 		$pdf->addText(170,$x-=20,12,$row['uso'],200,'left');
@@ -37,8 +38,11 @@
 		$pdf->addText(170,250,12,$row['producto'],200,'left');
 		$pdf->addText(170,200,12,$row['descripcion'],200,'left');
 
+		$pdf->addText(430,140,12,"Sub-Total",200,'left');
 		$pdf->addText(505,140,12,$row['subtotal'],200,'left');
+		$pdf->addText(430,120,12,"Iva",200,'left');
 		$pdf->addText(505,120,12,$row['iva'],200,'left');
+		$pdf->addText(430,100,12,"Total",200,'left');
 		$pdf->addText(505,100,12,$row['monto'],200,'left');
 
 		////////////////////////////////esto genera el archivo o para adjuntarlo en mail
