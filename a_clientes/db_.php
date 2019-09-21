@@ -183,6 +183,9 @@ class Clientes extends Sagyc{
 		if (isset($_REQUEST['telefono'])){
 			$arreglo+=array('telefono'=>$_REQUEST['telefono']);
 		}
+		if (isset($_REQUEST['prospecto'])){
+			$arreglo+=array('prospecto'=>$_REQUEST['prospecto']);
+		}
 		if (isset($_REQUEST['cumple'])){
 			$fx=explode("-",$_REQUEST['cumple']);
 			$arreglo+=array('cumple'=>$fx['2']."-".$fx['1']."-".$fx['0']);

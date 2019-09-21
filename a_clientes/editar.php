@@ -36,6 +36,7 @@ else{
 	$estado="";
 	$cp="";
 	$cumple=date("d-m-Y");
+	$prospecto="0";
 }
 echo "<div class='container'>";
 ?>
