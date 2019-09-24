@@ -168,15 +168,11 @@ class Operaciones extends Sagyc{
 			$res=$sth->fetchAll();
 
 			$x="<table class='table table-sm'>";
-		  $x.="<tr><th>-</th><th>Despacho</th><th>Empresa</th><th>Rfc</th></tr>";
+		  $x.="<tr><th>-</th><th>Empresa</th><th>Rfc</th><th>Banco</th></tr>";
 		    foreach($res as $key){
 		      $x.= "<tr id='".$key['idempresa']."' class='edit-t'>";
 		        $x.= "<td>";
 		          $x.= "<button class='btn btn-outline-secondary btn-sm' id='seleccomision' title='Seleccionar' onclick='seleccliente(".$key['idempresa'].")'><i class='fas fa-check'></i></i></button>";
-		        $x.= "</td>";
-
-		        $x.= "<td>";
-		          $x.= $key['nombre'];
 		        $x.= "</td>";
 
 		        $x.= "<td>";
@@ -185,6 +181,10 @@ class Operaciones extends Sagyc{
 
 		        $x.= "<td>";
 		          $x.= $key['rfc'];
+		        $x.= "</td>";
+
+						$x.= "<td>";
+		          $x.= $key['banco'];
 		        $x.= "</td>";
 
 		      $x.= "</tr>";
