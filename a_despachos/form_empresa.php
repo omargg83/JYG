@@ -13,6 +13,7 @@
 		$banco=$pers['banco'];
 		$clabe=$pers['clabe'];
 		$cuenta=$pers['cuenta'];
+    $activo=$pers['activo'];
 	}
 	else{
 		$razon="";
@@ -22,6 +23,7 @@
 		$banco="";
 		$clabe="";
 		$cuenta="";
+    $activo=1;
 	}
 ?>
 
@@ -60,6 +62,15 @@
 					<div class="col-4">
 						<label for="cuenta">Número de Cuenta</label>
 						<input type="text" placeholder="Cuenta" id="cuenta" name="cuenta" value="<?php echo $cuenta; ?>" class="form-control" required>
+					</div>
+
+          <div class='col-sm-3'>
+						<label>Activo: </label><br>
+						<input type='checkbox' name='activo' id='activo' value=1
+						<?php
+						if($activo==1){ echo " checked";}
+						?>
+						>
 					</div>
 				</div>
 			</div>

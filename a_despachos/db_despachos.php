@@ -178,6 +178,12 @@ class Despachos extends Sagyc{
 		if (isset($_REQUEST['cuenta'])){
 			$arreglo+=array('cuenta'=>$_REQUEST['cuenta']);
 		}
+		if (isset($_REQUEST['activo'])){
+			$arreglo+=array('activo'=>$_REQUEST['activo']);
+		}
+		else{
+			$arreglo+=array('activo'=>0);
+		}
 
 		if($id==0){
 			$x.=$this->insert('empresas', $arreglo);

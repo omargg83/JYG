@@ -15,7 +15,7 @@ if($id>0){
 
 	$cli=$db->razon($idrazon);
 	$empresa=$db->empresa($idempresa);
-
+	$quincena=$pers['quincena'];
 	$fecha=fecha($pers['fecha']);
 	$subtotal=$pers['subtotal'];
 	$iva=$pers['iva'];
@@ -160,6 +160,10 @@ else{
 	$empresa=array();
 	$com_final=0;
 	$finalizar=0;
+
+$nroDia = date("z", strtotime($fecha)); //Coloca la fecha que desees
+$quincena = floor($nroDia / 15); //Averiguo el número de quincena para la fecha
+
 }
 $readonly="";
 $disabled="";
@@ -182,7 +186,7 @@ $nombre=$ejecutivo['nombre'];
 
 				<div class="card-body">
 					<div class="row">
-						<div class="col-2">
+						<div class="col-1">
 							<label for="id">ID</label>
 							<input type="text" placeholder="ID" id="id" name="id" value="<?php echo $id; ?>" class="form-control" readonly>
 						</div>
@@ -191,6 +195,12 @@ $nombre=$ejecutivo['nombre'];
 							<label for="fecha">Fecha</label>
 							<input type="text" placeholder="Fecha" id="fecha" name="fecha" value="<?php echo $fecha; ?>" class="form-control fechaclass" autocomplete=off readonly >
 						</div>
+
+						<div class="col-1">
+							<label for="quincena">Quincena</label>
+							<input type="text" placeholder="quincena" id="quincena" name="quincena" value="<?php echo $quincena; ?>" class="form-control">
+						</div>
+
 						<?php
 						echo "<div class='col-4' >";
 						echo "<label for='cliente'>Cliente</label>";

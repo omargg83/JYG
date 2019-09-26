@@ -161,7 +161,7 @@ class Operaciones extends Sagyc{
 		try{
 			parent::set_names();
 			$iddespacho=$_REQUEST['iddespacho'];
-			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where despachos.iddespacho=:texto";
+			$sql="SELECT * FROM empresas left outer join despachos on empresas.iddespacho=despachos.iddespacho where despachos.iddespacho=:texto and activo=1";
 			$sth = $this->dbh->prepare($sql);
 			$sth->bindValue(":texto",$iddespacho);
 			$sth->execute();
@@ -415,6 +415,10 @@ class Operaciones extends Sagyc{
 		parent::set_names();
 		if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
 		$arreglo =array();
+
+		if (isset($_REQUEST['quincena'])){
+			$arreglo+=array('quincena'=>$_REQUEST['quincena']);
+		}
 
 		if (isset($_REQUEST['fecha'])){
 			$fx=explode("-",$_REQUEST['fecha']);
