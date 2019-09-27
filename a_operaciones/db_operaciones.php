@@ -881,6 +881,9 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['file_ret'])){$file_ret=$_REQUEST['file_ret'];}
 		if (isset($_REQUEST['comprobante'])){$comprobante=$_REQUEST['comprobante'];}
 
+		$adj_pago=0; /////campo para adjuntar solicitud
+		if (isset($_REQUEST['adj_pago'])){$adj_pago=$_REQUEST['adj_pago'];}
+
 		$x.=$correo;
 		$mail = new PHPMailer;
 		$mail->isSMTP();                                      // Set mailer to use SMTP
@@ -897,18 +900,20 @@ class Operaciones extends Sagyc{
 
 		$mail->AltBody = "Notificacion2";
 		$mail->addAddress($correo);
-		//$mail->addAddress("omargg83@gmail.com");
 
 		$titulo="";
 		if(strlen($file)>0){
-			$titulo.="Solicitud de factura ";
-			$mail->addAttachment("../".$file,"Solicitud.pdf");         // Add attachments
+			if($adj_pago==1){
+				$titulo.="Solicitud de factura ";
+				$mail->addAttachment("../".$file,"Solicitud.pdf");         // Add attachments
+			}
 
 			if(strlen($comprobante)>0){
 				$mail->addAttachment("../".$comprobante,"Transferencia.pdf");         // Add attachments
 			}
 
 		}
+		$x.=$comprobante;
 		if(strlen($file_ret)>0){
 			if(strlen($titulo)>0){
 				$titulo.=" y ";

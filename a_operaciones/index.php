@@ -234,7 +234,7 @@
 				$("#archivo").html("Generando solicitud");
 			},
 			success:  function (response) {
-				$("#archivo").html("<a href='"+response+"' target='_blank'><i class='far fa-file-pdf'></i>Solicitud</a>");
+				$("#archivo").html("<input type='checkbox' name='adj_pago' id='adj_pago' value=1><a href='"+response+"' target='_blank'><i class='far fa-file-pdf'></i>Solicitud</a>");
 				$("#file").val(response);
 			}
 		});

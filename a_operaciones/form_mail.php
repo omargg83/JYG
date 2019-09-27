@@ -51,14 +51,11 @@
           <input type="hidden" name="file" id='file' placeholder='file' value='' class='form-control' autocomplete="off" required>
           <input type="hidden" name="comprobante" id='comprobante' placeholder='comprobante' value='' class='form-control' autocomplete="off" required>
       </div>
-      <div class='col-sm-4' id='trans_visible' style='display:none;'>
-        <label>Transferencia: </label><br>
-        <input type='checkbox' name='com_pago' id='com_pago' value=1 onchange='comprobante_adj()'>
+
+      <div class='col-sm-2' id='trans_visible' style='display:none;'>
+        <label><input type='checkbox' name='com_pago' id='com_pago' value=1 onchange='comprobante_adj()'>Transferencia: </label>
       </div>
-      <div class='col-2' id='archivo'>
-      </div>
-      <div class='col-2' id='compro_file'>
-      </div>
+
 
     </div>
 
@@ -76,9 +73,19 @@
           ?>
           <input type="hidden" name="file_ret" id='file_ret' placeholder='file_ret' value='' class='form-control' autocomplete="off" required>
       </div>
+
+    </div>
+    <br>
+    <div class='row'>
+      <div class='col-3' id='archivo'>
+      </div>
+      <div class='col-3' id='compro_file'>
+      </div>
       <div class='col-2' id='archivo_ret'>
       </div>
     </div>
+
+
 
 	</div>
 	<div class="card-footer">
