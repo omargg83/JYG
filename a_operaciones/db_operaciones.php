@@ -424,7 +424,7 @@ class Operaciones extends Sagyc{
 			$fx=explode("-",$_REQUEST['fecha']);
 			$arreglo+=array('fecha'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
-		if (isset($_REQUEST['fech_contrato'])){
+		if (isset($_REQUEST['fech_contrato']) and strlen($_REQUEST['fech_contrato'])>0){
 			$fx=explode("-",$_REQUEST['fech_contrato']);
 			$arreglo+=array('fech_contrato'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
@@ -432,7 +432,7 @@ class Operaciones extends Sagyc{
 			$arreglo+=array('fech_contrato'=>null);
 		}
 
-		if (isset($_REQUEST['fech_contratoind'])){
+		if (isset($_REQUEST['fech_contratoind']) and strlen($_REQUEST['fech_contratoind'])>0){
 			$fx=explode("-",$_REQUEST['fech_contratoind']);
 			$arreglo+=array('fech_contratoind'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
