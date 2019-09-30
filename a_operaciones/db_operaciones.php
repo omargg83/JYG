@@ -310,12 +310,13 @@ class Operaciones extends Sagyc{
 			return "Database access FAILED! ".$e->getMessage();
 		}
 	}
-	public function producto_edit($id){
+	public function producto_edit($id_prod){
 		try{
 			parent::set_names();
-			$sql="SELECT * FROM productos where idproducto=:idproducto";
+
+			$sql="SELECT * FROM productos where idproducto=$id_prod";
 			$sth = $this->dbh->prepare($sql);
-			$sth->bindValue(":idproducto",$id);
+			$sth->bindValue(":id",$id_prod);
 			$sth->execute();
 			$res=$sth->fetch();
 			return $res;
@@ -545,6 +546,24 @@ class Operaciones extends Sagyc{
 
 		return $id;
 	}
+
+	public function guardar_nota(){
+  $x="";
+  parent::set_names();
+  if (isset($_REQUEST['id'])){$id=$_REQUEST['id'];}
+  $arreglo =array();
+
+  if (isset($_REQUEST['nota'])){
+    $arreglo+=array('nota'=>$_REQUEST['nota']);
+  }
+
+  if($id>0){
+    $id=$this->update('operaciones',array('idoperacion'=>$id), $arreglo);
+  }
+
+  return $id;
+}
+
 	public function guardar_factura(){
 		$x="";
 		parent::set_names();

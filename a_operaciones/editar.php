@@ -28,6 +28,7 @@ if($id>0){
 	$tcomision=$pers['tcomision'];
 	$idpersonal=$pers['idpersona'];
 
+
 	$contrato=$pers['contrato'];
 	$req_contrato=$pers['req_contrato'];
 
@@ -398,6 +399,7 @@ $nombre=$ejecutivo['nombre'];
 							>
 							<input type="text" placeholder="Fecha contrato" id="fech_contratoind" name="fech_contratoind" value="<?php echo $fech_contratoind; ?>" class="form-control fechaclass" autocomplete=off readonly >
 						</div>
+
 					</div>
 
 					<hr>
@@ -411,11 +413,18 @@ $nombre=$ejecutivo['nombre'];
 								if($finalizar==0){
 									echo "<button class='btn btn-outline-danger btn-sm' type='button' onclick='finalizar()'><i class='far fa-check-circle'></i>Finalizar</button>";
 								}
+
+								if($finalizar==1){
+									echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='$id' data-id2='$id' data-lugar='a_operaciones/form_nota' title='Agregar Nota'><i class='fas fa-comment-alt'></i></i>Nota</button>";
+								}
+
+
 								if($id>0){
 									if($idrazon>0 and $idempresa>0 and $finalizar==0){
 										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-id3='' data-lugar='a_operaciones/form_factura' title='Agregar factura'><i class='fas fa-plus'></i>Factura</button>";
-										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno'><i class='fas fa-plus'></i>Retorno</button>";
-										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_operador'><i class='fas fa-id-badge'></i>Operador</button>";
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_retorno' title='Agregar retorno'><i class='fas fa-plus'></i>Retorno</button>";
+										echo "<button type='button' class='btn btn-outline-secondary btn-sm' id='winmodal_cargo' data-id='0' data-id2='$id' data-lugar='a_operaciones/form_operador' title='Seleccionar operador'><i class='fas fa-id-badge'></i>Operador</button>";
+										echo "<button type='button' class='btn btn-outline-danger btn-sm' id='winmodal_cargo' data-id='$id' data-id2='$id' data-lugar='a_operaciones/form_nota' title='Agregar Nota'><i class='fas fa-comment-alt'></i>Nota</button>";
 									}
 
 									if((strlen($contrato)<2 or !file_exists("../".$db->doc.trim($contrato))) and $finalizar==0){
