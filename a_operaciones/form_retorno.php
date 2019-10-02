@@ -30,6 +30,8 @@ $empresa="";
 $lugar="";
 $tcomisionjg="";
 $retornojg="";
+$cuenta="";
+$banco="";
 
 if($id>0){
 	$row=$db->retorno_edit($id);
@@ -46,6 +48,8 @@ if($id>0){
 	$lugar=$row['lugar'];
 	$tcomisionjg=$row['tcomisionjg'];
 	$retornojg=$row['retornojg'];
+	$cuenta=$row['cuenta'];
+	$banco=$row['banco'];
 }
 
 ?>
@@ -87,10 +91,21 @@ if($id>0){
 					<input type="text" placeholder="Folio" id="folio" name="folio" value="<?php echo $folio; ?>" class="form-control" autocomplete=off onchange="retornoret()">
 				</div>
 
-				<div class="col-5">
+				<div class="col-6">
 					<label for="persona">Persona Beneficiaria:</label>
 					<input type="text" placeholder="Beneficiario" id="persona" name="persona" value="<?php echo $persona; ?>" class="form-control" autocomplete=off onchange="retornoret()">
 				</div>
+
+				<div class="col-6">
+					<label for="cuenta">No. Cuenta/Clabe:</label>
+					<input type="text" placeholder="0" id="cuenta" name="cuenta" value="<?php echo $cuenta; ?>" class="form-control" autocomplete=off onchange="retornoret()">
+				</div>
+
+				<div class="col-6">
+					<label for="banco">Banco:</label>
+					<input type="text" placeholder="Banco" id="banco" name="banco" value="<?php echo $banco; ?>" class="form-control" autocomplete=off onchange="retornoret()">
+				</div>
+
 
 				<div class="col-6">
 					<label for="empresa">Empresa que emite:</label>

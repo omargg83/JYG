@@ -686,6 +686,15 @@ class Operaciones extends Sagyc{
 		if (isset($_REQUEST['persona'])){
 			$arreglo+=array('persona'=>$_REQUEST['persona']);
 		}
+
+		if (isset($_REQUEST['cuenta'])){
+			$arreglo+=array('cuenta'=>$_REQUEST['cuenta']);
+		}
+
+		if (isset($_REQUEST['banco'])){
+			$arreglo+=array('banco'=>$_REQUEST['banco']);
+		}
+
 		if (isset($_REQUEST['empresa'])){
 			$arreglo+=array('empresa'=>$_REQUEST['empresa']);
 		}
