@@ -83,7 +83,7 @@ class Personal extends Sagyc{
 			$fx=explode("-",$_REQUEST['cumple']);
 			$arreglo+=array('cumple'=>$fx['2']."-".$fx['1']."-".$fx['0']);
 		}
-		
+
 		if (isset($_REQUEST['correo'])){
 			$correo=$_REQUEST['correo'];
 			$arreglo+=array('correo'=>$correo);
@@ -109,7 +109,7 @@ class Personal extends Sagyc{
 
 		if($id==0){
 			$sql="select * from personal where correo='$correo' or rfc='$rfc'";
-			$buscar=$personal->general($sql);
+			$buscar=$this->general($sql);
 			if(count($buscar)==0){
 				$arreglo+=array('autoriza'=>1);
 				$x.=$this->insert('personal', $arreglo);
