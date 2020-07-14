@@ -490,7 +490,7 @@
 			div="trabajo";
 		}
 		$.confirm({
-			title: 'Guardar',
+			title: 'Eliminar',
 			content: '¿Desea borrar el registro seleccionado?',
 			buttons: {
 				Aceptar: function () {
